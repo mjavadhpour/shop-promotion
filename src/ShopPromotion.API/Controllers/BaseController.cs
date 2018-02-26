@@ -13,6 +13,7 @@ namespace ShopPromotion.API.Controllers
     /// <summary>
     /// Base Controller that SOULD extended from all APIs.
     /// </summary>
+    [ApiVersion( "1.0" )]
     [Produces("application/json")]
     [Route("api/v1/[controller]")]
     [ValidateModel]

@@ -44,6 +44,8 @@
   <ItemGroup>
     <!-- Full AspNetCore framework. intruduced in the version 2.0.0 -->
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+    <!-- Version Your Service with this package -->
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="2.0.0" />
     <!-- Swager Swashbuckle -->
     <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0" />
     <!-- Auto Mapper -->
