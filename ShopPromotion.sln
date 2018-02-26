@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopPromotion.API", "src\ShopPromotion.API\ShopPromotion.API.csproj", "{F5390DEE-6580-4041-BEA7-021FBAA1974E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopPromotion.Domain", "src\ShopPromotion.Domain\ShopPromotion.Domain.csproj", "{B6355836-786A-40FC-B003-82B09757F491}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopPromotion.Helper", "src\ShopPromotion.Helper\ShopPromotion.Helper.csproj", "{99C45E13-385E-49DE-B9D1-684E3C382811}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{990805AF-B0F5-468E-B4A4-46C5C08B8F57}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F5390DEE-6580-4041-BEA7-021FBAA1974E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5390DEE-6580-4041-BEA7-021FBAA1974E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5390DEE-6580-4041-BEA7-021FBAA1974E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5390DEE-6580-4041-BEA7-021FBAA1974E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6355836-786A-40FC-B003-82B09757F491}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6355836-786A-40FC-B003-82B09757F491}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6355836-786A-40FC-B003-82B09757F491}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6355836-786A-40FC-B003-82B09757F491}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99C45E13-385E-49DE-B9D1-684E3C382811}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99C45E13-385E-49DE-B9D1-684E3C382811}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99C45E13-385E-49DE-B9D1-684E3C382811}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99C45E13-385E-49DE-B9D1-684E3C382811}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F5390DEE-6580-4041-BEA7-021FBAA1974E} = {990805AF-B0F5-468E-B4A4-46C5C08B8F57}
+		{B6355836-786A-40FC-B003-82B09757F491} = {990805AF-B0F5-468E-B4A4-46C5C08B8F57}
+		{99C45E13-385E-49DE-B9D1-684E3C382811} = {990805AF-B0F5-468E-B4A4-46C5C08B8F57}
+	EndGlobalSection
+EndGlobal

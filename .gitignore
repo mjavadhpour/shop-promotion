@@ -1,0 +1,8 @@
+# Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
+
+# Intellij files
+.idea/
+
+# ASP.NET Core build files
+**/bin
+**/obj

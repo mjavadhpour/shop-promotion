@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <!-- ******************************* -->
+  <!--  Framework Configs And Version  -->
+  <!-- ******************************* -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+  <!-- ******************************* -->
+  <!--    Common Root-Level Options    -->
+  <!-- ******************************* -->
+  <PropertyGroup>
+    <Authors>Mohammad Javad Hosein Pour</Authors>
+    <Company>SelfOwned</Company>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <Description>ShopPromotion Domain is core for Application layer in ShopPromotion project.</Description>
+    <Copyright>2018 Mohammad Javad HoseinPour mjavadhpour@gmail.com. All right reserved.</Copyright>
+  </PropertyGroup>
+  <!-- ******************************* -->
+  <!--       Internal Dependency       -->
+  <!-- ******************************* -->
+  <ItemGroup>
+    <!-- AspNetCore Mvc framework. intruduced in the version 2.0.0 -->
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.0" />
+    <!-- User Identity -->
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.0.0" />
+    <!-- SqlServer -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.0" />
+    <!-- Auto mapper -->
+    <PackageReference Include="AutoMapper" Version="6.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="2.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Exceptions" />
+    <Folder Include="ModelLayer\Form" />
+  </ItemGroup>
+</Project>
