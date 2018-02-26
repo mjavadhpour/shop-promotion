@@ -3,9 +3,11 @@
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace ShopPromotion.API.Controllers
 {
+    using Domain.ModelLayer.Response.Pagination;
     using Helper.Infrastructure.Filters;
 
     /// <summary>
@@ -18,10 +20,16 @@ namespace ShopPromotion.API.Controllers
     public class BaseController : Controller
     {
         /// <summary>
+        /// Pagination settings.
+        /// </summary>
+        protected readonly IPagingOptions DefaultPagingOptions;
+
+        /// <summary>
         /// Cunstructor.
         /// </summary>
-        protected BaseController()
+        protected BaseController(IOptions<PagingOptions> defaultPagingOptionsAccessor)
         {
+            DefaultPagingOptions = defaultPagingOptionsAccessor.Value;
         }
     }
 }

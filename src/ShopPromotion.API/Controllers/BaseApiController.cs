@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace ShopPromotion.API.Controllers
 {
@@ -40,10 +41,12 @@ namespace ShopPromotion.API.Controllers
         /// <summary>
         /// Base controller constructor.
         /// </summary>
+        /// <param name="defaultPagingOptionsAccessor"></param>
         /// <param name="entityService"></param>
         /// <param name="userManager"></param>
-        protected BaseApiController(IBaseService<TForm, TMinimumTResource, T> entityService,
-            UserManager<ApplicationUser> userManager)
+        protected BaseApiController(IOptions<PagingOptions> defaultPagingOptionsAccessor,
+            IBaseService<TForm, TMinimumTResource, T> entityService, UserManager<ApplicationUser> userManager) : base(
+            defaultPagingOptionsAccessor)
         {
             EntityService = entityService;
             _userManager = userManager;

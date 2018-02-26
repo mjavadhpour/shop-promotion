@@ -28,7 +28,6 @@
   <!--             Folders             -->
   <!-- ******************************* -->
   <ItemGroup>
-    <Folder Include="Infrastructure\Model" />
     <Folder Include="wwwroot" />
   </ItemGroup>
   <!-- ******************************* -->
