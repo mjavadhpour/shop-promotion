@@ -6,7 +6,7 @@ namespace ShopPromotion.Domain.EntityLayer
 {
     using Microsoft.AspNetCore.Identity;
 
-    public class ApplicationUser : IdentityUser
+    public abstract class ApplicationUser : IdentityUser
     {
     }
 }

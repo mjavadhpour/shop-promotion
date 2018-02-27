@@ -54,7 +54,7 @@ namespace ShopPromotion.API.Controllers
         /// <summary>
         ///A JWT access token.
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="loginFormModel"></param>
         /// <returns></returns>
         /// <response code="200">OK</response>
         /// <response code="400">Bad Request</response>
@@ -63,13 +63,13 @@ namespace ShopPromotion.API.Controllers
         [ValidateModel]
         [ProducesResponseType(typeof(TokenViewModel), 200)]
         [ProducesResponseType(typeof(ApiError), 400)]
-        public async Task<IActionResult> Token([FromBody] LoginFormModel model)
+        public async Task<IActionResult> Token([FromBody] LoginFormModel loginFormModel)
         {
-            var user = await _userManager.FindByEmailAsync(model.Email);
+            var user = await _userManager.FindByEmailAsync(loginFormModel.Email);
 
             if (user == null) return BadRequest(new ApiError("Could not create token"));
 
-            var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
+            var result = await _signInManager.CheckPasswordSignInAsync(user, loginFormModel.Password, false);
 
             if (!result.Succeeded) return BadRequest(new ApiError("Could not create token"));
 
