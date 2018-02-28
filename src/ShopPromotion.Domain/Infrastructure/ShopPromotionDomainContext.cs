@@ -25,30 +25,30 @@ namespace ShopPromotion.Domain.Infrastructure
         private string MySqlConnectionString { get; }
 
         public DbSet<AdminUser> AdminUsers { get; set; }
-        
-        public DbSet<ShopKeeperUser> ShopKeeperUsers{ get; set; }
-        
-        public DbSet<AppUser> AppUsers { get; set; }
-        
-        public DbSet<Shop> Shops { get; set; }
-        
-        public DbSet<ShopReview> ShopReviews { get; set; }
-        
-        public DbSet<SpecialOffer> SpecialOffers { get; set; }
-        
-        public DbSet<ShopStatus> ShopStatuses { get; set; }
 
-        public DbSet<ShopImage> ShopImages { get; set; }
-        
-        public DbSet<ShopPromotion> ShopPromotions { get; set; }
-        
+        public DbSet<AppUser> AppUsers { get; set; }
+
+        public DbSet<Attribute> Attributes { get; set; }
+
         public DbSet<PromotionBarcode> PromotionBarcodes { get; set; }
 
-        public DbSet<ShopGeolocation> ShopGeolocations { get; set; }
-        
+        public DbSet<Shop> Shops { get; set; }
+
         public DbSet<ShopAttribute> ShopAttributes { get; set; }
-        
-        public DbSet<Attribute> Attributes { get; set; }
+
+        public DbSet<ShopGeolocation> ShopGeolocations { get; set; }
+
+        public DbSet<ShopImage> ShopImages { get; set; }
+
+        public DbSet<ShopKeeperUser> ShopKeeperUsers{ get; set; }
+
+        public DbSet<ShopPromotion> ShopPromotions { get; set; }
+
+        public DbSet<ShopReview> ShopReviews { get; set; }
+
+        public DbSet<ShopStatus> ShopStatuses { get; set; }
+
+        public DbSet<SpecialOffer> SpecialOffers { get; set; }
         
         /// <summary>
         /// Top of all confiuration for context. all things can be override here.
