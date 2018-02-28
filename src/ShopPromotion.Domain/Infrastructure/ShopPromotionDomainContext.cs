@@ -12,26 +12,51 @@ namespace ShopPromotion.Domain.Infrastructure
     using AppSettings;
 
     /// <inheritdoc />
-    public class ShopPromotionDomainContext : IdentityDbContext<ApplicationUser>
+    public class ShopPromotionDomainContext : IdentityDbContext<BaseIdentityUser>
     {
         public ShopPromotionDomainContext(DbContextOptions<ShopPromotionDomainContext> options,
             IOptions<ShopPromotionDomainAppSettings> appSettings) : base(options)
         {
-            ConnectionString = appSettings.Value.ConnectionStrings.DefaultConnection;
+            DefaultConnectionString = appSettings.Value.ConnectionStrings.DefaultConnection;
+            MySqlConnectionString = appSettings.Value.ConnectionStrings.MySqlConnection;
         }
 
-        public string ConnectionString { get; }
+        private string DefaultConnectionString { get; }
+        private string MySqlConnectionString { get; }
 
-        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<AdminUser> AdminUsers { get; set; }
+        
+        public DbSet<ShopKeeperUser> ShopKeeperUsers{ get; set; }
+        
+        public DbSet<AppUser> AppUsers { get; set; }
+        
+        public DbSet<Shop> Shops { get; set; }
+        
+        public DbSet<ShopReview> ShopReviews { get; set; }
+        
+        public DbSet<SpecialOffer> SpecialOffers { get; set; }
+        
+        public DbSet<ShopStatus> ShopStatuses { get; set; }
 
+        public DbSet<ShopImage> ShopImages { get; set; }
+        
+        public DbSet<ShopPromotion> ShopPromotions { get; set; }
+        
+        public DbSet<PromotionBarcode> PromotionBarcodes { get; set; }
 
+        public DbSet<ShopGeolocation> ShopGeolocations { get; set; }
+        
+        public DbSet<ShopAttribute> ShopAttributes { get; set; }
+        
+        public DbSet<Attribute> Attributes { get; set; }
+        
         /// <summary>
         /// Top of all confiuration for context. all things can be override here.
         /// </summary>
         /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(ConnectionString);
+            optionsBuilder.UseMySql(MySqlConnectionString);
 
             base.OnConfiguring(optionsBuilder);
         }

@@ -4,13 +4,12 @@
 
 namespace ShopPromotion.Domain.EntityLayer
 {
-    using Microsoft.AspNetCore.Identity;
-
     /// <summary>
-    /// The ASP.NET Base identity user class. The drived class from this class was keeped in one table but with
-    /// dofference discriminator.
+    /// The SpecialOffer is a Shop that was defined by AdminUser and will offer to AppUsers as a Special Offer. 
     /// </summary>
-    public abstract class BaseIdentityUser : IdentityUser
+    public class SpecialOffer : BaseEntity
     {
+        public int ShopId { get; set; }
+        public Shop Shop { get; set; }
     }
 }

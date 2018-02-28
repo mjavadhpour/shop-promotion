@@ -4,13 +4,12 @@
 
 namespace ShopPromotion.Domain.EntityLayer
 {
-    using Microsoft.AspNetCore.Identity;
-
     /// <summary>
-    /// The ASP.NET Base identity user class. The drived class from this class was keeped in one table but with
-    /// dofference discriminator.
+    /// The images of shop.
     /// </summary>
-    public abstract class BaseIdentityUser : IdentityUser
+    public class ShopImage : BaseEntity
     {
+        public int ShopId { get; set; }
+        public Shop Shop { get; set; }
     }
 }

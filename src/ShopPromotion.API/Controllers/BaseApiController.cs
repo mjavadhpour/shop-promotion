@@ -31,7 +31,7 @@ namespace ShopPromotion.API.Controllers
         where TMinimumTResource : MinimumBaseEntity
         where TGetAllParameters : IEntityTypeParameters
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<BaseIdentityUser> _userManager;
 
         /// <summary>
         /// The Base entity service. SHOULD pass by child with real service that was related to API.
@@ -45,7 +45,7 @@ namespace ShopPromotion.API.Controllers
         /// <param name="entityService"></param>
         /// <param name="userManager"></param>
         protected BaseApiController(IOptions<PagingOptions> defaultPagingOptionsAccessor,
-            IBaseService<TForm, TMinimumTResource, T> entityService, UserManager<ApplicationUser> userManager) : base(
+            IBaseService<TForm, TMinimumTResource, T> entityService, UserManager<BaseIdentityUser> userManager) : base(
             defaultPagingOptionsAccessor)
         {
             EntityService = entityService;

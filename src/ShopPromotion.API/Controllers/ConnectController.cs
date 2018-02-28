@@ -36,17 +36,17 @@ namespace ShopPromotion.API.Controllers
     [Route("api/[controller]")]
     public class ConnectController : BaseController
     {
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly SignInManager<BaseIdentityUser> _signInManager;
         private readonly TokenOptions _tokenOptions;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<BaseIdentityUser> _userManager;
 
         /// <inheritdoc />
         public ConnectController(IOptions<PagingOptions> defaultPagingOptionsAccessor,
-            UserManager<ApplicationUser> jUserManager, SignInManager<ApplicationUser> signInManager,
+            UserManager<BaseIdentityUser> userManager, SignInManager<BaseIdentityUser> signInManager,
             IOptions<ShopPromotionApiAppSettings> appSettings)
             : base(defaultPagingOptionsAccessor)
         {
-            _userManager = jUserManager;
+            _userManager = userManager;
             _signInManager = signInManager;
             _tokenOptions = appSettings.Value.TokenOptions;
         }

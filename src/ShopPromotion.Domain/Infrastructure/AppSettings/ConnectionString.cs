@@ -6,6 +6,11 @@ namespace ShopPromotion.Domain.Infrastructure.AppSettings
 {
     public class ConnectionString
     {
+        /// <summary>
+        /// SQLServer connection string is default connection of this system.
+        /// </summary>
         public string DefaultConnection { get; set; }
+
+        public string MySqlConnection { get; set; }
     }
 }

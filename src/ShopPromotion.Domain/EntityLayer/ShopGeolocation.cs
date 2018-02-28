@@ -4,13 +4,12 @@
 
 namespace ShopPromotion.Domain.EntityLayer
 {
-    using Microsoft.AspNetCore.Identity;
-
     /// <summary>
-    /// The ASP.NET Base identity user class. The drived class from this class was keeped in one table but with
-    /// dofference discriminator.
+    /// The Geolocation of a Shop. 
     /// </summary>
-    public abstract class BaseIdentityUser : IdentityUser
+    public class ShopGeolocation : BaseEntity
     {
+        public int ShopId { get; set; }
+        public Shop Shop { get; set; }
     }
 }

@@ -4,13 +4,11 @@
 
 namespace ShopPromotion.Domain.EntityLayer
 {
-    using Microsoft.AspNetCore.Identity;
-
     /// <summary>
-    /// The ASP.NET Base identity user class. The drived class from this class was keeped in one table but with
-    /// dofference discriminator.
+    /// The administrator of application who access to anything and can handle most of functionality.
     /// </summary>
-    public abstract class BaseIdentityUser : IdentityUser
+    public class AdminUser : BaseIdentityUser
     {
+        
     }
 }

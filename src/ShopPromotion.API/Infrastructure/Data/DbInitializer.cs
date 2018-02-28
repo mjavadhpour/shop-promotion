@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
+using ShopPromotion.API.ServiceConfiguration;
 
 namespace ShopPromotion.API.Infrastructure.Data
 {
@@ -20,7 +21,7 @@ namespace ShopPromotion.API.Infrastructure.Data
     {
         private readonly AdministratorOptions _administratorOptions;
         private readonly ShopPromotionDomainContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<BaseIdentityUser> _userManager;
 
         /// <summary>
         /// DbInitializer constructor.
@@ -28,7 +29,7 @@ namespace ShopPromotion.API.Infrastructure.Data
         /// <param name="context"></param>
         /// <param name="userManager"></param>
         /// <param name="appSettings"></param>
-        public DbInitializer(ShopPromotionDomainContext context, UserManager<ApplicationUser> userManager,
+        public DbInitializer(ShopPromotionDomainContext context, UserManager<BaseIdentityUser> userManager,
             IOptions<ShopPromotionApiAppSettings> appSettings)
         {
             _context = context;
@@ -43,9 +44,10 @@ namespace ShopPromotion.API.Infrastructure.Data
             await _context.Database.EnsureCreatedAsync();
 
             // If there is already an Administrator claim, delete old user
-            if (_context.UserClaims.Any(x => x.ClaimValue == "Administrator"))
+            if (_context.UserClaims.Any(x => x.ClaimValue == ConfigurePolicyService.AdminUserClaimVelue))
             {
-                var adminClaim = _context.UserClaims.FirstOrDefault(x => x.ClaimValue == "Administrator");
+                var adminClaim =
+                    _context.UserClaims.FirstOrDefault(x => x.ClaimValue == ConfigurePolicyService.AdminUserClaimVelue);
                 if (adminClaim != null)
                 {
                     var administrator = await _userManager.FindByIdAsync(adminClaim.UserId);
@@ -57,9 +59,9 @@ namespace ShopPromotion.API.Infrastructure.Data
             var userName = _administratorOptions.UserName;
             var email = _administratorOptions.Email;
             var password = _administratorOptions.Password;
-            await _userManager.CreateAsync(new ApplicationUser {UserName = userName, Email = email, EmailConfirmed = true},
-                password);
-            var claim = new Claim("Role", "Administrator");
+            await _userManager.CreateAsync(
+                new AdminUser {UserName = userName, Email = email, EmailConfirmed = true}, password);
+            var claim = new Claim(ConfigurePolicyService.ClaimType, ConfigurePolicyService.AdminUserClaimVelue);
             await _userManager.AddClaimAsync(await _userManager.FindByNameAsync(email), claim);
         }
     }

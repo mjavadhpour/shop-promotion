@@ -4,13 +4,13 @@
 
 namespace ShopPromotion.Domain.EntityLayer
 {
-    using Microsoft.AspNetCore.Identity;
-
     /// <summary>
-    /// The ASP.NET Base identity user class. The drived class from this class was keeped in one table but with
-    /// dofference discriminator.
+    /// The Status of a Shop. This status will promote with Admin and can be: Approved, Disapproved, Need Change.
+    /// <see cref="ShopStatusOption"/>
     /// </summary>
-    public abstract class BaseIdentityUser : IdentityUser
-    {
+    public class ShopStatus : BaseEntity
+    {   
+        public int ShopId { get; set; }
+        public Shop Shop { get; set; }
     }
 }

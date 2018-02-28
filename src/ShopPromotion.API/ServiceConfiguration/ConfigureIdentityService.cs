@@ -27,7 +27,7 @@ namespace ShopPromotion.API.ServiceConfiguration
         /// <param name="services"></param>
         public static void Configure(IServiceCollection services)
         {
-            services.AddIdentity<ApplicationUser, IdentityRole>(option =>
+            services.AddIdentity<BaseIdentityUser, IdentityRole>(option =>
                 {
                     option.Password.RequireDigit = false;
                     option.Password.RequiredLength = 6;
