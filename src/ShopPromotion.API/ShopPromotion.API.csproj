@@ -51,6 +51,8 @@
     <!-- Auto Mapper -->
     <PackageReference Include="AutoMapper" Version="6.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="2.0.1" />
+    <!-- SMS Panel -->
+    <PackageReference Include="SmsIrRestful" Version="1.1.0" />
   </ItemGroup>
   <!-- ******************************* -->
   <!--      Dotnet Cli dependency      -->

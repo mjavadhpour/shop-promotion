@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using ShopPromotion.API.Extentions;
 
 namespace ShopPromotion.API.Controllers
 {
@@ -31,6 +30,7 @@ namespace ShopPromotion.API.Controllers
     {
         private readonly UserManager<BaseIdentityUser> _userManager;
         private readonly IShopPromotionUserManager _shopPromotionUserManager;
+        private readonly ISmsSender _smsSender;
 
         /// <summary>
         /// Constructor.
@@ -38,14 +38,17 @@ namespace ShopPromotion.API.Controllers
         /// <param name="defaultPagingOptionsAccessor"></param>
         /// <param name="userManager"></param>
         /// <param name="shopPromotionUserManager"></param>
+        /// <param name="smsSender"></param>
         public IdentityController(
             IOptions<PagingOptions> defaultPagingOptionsAccessor,
             UserManager<BaseIdentityUser> userManager,
-            IShopPromotionUserManager shopPromotionUserManager
+            IShopPromotionUserManager shopPromotionUserManager,
+            ISmsSender smsSender
             ) : base(defaultPagingOptionsAccessor)
         {
             _userManager = userManager;
             _shopPromotionUserManager = shopPromotionUserManager;
+            _smsSender = smsSender;
         }
 
         /// <summary>
@@ -62,7 +65,7 @@ namespace ShopPromotion.API.Controllers
         /// <response code="204">No Content, The user was existed in the database</response>
         /// <response code="400">Bad Request</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpPost]
+        [HttpPost("Register")]
         [AllowAnonymous]
         [ProducesResponseType(typeof(RegisterViewModel), 201)]
         [ProducesResponseType(typeof(ApiError), 400)]
@@ -73,12 +76,19 @@ namespace ShopPromotion.API.Controllers
             {
                 // Create user
                 user = await _shopPromotionUserManager.CreateByPhoneNumberAsync(formModel.PhoneNumber);
+                // Generate new verification code for user
                 await _shopPromotionUserManager.GenerateVerificationCodeAsync(user);
+                // Send SMS for verification code
+                await _smsSender.SendSmsAsync(user.PhoneNumber, user.VerificationCode);
             }
             catch (DbUpdateException ex)
             { // The user exists and duplicate ky exception was thrown. then we just publish and event
+                // Get old user.
                 user = await _shopPromotionUserManager.FindByPhoneAsync(formModel.PhoneNumber);
+                // Generate new verification code for user
                 await _shopPromotionUserManager.GenerateVerificationCodeAsync(user);
+                // Send SMS for verification code
+                await _smsSender.SendSmsAsync(user.PhoneNumber, user.VerificationCode);
                 return NoContent();
             }
 

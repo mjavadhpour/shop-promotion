@@ -4,7 +4,6 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 
 namespace ShopPromotion.API.Services
 {
@@ -54,6 +53,6 @@ namespace ShopPromotion.API.Services
         /// The <see cref="T:System.Threading.Tasks.Task" /> that represents the asynchronous operation, containing the <see cref="T:Microsoft.AspNetCore.Identity.IdentityResult" />
         /// of the operation.
         /// </returns>
-        Task<IdentityResult> GenerateVerificationCodeAsync(BaseIdentityUser user);
+        Task<int> GenerateVerificationCodeAsync(BaseIdentityUser user);
     }
 }

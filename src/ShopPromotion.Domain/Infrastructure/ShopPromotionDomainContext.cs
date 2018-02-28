@@ -2,11 +2,9 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
-using System;
-using System.Linq.Expressions;
+using System.Linq;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.Extensions.Options;
 
 namespace ShopPromotion.Domain.Infrastructure
@@ -84,6 +82,22 @@ namespace ShopPromotion.Domain.Infrastructure
             });
             // Execute system onModelCreating to handle other library database.
             base.OnModelCreating(modelBuilder);
+        }
+
+        /// <summary>
+        /// Clear tracked entities in entity framework <a href="https://stackoverflow.com/questions/27423059/how-do-i-clear-tracked-entities-in-entity-framework"/>
+        /// </summary>
+        public void DetachAllEntities()
+        {
+            var changedEntriesCopy = ChangeTracker.Entries()
+                .Where(e => e.State == EntityState.Added ||
+                            e.State == EntityState.Modified ||
+                            e.State == EntityState.Deleted)
+                .ToList();
+            foreach (var entity in changedEntriesCopy)
+            {
+                Entry(entity.Entity).State = EntityState.Detached;
+            }
         }
     }
 }

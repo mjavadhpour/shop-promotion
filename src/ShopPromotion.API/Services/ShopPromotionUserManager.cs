@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using ShopPromotion.API.Exceptions;
 using ShopPromotion.API.Extentions;
 
@@ -44,7 +45,9 @@ namespace ShopPromotion.API.Services
             return 
                 await 
                     Task.FromResult(
-                        _context.BaseIdentityUsers.FirstOrDefault(u => u.PhoneNumber == phoneNumber));
+                        _context.BaseIdentityUsers
+                            .AsNoTracking()
+                            .FirstOrDefault(u => u.PhoneNumber == phoneNumber));
         }
 
         /// <inheritdoc />
@@ -57,7 +60,9 @@ namespace ShopPromotion.API.Services
             return
                 await
                     Task.FromResult(
-                        _context.BaseIdentityUsers.FirstOrDefault(u => u.VerificationCode == verificationCode));
+                        _context.BaseIdentityUsers
+                            .AsNoTracking()
+                            .FirstOrDefault(u => u.VerificationCode == verificationCode));
         }
 
         /// <inheritdoc />
@@ -80,10 +85,16 @@ namespace ShopPromotion.API.Services
         }
 
         /// <inheritdoc />
-        public async Task<IdentityResult> GenerateVerificationCodeAsync(BaseIdentityUser user)
+        /// <remarks>
+        /// Be careful! by running this method the context will be refereshed and lost all registered data.
+        /// </remarks>
+        public async Task<int> GenerateVerificationCodeAsync(BaseIdentityUser user)
         {
+            // Clear tracked entities in entity framework
+            _context.DetachAllEntities();
             user.VerificationCode = RandomHelper.GenerateNewUniqueRandom();
-            return await _userManager.UpdateAsync(user);
+            _context.BaseIdentityUsers.Update(user);
+            return await _context.SaveChangesAsync();
         }
     }
 }

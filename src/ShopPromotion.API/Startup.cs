@@ -69,9 +69,13 @@ namespace ShopPromotion.API
             // Add Database Initializer
             services.AddSingleton<IDbInitializer, DbInitializer>();
             // TODO: SHOULD move to related configuration
-            services.AddScoped<IShopPromotionUserManager, ShopPromotionUserManager>();
+            services.AddTransient<IShopPromotionUserManager, ShopPromotionUserManager>();
             // TODO: SHOULD move to related configuration file
-            services.AddScoped<TokenProviderService>();
+            services.AddTransient<TokenProviderService>();
+            // TODO: SHOULD move to related configuration file
+            services.AddTransient<SmsIrRestful.Token>();
+            services.AddTransient<SmsIrRestful.MessageSend>();
+            services.AddTransient<ISmsSender, AuthMessageSender>();
             // Swagger
             ConfigureSwaggerService.Configure(services);
             // User identity
