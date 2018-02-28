@@ -2,53 +2,54 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
-using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
+using ShopPromotion.API.Services;
 
 namespace ShopPromotion.API.Controllers
 {
+    // ShopPromotion API
     using Infrastructure.ActionResults;
     using Infrastructure.Models;
     using Infrastructure.Models.AccountFormModels;
-    using Infrastructure.AppSettings;
-    using TokenOptions = Infrastructure.AppSettings.TokenOptions;
-    
+    // ShopPromotion Domain
     using Domain.EntityLayer;
     using Domain.ModelLayer.Response.Pagination;
-    
+    // ShopPromotion Helper
     using Helper.Infrastructure.ActionResults;
     using Helper.Infrastructure.Filters;
 
     /// <summary>
-    ///Connect controller.
+    /// Connect controller.
     /// </summary>
     [AllowAnonymous]
     [Route("api/[controller]")]
     public class ConnectController : BaseController
     {
         private readonly SignInManager<BaseIdentityUser> _signInManager;
-        private readonly TokenOptions _tokenOptions;
         private readonly UserManager<BaseIdentityUser> _userManager;
+        private readonly IShopPromotionUserManager _shopPromotionUserManager;
+        private readonly TokenProviderService _tokenProviderService;
 
         /// <inheritdoc />
-        public ConnectController(IOptions<PagingOptions> defaultPagingOptionsAccessor,
-            UserManager<BaseIdentityUser> userManager, SignInManager<BaseIdentityUser> signInManager,
-            IOptions<ShopPromotionApiAppSettings> appSettings)
+        public ConnectController(
+            IOptions<PagingOptions> defaultPagingOptionsAccessor,
+            UserManager<BaseIdentityUser> userManager, 
+            IShopPromotionUserManager shopPromotionUserManager,
+            SignInManager<BaseIdentityUser> signInManager,
+            TokenProviderService tokenProviderService)
             : base(defaultPagingOptionsAccessor)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _tokenOptions = appSettings.Value.TokenOptions;
+            _shopPromotionUserManager = shopPromotionUserManager;
+            _tokenProviderService = tokenProviderService;
         }
 
         /// <summary>
@@ -63,35 +64,21 @@ namespace ShopPromotion.API.Controllers
         [ValidateModel]
         [ProducesResponseType(typeof(TokenViewModel), 200)]
         [ProducesResponseType(typeof(ApiError), 400)]
+        // TODO: Add more situation handlling.
         public async Task<IActionResult> Token([FromBody] LoginFormModel loginFormModel)
         {
-            var user = await _userManager.FindByEmailAsync(loginFormModel.Email);
+            var user = await _shopPromotionUserManager.FindByCodeAsync(loginFormModel.Code);
 
             if (user == null) return BadRequest(new ApiError("Could not create token"));
 
-            var result = await _signInManager.CheckPasswordSignInAsync(user, loginFormModel.Password, false);
-
-            if (!result.Succeeded) return BadRequest(new ApiError("Could not create token"));
-
             var userClaims = await _userManager.GetClaimsAsync(user);
 
-            userClaims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Email));
-            userClaims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenOptions.Key));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var token = new JwtSecurityToken(
-                _tokenOptions.Issuer,
-                _tokenOptions.Audience,
-                userClaims,
-                expires: DateTime.Now.AddMinutes(_tokenOptions.ExpiresTimeAsMinutes),
-                signingCredentials: creds);
+            var token = _tokenProviderService.CreateToken(userClaims);
 
             return Ok(new TokenViewModel
             {
-                Token = new JwtSecurityTokenHandler().WriteToken(token),
-                Expires = token.ValidTo,
+                AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
+                ExpiresIn = token.ValidTo,
                 Claim = Mapper.Map<IList<MinimumClaimResource>>(userClaims)
             });
         }

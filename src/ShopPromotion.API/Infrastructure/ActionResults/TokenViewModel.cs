@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace ShopPromotion.API.Infrastructure.ActionResults
 {
@@ -17,12 +18,17 @@ namespace ShopPromotion.API.Infrastructure.ActionResults
         /// <summary>
         /// Token.
         /// </summary>
-        public string Token { get; set; }
+        public string AccessToken { get; set; }
 
         /// <summary>
         /// Velid to.
         /// </summary>
-        public DateTime Expires { get; set; }
+        public DateTime ExpiresIn { get; set; }
+
+        /// <summary>
+        /// Bearer token type by default.
+        /// </summary>
+        public string TokenType => JwtBearerDefaults.AuthenticationScheme;
 
         /// <summary>
         /// User claim.

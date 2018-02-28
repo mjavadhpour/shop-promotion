@@ -12,23 +12,9 @@ namespace ShopPromotion.API.Infrastructure.Models.AccountFormModels
     public class LoginFormModel
     {
         /// <summary>
-        /// Email
+        /// The verification code that was send to mobile phone with SMS.
         /// </summary>
         [Required]
-        [EmailAddress]
-        public string Email { get; set; }
-
-        /// <summary>
-        /// Password
-        /// </summary>
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-
-        /// <summary>
-        /// Remember me?
-        /// </summary>
-        [Display(Name = "Remember me?")]
-        public bool RememberMe { get; set; }
+        public string Code { get; set; }
     }
 }

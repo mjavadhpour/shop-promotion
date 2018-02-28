@@ -60,7 +60,8 @@ namespace ShopPromotion.API.Infrastructure.Data
             var email = _administratorOptions.Email;
             var password = _administratorOptions.Password;
             await _userManager.CreateAsync(
-                new AdminUser {UserName = userName, Email = email, EmailConfirmed = true}, password);
+                new AdminUser {UserName = userName, Email = email, EmailConfirmed = true, PhoneNumber = "00000000000"},
+                password);
             var claim = new Claim(ConfigurePolicyService.ClaimType, ConfigurePolicyService.AdminUserClaimVelue);
             await _userManager.AddClaimAsync(await _userManager.FindByNameAsync(email), claim);
         }

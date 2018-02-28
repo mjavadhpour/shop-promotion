@@ -14,9 +14,9 @@ namespace ShopPromotion.API.Infrastructure.ActionResults
     public class RegisterViewModel
     {
         /// <summary>
-        /// The email of new user
+        /// The phone number of new user
         /// </summary>
-        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
 
         /// <summary>
         /// The default claim of new user

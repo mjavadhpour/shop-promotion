@@ -20,7 +20,7 @@ namespace ShopPromotion.Domain.ModelLayer.Response.Pagination
 #pragma warning restore CA1000
 
         /// <summary>
-        /// Cunstructor.
+        /// Constructor.
         /// </summary>
         /// <param name="defaultPagingOptionsAccessor"></param>
         protected Page(IOptions<PagingOptions> defaultPagingOptionsAccessor)

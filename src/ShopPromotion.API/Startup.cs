@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using ShopPromotion.API.Services;
 
 namespace ShopPromotion.API
 {
@@ -67,6 +68,10 @@ namespace ShopPromotion.API
             services.AddRouting(options => options.LowercaseUrls = true);
             // Add Database Initializer
             services.AddSingleton<IDbInitializer, DbInitializer>();
+            // TODO: SHOULD move to related configuration
+            services.AddScoped<IShopPromotionUserManager, ShopPromotionUserManager>();
+            // TODO: SHOULD move to related configuration file
+            services.AddScoped<TokenProviderService>();
             // Swagger
             ConfigureSwaggerService.Configure(services);
             // User identity

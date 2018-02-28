@@ -29,7 +29,7 @@ namespace ShopPromotion.API.Controllers
         protected readonly IPagingOptions DefaultPagingOptions;
 
         /// <summary>
-        /// Cunstructor.
+        /// Constructor.
         /// </summary>
         protected BaseController(IOptions<PagingOptions> defaultPagingOptionsAccessor)
         {

@@ -12,5 +12,9 @@ namespace ShopPromotion.Domain.EntityLayer
     /// </summary>
     public abstract class BaseIdentityUser : IdentityUser
     {
+        /// <summary>
+        /// Verification code for SMS login confirmation.
+        /// </summary>
+        public string VerificationCode { get; set; }
     }
 }

@@ -2,10 +2,13 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using System.Security.Claims;
 using AutoMapper;
 
-namespace ShopPromotion.Domain.Infrastructure.AutoMapper
+namespace ShopPromotion.API.Infrastructure.AutoMapper
 {
+    using Models;
+
     /// <summary>
     /// Default auto mapping configuration and define supported mapping in project.
     /// </summary>
@@ -16,7 +19,8 @@ namespace ShopPromotion.Domain.Infrastructure.AutoMapper
         /// </summary>
         public DefaultAutomapperProfile()
         {
-            
+            // Claim
+            CreateMap<Claim, MinimumClaimResource>();
         }
     }
 }

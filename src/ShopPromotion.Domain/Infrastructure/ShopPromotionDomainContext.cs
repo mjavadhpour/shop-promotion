@@ -2,8 +2,11 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using System;
+using System.Linq.Expressions;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.Extensions.Options;
 
 namespace ShopPromotion.Domain.Infrastructure
@@ -23,6 +26,8 @@ namespace ShopPromotion.Domain.Infrastructure
 
         private string DefaultConnectionString { get; }
         private string MySqlConnectionString { get; }
+
+        public DbSet<BaseIdentityUser> BaseIdentityUsers { get; set; }
 
         public DbSet<AdminUser> AdminUsers { get; set; }
 
@@ -72,7 +77,11 @@ namespace ShopPromotion.Domain.Infrastructure
         /// </remarks>
         /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {   
+        {
+            modelBuilder.Entity<BaseIdentityUser>(b =>
+            {
+                b.HasIndex(u => u.PhoneNumber).HasName("PhoneNumberIndex").IsUnique();
+            });
             // Execute system onModelCreating to handle other library database.
             base.OnModelCreating(modelBuilder);
         }
