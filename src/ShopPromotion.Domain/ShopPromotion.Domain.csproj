@@ -25,13 +25,14 @@
     <!-- User Identity -->
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.0.0" />
     <!-- Entity Framework Core provider for MySql built on top of mysql-net/MySqlConnector -->
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.0.0-rtm-*" />
+    <!-- <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.0.0-rtm-*" /> -->
+    <!-- SqlServer -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.0" />
     <!-- Auto mapper -->
     <PackageReference Include="AutoMapper" Version="6.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="2.0.1" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Exceptions" />
-    <Folder Include="ModelLayer\Form" />
   </ItemGroup>
 </Project>

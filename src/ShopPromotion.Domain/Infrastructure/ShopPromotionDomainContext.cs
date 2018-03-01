@@ -33,8 +33,6 @@ namespace ShopPromotion.Domain.Infrastructure
 
         public DbSet<Attribute> Attributes { get; set; }
 
-        public DbSet<PromotionBarcode> PromotionBarcodes { get; set; }
-
         public DbSet<Shop> Shops { get; set; }
 
         public DbSet<ShopAttribute> ShopAttributes { get; set; }
@@ -47,7 +45,9 @@ namespace ShopPromotion.Domain.Infrastructure
 
         public DbSet<ShopPromotion> ShopPromotions { get; set; }
 
-        public DbSet<ShopReview> ShopReviews { get; set; }
+        public DbSet<ShopPromotionBarcode> PromotionBarcodes { get; set; }
+
+        public DbSet<ShopPromotionReview> ShopReviews { get; set; }
 
         public DbSet<ShopStatus> ShopStatuses { get; set; }
 
@@ -59,7 +59,8 @@ namespace ShopPromotion.Domain.Infrastructure
         /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySql(MySqlConnectionString);
+            // optionsBuilder.UseMySql(MySqlConnectionString);
+            optionsBuilder.UseSqlServer(DefaultConnectionString);
 
             base.OnConfiguring(optionsBuilder);
         }

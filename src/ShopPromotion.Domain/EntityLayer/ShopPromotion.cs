@@ -11,5 +11,7 @@ namespace ShopPromotion.Domain.EntityLayer
     {
         public int ShopId { get; set; }
         public Shop Shop { get; set; }
+
+        public double AverageRating { get; set; }
     }
 }

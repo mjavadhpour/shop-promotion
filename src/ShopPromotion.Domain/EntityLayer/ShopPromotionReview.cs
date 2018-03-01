@@ -5,15 +5,15 @@
 namespace ShopPromotion.Domain.EntityLayer
 {
     /// <summary>
-    /// Shop Review is review of shop with AppUser. He/She can leave a comment or rate the shop.
+    /// Promotion Review is review of promotion by AppUsers or ShopKeepers. He/She can leave a comment or rate the promotion of shop.
     /// </summary>
-    public class ShopReview : BaseEntity
+    public class ShopPromotionReview : BaseEntity
     {
         public string AuthorId { get; set; }
         public AppUser Author { get; set; }
 
-        public int ShopId { get; set; }
-        public Shop Shop { get; set; }
+        public int ShopPromotionId { get; set; }
+        public ShopPromotion ShopPromotion { get; set; }
 
         public string Comment { get; set; }
 

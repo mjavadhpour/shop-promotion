@@ -13,7 +13,5 @@ namespace ShopPromotion.Domain.EntityLayer
     {
         public string OwnerId { get; set; }
         public ShopKeeperUser Owner { get; set; }
-        
-        public double AverageRating { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace ShopPromotion.Domain.EntityLayer
     /// <summary>
     /// Generated barcode for promotion to approve an discount for an Order.
     /// </summary>
-    public class PromotionBarcode : BaseEntity
+    public class ShopPromotionBarcode : BaseEntity
     {
         [NotMapped]
         public override int Id { get; set; }
