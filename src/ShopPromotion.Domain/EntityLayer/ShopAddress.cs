@@ -5,10 +5,11 @@
 namespace ShopPromotion.Domain.EntityLayer
 {
     /// <summary>
-    /// The end user or normal customer who is register to the app and want to use the application.
+    /// The address, phone number, and other address related information of shop.
     /// </summary>
-    public class AppUser : BaseIdentityUser
+    public class ShopAddress : BaseEntity
     {
-        public double TotalPrivilege { get; set; }
+        public int ShopId { get; set; }
+        public Shop Shop { get; set; }
     }
 }

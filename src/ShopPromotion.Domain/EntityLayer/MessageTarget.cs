@@ -5,10 +5,15 @@
 namespace ShopPromotion.Domain.EntityLayer
 {
     /// <summary>
-    /// The end user or normal customer who is register to the app and want to use the application.
+    /// The requested target of specific message.
     /// </summary>
-    public class AppUser : BaseIdentityUser
+    public class MessageTarget : BaseEntity
     {
-        public double TotalPrivilege { get; set; }
+        public int MessageId { get; set; }
+        public Message Message { get; set; }
+
+        public MessageTargetTypeOption TargetType { get; set; }
+
+        public string TargetObjectId { get; set; }
     }
 }

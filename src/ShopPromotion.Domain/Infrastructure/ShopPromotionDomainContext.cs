@@ -31,9 +31,21 @@ namespace ShopPromotion.Domain.Infrastructure
 
         public DbSet<AppUser> AppUsers { get; set; }
 
+        public DbSet<AppUserInbox> AppUserInboxes { get; set; }
+
+        public DbSet<AppUserPrivilege> AppUserPrivileges { get; set; }
+
         public DbSet<Attribute> Attributes { get; set; }
 
+        public DbSet<Message> Messages { get; set; }
+
+        public DbSet<MessageTarget> MessageTargets { get; set; }
+
+        public DbSet<Privilege> Privileges { get; set; }
+
         public DbSet<Shop> Shops { get; set; }
+
+        public DbSet<ShopAddress> ShopAddresses { get; set; }
 
         public DbSet<ShopAttribute> ShopAttributes { get; set; }
 
@@ -42,6 +54,8 @@ namespace ShopPromotion.Domain.Infrastructure
         public DbSet<ShopImage> ShopImages { get; set; }
 
         public DbSet<ShopKeeperUser> ShopKeeperUsers{ get; set; }
+
+        public DbSet<ShopKeeperUserInbox> ShopKeeperUserInboxes { get; set; }
 
         public DbSet<ShopPromotion> ShopPromotions { get; set; }
 

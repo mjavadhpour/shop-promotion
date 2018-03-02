@@ -5,10 +5,13 @@
 namespace ShopPromotion.Domain.EntityLayer
 {
     /// <summary>
-    /// The end user or normal customer who is register to the app and want to use the application.
+    /// The Privileges that was defined in the system. used in promote privilege to AppUser for logic condition.
     /// </summary>
-    public class AppUser : BaseIdentityUser
+    /// <remarks>
+    /// Find is granted privilege or not. Keep information about something like this is a responsibility of this entity.
+    /// </remarks>
+    public class Privilege : BaseEntity
     {
-        public double TotalPrivilege { get; set; }
+        
     }
 }

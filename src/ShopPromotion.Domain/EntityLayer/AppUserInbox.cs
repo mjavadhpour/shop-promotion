@@ -5,10 +5,11 @@
 namespace ShopPromotion.Domain.EntityLayer
 {
     /// <summary>
-    /// The end user or normal customer who is register to the app and want to use the application.
+    /// The messages inbox for app user. this inbox is a copy of the sent message by the admin user.
     /// </summary>
-    public class AppUser : BaseIdentityUser
+    public class AppUserInbox : BaseEntity
     {
-        public double TotalPrivilege { get; set; }
+        public string AppUserId { get; set; }
+        public AppUser AppUser { get; set; }
     }
 }
