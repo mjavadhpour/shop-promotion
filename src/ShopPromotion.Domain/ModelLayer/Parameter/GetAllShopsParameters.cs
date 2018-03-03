@@ -9,7 +9,7 @@ namespace ShopPromotion.Domain.ModelLayer.Parameter
     public class GetAllShopsParameters : IEntityTypeParameters
     {
         /// <summary>
-        ///     Filter human by contract id
+        /// Filter human by contract id
         /// </summary>
         [FromQuery]
         public int? ContractId { get; set; }

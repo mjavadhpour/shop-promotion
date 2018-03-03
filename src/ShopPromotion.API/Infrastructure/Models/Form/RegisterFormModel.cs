@@ -2,10 +2,10 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
-namespace ShopPromotion.API.Infrastructure.Models.AccountFormModels
-{
-    using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
+namespace ShopPromotion.API.Infrastructure.Models.Form
+{
     /// <summary>
     /// Model for registring ShopPromotion user.
     /// </summary>
@@ -15,7 +15,6 @@ namespace ShopPromotion.API.Infrastructure.Models.AccountFormModels
         /// The user phone number.
         /// </summary>
         [Required]
-        [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
     }
 }

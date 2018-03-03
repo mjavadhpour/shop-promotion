@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace ShopPromotion.API.Infrastructure.ActionResults
 {
-    using Models;
+    using Models.Resource;
 
     /// <summary>
     /// View model for token response.

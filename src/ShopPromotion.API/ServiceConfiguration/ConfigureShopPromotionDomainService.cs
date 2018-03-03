@@ -2,9 +2,14 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using Microsoft.Extensions.DependencyInjection;
+
 namespace ShopPromotion.API.ServiceConfiguration
 {
-    using Microsoft.Extensions.DependencyInjection;
+    using Domain.EntityLayer;
+    using Domain.ModelLayer.Form;
+    using Domain.ModelLayer.Resource;
+    using Domain.Services;
 
     /// <summary>
     /// Configure ShopPromotion core services.
@@ -27,6 +32,7 @@ namespace ShopPromotion.API.ServiceConfiguration
         /// <param name="services"></param>
         public static void Configure(IServiceCollection services)
         {
+            services.AddScoped<IBaseService<ShopForm, MinimumShopResource, Shop>, DefaultShopService>();
         }
     }
 }

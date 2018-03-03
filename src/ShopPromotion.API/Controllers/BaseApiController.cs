@@ -13,7 +13,7 @@ using Microsoft.Extensions.Options;
 
 namespace ShopPromotion.API.Controllers
 {
-    using Infrastructure.Models.ApiViewModels;
+    using Infrastructure.Models.Parameter;
     using Domain.EntityLayer;
     using Domain.ModelLayer.Parameter;
     using Domain.ModelLayer.Resource;

@@ -7,7 +7,7 @@ using AutoMapper;
 
 namespace ShopPromotion.API.Infrastructure.AutoMapper
 {
-    using Models;
+    using Models.Resource;
 
     /// <summary>
     /// Default auto mapping configuration and define supported mapping in project.

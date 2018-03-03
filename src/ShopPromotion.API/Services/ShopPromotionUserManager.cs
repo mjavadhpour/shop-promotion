@@ -8,13 +8,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using ShopPromotion.API.Exceptions;
-using ShopPromotion.API.Extentions;
 
 namespace ShopPromotion.API.Services
 {
+    // API
+    using Exceptions;
+    using Extentions;
+    using Infrastructure.Models.Resource;
+    // Domain
     using Domain.EntityLayer;
     using Domain.Infrastructure;
+    using Domain.ModelLayer.Response.Pagination;
 
     /// <inheritdoc />
     public class ShopPromotionUserManager : IShopPromotionUserManager
@@ -95,6 +99,12 @@ namespace ShopPromotion.API.Services
             user.VerificationCode = RandomHelper.GenerateNewUniqueRandom();
             _context.BaseIdentityUsers.Update(user);
             return await _context.SaveChangesAsync();
+        }
+
+        /// <inheritdoc />
+        public Task<Page<MinimumIdentityUserResource>> GetAllUsersAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }

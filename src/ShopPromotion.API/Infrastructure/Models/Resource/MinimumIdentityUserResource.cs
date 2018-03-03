@@ -2,19 +2,21 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
-using System.ComponentModel.DataAnnotations;
-
-namespace ShopPromotion.API.Infrastructure.Models.AccountFormModels
+namespace ShopPromotion.API.Infrastructure.Models.Resource
 {
     /// <summary>
-    /// Login model.
+    /// Identity user response model.
     /// </summary>
-    public class LoginFormModel
+    public class MinimumIdentityUserResource
     {
         /// <summary>
-        /// The verification code that was send to mobile phone with SMS.
+        /// The ID.
         /// </summary>
-        [Required]
-        public string Code { get; set; }
+        public string Id;
+
+        /// <summary>
+        /// The User name.
+        /// </summary>
+        public object UserName;
     }
 }

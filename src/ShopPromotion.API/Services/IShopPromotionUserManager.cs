@@ -7,7 +7,11 @@ using System.Threading.Tasks;
 
 namespace ShopPromotion.API.Services
 {
+    // API
+    using Infrastructure.Models.Resource;
+    // Domain
     using Domain.EntityLayer;
+    using Domain.ModelLayer.Response.Pagination;
 
     /// <summary>
     /// Custom user manager for support functionallity of ShopPromotion login API.
@@ -54,5 +58,11 @@ namespace ShopPromotion.API.Services
         /// of the operation.
         /// </returns>
         Task<int> GenerateVerificationCodeAsync(BaseIdentityUser user);
+
+        /// <summary>
+        /// Get all idnetity users with pagination.
+        /// </summary>
+        /// <returns></returns>
+        Task<Page<MinimumIdentityUserResource>> GetAllUsersAsync();
     }
 }

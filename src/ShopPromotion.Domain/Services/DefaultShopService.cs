@@ -28,7 +28,7 @@ namespace ShopPromotion.Domain.Services
         }
 
         /// <inheritdoc>
-        ///     <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
+        /// <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
         /// </inheritdoc>
         protected override async Task<Shop> GetElementOfTModelSequenceAsync(int id, CancellationToken ct)
         {
@@ -38,7 +38,7 @@ namespace ShopPromotion.Domain.Services
         }
 
         /// <inheritdoc>
-        ///     <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
+        /// <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
         /// </inheritdoc>
         protected override Shop MappingFromModelToTModelDestination(ShopForm form, CancellationToken ct)
         {
@@ -49,7 +49,7 @@ namespace ShopPromotion.Domain.Services
         }
 
         /// <inheritdoc>
-        ///     <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
+        /// <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
         /// </inheritdoc>
         public override async Task<IPage<MinimumShopResource>> GetEntitiesAsync(IPagingOptions pagingOptions,
             IEntityTypeParameters entityTypeParameters, CancellationToken ct)
@@ -59,9 +59,8 @@ namespace ShopPromotion.Domain.Services
 
         /// <inheritdoc />
         /// <summary>
-        ///     Check if shop have duplicated size for each product group thrown error.
+        /// Check if shop have duplicated size for each product group thrown error.
         /// </summary>
-        /// <exception cref="T:JaminehAPI.Core.Exceptions.DuplicateProductSizeException"></exception>
         protected override void ValidateAddOrUpdateRequest(ShopForm form)
         {
         }

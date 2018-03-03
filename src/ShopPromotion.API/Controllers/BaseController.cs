@@ -17,7 +17,7 @@ namespace ShopPromotion.API.Controllers
     /// </summary>
     [ApiVersion( "1.0" )]
     [Produces("application/json")]
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/[area]/[controller]")]
     [Authorize(Policy = ConfigurePolicyService.AppUserPolicy)]
     [ValidateModel]
     [ApiExceptionFilter]

@@ -2,21 +2,27 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
-namespace ShopPromotion.API.Infrastructure.Models
+using System.ComponentModel.DataAnnotations;
+
+namespace ShopPromotion.API.Infrastructure.Models.Form
 {
     /// <summary>
-    /// Minimum claim resource.
+    /// Model for add claim to intended user.
     /// </summary>
-    public class MinimumClaimResource
+    public class AddClaimFormModel
     {
         /// <summary>
-        /// Claim type.
+        /// Email.
         /// </summary>
-        public string Type { get; set; }
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
 
         /// <summary>
         /// Claim value.
         /// </summary>
+        [Required]
+        [RegularExpression(@"^AppUserClaim|ShopKeeperClaim*$")]
         public string Value { get; set; }
     }
 }

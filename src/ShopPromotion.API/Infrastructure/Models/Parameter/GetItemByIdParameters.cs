@@ -5,7 +5,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ShopPromotion.API.Infrastructure.Models.ApiViewModels
+namespace ShopPromotion.API.Infrastructure.Models.Parameter
 {
     /// <summary>
     /// Controllers parameter class model.

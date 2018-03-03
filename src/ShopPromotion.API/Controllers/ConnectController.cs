@@ -10,14 +10,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using ShopPromotion.API.Services;
 
 namespace ShopPromotion.API.Controllers
 {
     // ShopPromotion API
+    using Services;
     using Infrastructure.ActionResults;
-    using Infrastructure.Models;
-    using Infrastructure.Models.AccountFormModels;
+    using Infrastructure.Models.Form;
+    using Infrastructure.Models.Resource;
     // ShopPromotion Domain
     using Domain.EntityLayer;
     using Domain.ModelLayer.Response.Pagination;
@@ -32,7 +32,6 @@ namespace ShopPromotion.API.Controllers
     [Route("api/[controller]")]
     public class ConnectController : BaseController
     {
-        private readonly SignInManager<BaseIdentityUser> _signInManager;
         private readonly UserManager<BaseIdentityUser> _userManager;
         private readonly IShopPromotionUserManager _shopPromotionUserManager;
         private readonly TokenProviderService _tokenProviderService;
@@ -42,12 +41,10 @@ namespace ShopPromotion.API.Controllers
             IOptions<PagingOptions> defaultPagingOptionsAccessor,
             UserManager<BaseIdentityUser> userManager, 
             IShopPromotionUserManager shopPromotionUserManager,
-            SignInManager<BaseIdentityUser> signInManager,
             TokenProviderService tokenProviderService)
             : base(defaultPagingOptionsAccessor)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
             _shopPromotionUserManager = shopPromotionUserManager;
             _tokenProviderService = tokenProviderService;
         }

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace ShopPromotion.API.Infrastructure.ActionResults
 {
-    using Models;
+    using Models.Resource;
 
     /// <summary>
     /// View model for token response.
