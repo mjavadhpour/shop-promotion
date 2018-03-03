@@ -4,6 +4,7 @@
 
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -55,10 +56,9 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="500">Internal Server Error</response>
         [HttpGet]
         [ProducesResponseType(typeof(Page<MinimumIdentityUserResource>), 200)]
-        [ProducesResponseType(typeof(ApiError), 404)]
-        public async Task<IActionResult> GetUsersAsync([FromQuery] PagingOptions page)
+        public async Task<IActionResult> GetUsersAsync([FromQuery] PagingOptions pagingOptions)
         {
-            var result = await _shopPromotionUserManager.GetAllUsersAsync();
+            var result = await _shopPromotionUserManager.GetAllUsersAsync(pagingOptions);
             return Ok(result);
         }
 
@@ -76,18 +76,13 @@ namespace ShopPromotion.API.Controllers.Admin
         [ProducesResponseType(typeof(ApiError), 404)]
         public async Task<IActionResult> GetUserAsync(GetItemByUserNameParameters itemByUserNameParameter)
         {
-            var users = await _baseIdentityUserManager.FindByEmailAsync(itemByUserNameParameter.UserName);
-            var minmized = new MinimumIdentityUserResource
-            {
-                Id = users.Id,
-                UserName = users.UserName
-            };
+            var user = await _baseIdentityUserManager.FindByEmailAsync(itemByUserNameParameter.UserName);
             var response =
                 new SingleModelResponse<MinimumIdentityUserResource>() as
                     ISingleModelResponse<MinimumIdentityUserResource>;
-            response.Model = minmized;
-            if (response.Model == null)
-                return NotFound();
+            response.Model = Mapper.Map<MinimumIdentityUserResource>(user);
+            // 404
+            if (response.Model == null) return NotFound();
             return Ok(response.Model);
         }
 
@@ -111,6 +106,7 @@ namespace ShopPromotion.API.Controllers.Admin
             [FromBody] UpdateUserFormModel model)
         {
             var user = await _baseIdentityUserManager.FindByEmailAsync(itemByUserNameParameters.UserName);
+            // 404
             if (user == null) return NotFound();
             await _baseIdentityUserManager.ChangePasswordAsync(user, model.Password, model.NewPassword);
             return NoContent();
@@ -121,11 +117,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// </summary>
         /// <remarks>
         /// #### Supported claim values:
-        /// `GarmentMaker`, `Tailor`
-        /// #### GarmentMaker:
-        /// Known as `Founder` in system and can access to all APIs.
-        /// #### Tailor:
-        /// Known as `Staff` in system and just can access to tailor related APIs e.g size.
+        /// `AppUser`, `ShopKeeperUser`
         /// ----
         /// **Note:** Eeach users can just have one claim.
         /// </remarks>
@@ -140,9 +132,8 @@ namespace ShopPromotion.API.Controllers.Admin
         public async Task<IActionResult> AddEmployeeClaim([FromBody] AddClaimFormModel claimFormModel)
         {
             var user = await _baseIdentityUserManager.FindByEmailAsync(claimFormModel.Email);
-
+            // 404
             if (user == null) return NotFound();
-
             // Remove previous claims.
             var userClaims = await _baseIdentityUserManager.GetClaimsAsync(user);
             await _baseIdentityUserManager.RemoveClaimsAsync(user, userClaims);
@@ -168,6 +159,7 @@ namespace ShopPromotion.API.Controllers.Admin
         public async Task<IActionResult> DeleteUser(GetItemByUserNameParameters itemByUserNameParameters)
         {
             var user = await _baseIdentityUserManager.FindByEmailAsync(itemByUserNameParameters.UserName);
+            // 404
             if (user == null) return NotFound();
             await _baseIdentityUserManager.DeleteAsync(user);
             return NoContent();

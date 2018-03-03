@@ -8,6 +8,8 @@ using AutoMapper;
 namespace ShopPromotion.API.Infrastructure.AutoMapper
 {
     using Models.Resource;
+    // Domain
+    using Domain.EntityLayer;
 
     /// <summary>
     /// Default auto mapping configuration and define supported mapping in project.
@@ -21,6 +23,10 @@ namespace ShopPromotion.API.Infrastructure.AutoMapper
         {
             // Claim
             CreateMap<Claim, MinimumClaimResource>();
+            // Application User
+            CreateMap<BaseIdentityUser, MinimumIdentityUserResource>();
+            CreateMap<MinimumIdentityUserResource, BaseIdentityUser>();
+            CreateMap<MinimumIdentityUserResource, MinimumIdentityUserResource>();
         }
     }
 }

@@ -23,5 +23,10 @@ namespace ShopPromotion.API.Infrastructure.AppSettings
         /// Administrator password.
         /// </summary>
         public string Password { get; set; }
+
+        /// <summary>
+        /// Verification code, using for login.
+        /// </summary>
+        public string VerificationCode { get; set; }
     }
 }

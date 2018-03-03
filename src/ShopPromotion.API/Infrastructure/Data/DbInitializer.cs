@@ -56,14 +56,18 @@ namespace ShopPromotion.API.Infrastructure.Data
             }
 
             // Create the default Admin account and apply the Administrator role
-            var userName = _administratorOptions.UserName;
-            var email = _administratorOptions.Email;
-            var password = _administratorOptions.Password;
             await _userManager.CreateAsync(
-                new AdminUser {UserName = userName, Email = email, EmailConfirmed = true, PhoneNumber = "00000000000"},
-                password);
+                new AdminUser
+                {
+                    UserName         = _administratorOptions.UserName, 
+                    Email            = _administratorOptions.Email, 
+                    VerificationCode = _administratorOptions.VerificationCode, 
+                    PhoneNumber      = "00000000000", 
+                    EmailConfirmed   = true
+                },
+                _administratorOptions.Password);
             var claim = new Claim(ConfigurePolicyService.ClaimType, ConfigurePolicyService.AdminUserClaimVelue);
-            await _userManager.AddClaimAsync(await _userManager.FindByNameAsync(email), claim);
+            await _userManager.AddClaimAsync(await _userManager.FindByNameAsync(_administratorOptions.Email), claim);
         }
     }
 }

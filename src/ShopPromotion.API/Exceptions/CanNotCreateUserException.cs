@@ -7,7 +7,7 @@ namespace ShopPromotion.API.Exceptions
     using System;
 
     /// <summary>
-    /// Thrown when can not create user with <see cref="Microsoft.AspNetCore.Identity.UserManager{T}.CreateAsync"/>
+    /// Thrown when can not create user with <see cref="Microsoft.AspNetCore.Identity.UserManager{T}.CreateAsync(T)"/>
     /// </summary>
     public class CanNotCreateUserException : Exception
     {

@@ -2,6 +2,8 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using System.Collections.Generic;
+
 namespace ShopPromotion.API.Infrastructure.Models.Resource
 {
     /// <summary>
@@ -10,13 +12,13 @@ namespace ShopPromotion.API.Infrastructure.Models.Resource
     public class MinimumIdentityUserResource
     {
         /// <summary>
-        /// The ID.
-        /// </summary>
-        public string Id;
-
-        /// <summary>
         /// The User name.
         /// </summary>
         public object UserName;
+
+        /// <summary>
+        /// The user claim list.
+        /// </summary>
+        public IList<string> ClaimList { get; set; }
     }
 }

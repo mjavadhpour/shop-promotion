@@ -62,7 +62,8 @@ namespace ShopPromotion.API.Services
         /// <summary>
         /// Get all idnetity users with pagination.
         /// </summary>
+        /// <param name="pagingOptions"></param>
         /// <returns></returns>
-        Task<Page<MinimumIdentityUserResource>> GetAllUsersAsync();
+        Task<Page<MinimumIdentityUserResource>> GetAllUsersAsync(PagingOptions pagingOptions);
     }
 }

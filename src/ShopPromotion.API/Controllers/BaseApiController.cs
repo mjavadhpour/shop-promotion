@@ -67,7 +67,8 @@ namespace ShopPromotion.API.Controllers
 
             var collection = Page<TMinimumTResource>.Create(
                 entities.Results.ToArray(),
-                entities.TotalNumberOfRecords);
+                entities.TotalNumberOfRecords,
+                DefaultPagingOptions);
 
             return Ok(collection);
         }
