@@ -37,6 +37,14 @@ namespace ShopPromotion.Domain.Infrastructure
 
         public DbSet<Attribute> Attributes { get; set; }
 
+        public DbSet<Discount> Discounts { get; set; }
+
+        public DbSet<DiscountCoupon> DiscountCoupons { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<OrderItem> OrderItems { get; set; }
+
         public DbSet<Message> Messages { get; set; }
 
         public DbSet<MessageTarget> MessageTargets { get; set; }
