@@ -13,7 +13,7 @@ namespace ShopPromotion.API.ServiceConfiguration
     /// <summary>
     /// Configure identity services.
     /// </summary>
-    public class ConfigureIdnetityService : IConfigureService
+    public class ConfigureIdentityService : IConfigureService
     {
         /// <inheritdoc />
         void IConfigureService.Configure(IServiceCollection services)

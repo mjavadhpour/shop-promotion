@@ -79,7 +79,7 @@ namespace ShopPromotion.API
             // Swagger
             ConfigureSwaggerService.Configure(services);
             // User identity
-            ConfigureIdnetityService.Configure(services);
+            ConfigureIdentityService.Configure(services);
             // User authenticatiuon
             ConfigureJwtAuthService.Configure(services);
             // ShopPromotion core
