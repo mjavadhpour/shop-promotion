@@ -9,7 +9,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
 namespace ShopPromotion.API.Controllers
 {
@@ -20,7 +19,7 @@ namespace ShopPromotion.API.Controllers
     using Infrastructure.Models.Resource;
     // ShopPromotion Domain
     using Domain.EntityLayer;
-    using Domain.ModelLayer.Response.Pagination;
+    using Domain.Services.PaginationHelper;
     // ShopPromotion Helper
     using Helper.Infrastructure.ActionResults;
     using Helper.Infrastructure.Filters;
@@ -38,7 +37,7 @@ namespace ShopPromotion.API.Controllers
 
         /// <inheritdoc />
         public ConnectController(
-            IOptions<PagingOptions> defaultPagingOptionsAccessor,
+            ResolvedPaginationValue defaultPagingOptionsAccessor,
             UserManager<BaseIdentityUser> userManager, 
             IShopPromotionUserManager shopPromotionUserManager,
             TokenProviderService tokenProviderService)

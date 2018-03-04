@@ -17,13 +17,15 @@ namespace ShopPromotion.Domain.Services
     using ModelLayer.Parameter;
     using ModelLayer.Resource;
     using ModelLayer.Response.Pagination;
+    using PaginationHelper;
 
     public class
         DefaultShopService : DefaultEntityService<ShopForm, MinimumShopResource, Shop, ShopPromotionDomainContext>
     {
         public DefaultShopService(IOptions<ShopPromotionDomainAppSettings> appSettings,
-            ShopPromotionDomainContext context) : base(appSettings,
-            context)
+            ShopPromotionDomainContext context,
+            ResolvedPaginationValue resolvedPaginationValue) : base(appSettings,
+            context, resolvedPaginationValue)
         {
         }
 

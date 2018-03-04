@@ -18,6 +18,8 @@ namespace ShopPromotion.Domain.Services
     using Infrastructure.AppSettings;
     using ModelLayer.Parameter;
     using ModelLayer.Response.Pagination;
+    // Helper
+    using PaginationHelper;
 
     public class DefaultEntityService<TForm, TModelResource, TModel, TContext> : BaseEntityService,
         IBaseService<TForm, TModelResource, TModel> where TModel : BaseEntity
@@ -27,6 +29,10 @@ namespace ShopPromotion.Domain.Services
         protected readonly TContext Context;
         protected readonly DbSet<TModel> Entities;
         protected IQueryable<TModel> Query;
+        /// <summary>
+        /// Resolved velue for pagination.
+        /// </summary>
+        private readonly ResolvedPaginationValue _paginationValue;
         /// <summary>
         /// Hold the actions that specify what actually happening in this class.
         /// </summary>
@@ -42,12 +48,15 @@ namespace ShopPromotion.Domain.Services
         internal const short UpdateEntity = 5; 
         internal const short DeleteEntity = 6;
 
-        public DefaultEntityService(IOptions<ShopPromotionDomainAppSettings> appSettings, TContext context) : base(
-            appSettings)
+        public DefaultEntityService(
+            IOptions<ShopPromotionDomainAppSettings> appSettings, 
+            TContext context,
+            ResolvedPaginationValue resolvedPaginationValue) : base(appSettings)
         {
             Context = context;
             Entities = Context.Set<TModel>();
             Query = Entities;
+            _paginationValue = resolvedPaginationValue;
             _currentAction = Initialize;
         }
 
@@ -69,15 +78,14 @@ namespace ShopPromotion.Domain.Services
             IEntityTypeParameters entityTypeParameters, CancellationToken ct)
         {
             _currentAction = GetEntities;
-            var pageSize = pagingOptions.GetTakeValue(pagingOptions, DefaultPagingOptions);
-            var pageNumber = pagingOptions.GetSkipValue(pagingOptions, DefaultPagingOptions);
-            var orderBy = pagingOptions.GetOrderBy(pagingOptions, DefaultPagingOptions);
-            var ascending = pagingOptions.GetAscending(pagingOptions, DefaultPagingOptions);
-
             var totalNumberOfRecords = await Query.CountAsync(ct);
-            var results = await GetElementsOfTModelSequenceAsync(pageSize, pageNumber, orderBy, ascending, ct);
+            var results = await GetElementsOfTModelSequenceAsync(
+                _paginationValue.PageSize, 
+                _paginationValue.Page,
+                _paginationValue.OrderBy, 
+                _paginationValue.Ascending, ct);
 
-            return Page<TModelResource>.Create(results, totalNumberOfRecords);
+            return Page<TModelResource>.Create(results, totalNumberOfRecords, _paginationValue);
         }
 
         /// <inheritdoc>

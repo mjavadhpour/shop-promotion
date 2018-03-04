@@ -101,6 +101,7 @@ namespace ShopPromotion.Domain.Infrastructure
         /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Base identity user configurarions.
             modelBuilder.Entity<BaseIdentityUser>(b =>
             {
                 b.HasIndex(u => u.PhoneNumber).HasName("PhoneNumberIndex").IsUnique();

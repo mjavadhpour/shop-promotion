@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using ShopPromotion.API.Services;
 
 namespace ShopPromotion.API
 {
@@ -67,21 +66,15 @@ namespace ShopPromotion.API
             // Lowercase routes
             services.AddRouting(options => options.LowercaseUrls = true);
             // Add Database Initializer
-            services.AddSingleton<IDbInitializer, DbInitializer>();
-            // TODO: SHOULD move to related configuration
-            services.AddTransient<IShopPromotionUserManager, ShopPromotionUserManager>();
-            // TODO: SHOULD move to related configuration file
-            services.AddTransient<TokenProviderService>();
-            // TODO: SHOULD move to related configuration file
-            services.AddTransient<SmsIrRestful.Token>();
-            services.AddTransient<SmsIrRestful.MessageSend>();
-            services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.AddTransient<IDbInitializer, DbInitializer>();
             // Swagger
             ConfigureSwaggerService.Configure(services);
             // User identity
             ConfigureIdentityService.Configure(services);
             // User authenticatiuon
             ConfigureJwtAuthService.Configure(services);
+            // ShopPromotion API
+            ConfigureShopPromotionApiService.Configure(services);
             // ShopPromotion core
             ConfigureShopPromotionDomainService.Configure(services);
             // Policy based role checks

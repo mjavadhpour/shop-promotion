@@ -2,12 +2,13 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
-using Microsoft.Extensions.Options;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace ShopPromotion.Domain.ModelLayer.Response.Pagination
 {
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
+    // Domain 
+    using Services.PaginationHelper;
 
     /// <summary>
     /// Page class for pagination.
@@ -15,22 +16,6 @@ namespace ShopPromotion.Domain.ModelLayer.Response.Pagination
     /// <typeparam name="TModel"></typeparam>
     public class Page<TModel> : IPage<TModel>
     {
-#pragma warning disable CA1000
-        private static PagingOptions DefaultPagingOptionsTest { get; set; }
-#pragma warning restore CA1000
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="defaultPagingOptionsAccessor"></param>
-        protected Page(IOptions<PagingOptions> defaultPagingOptionsAccessor)
-        {
-            DefaultPagingOptionsTest = defaultPagingOptionsAccessor.Value;
-        }
-
-        private Page()
-        { }
-
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public int? PageNumber { get; set; }
 
@@ -52,20 +37,26 @@ namespace ShopPromotion.Domain.ModelLayer.Response.Pagination
         /// <summary>
         /// Create base pageination.
         /// </summary>
+        /// <remarks>
+        /// In the static generic objects we can not use DI,
+        /// because DI work in compile time and static context work in runtime!
+        /// </remarks>
         /// <param name="items"></param>
         /// <param name="totalItemsNumber"></param>
+        /// <param name="defaultPagingOptions"></param>
         /// <returns></returns>
-        public static Page<TModel> Create(TModel[] items, int totalItemsNumber)
+        public static Page<TModel> Create(TModel[] items, int totalItemsNumber,
+            ResolvedPaginationValue defaultPagingOptions)
         {
             return new Page<TModel>
             {
                 Results = items,
                 TotalNumberOfRecords = totalItemsNumber,
-                TotalNumberOfPages = totalItemsNumber % DefaultPagingOptionsTest.PageSize > 0
-                    ? totalItemsNumber / DefaultPagingOptionsTest.PageSize + 1
-                    : totalItemsNumber / DefaultPagingOptionsTest.PageSize,
-                PageSize = DefaultPagingOptionsTest.PageSize,
-                PageNumber = DefaultPagingOptionsTest.Page
+                TotalNumberOfPages = totalItemsNumber % defaultPagingOptions.PageSize > 0
+                    ? totalItemsNumber / defaultPagingOptions.PageSize + 1
+                    : totalItemsNumber / defaultPagingOptions.PageSize,
+                PageSize = defaultPagingOptions.PageSize,
+                PageNumber = defaultPagingOptions.Page + 1
             };
         }
     }

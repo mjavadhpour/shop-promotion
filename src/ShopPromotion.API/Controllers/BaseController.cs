@@ -4,12 +4,11 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
+using ShopPromotion.Domain.Services.PaginationHelper;
 
 namespace ShopPromotion.API.Controllers
 {
     using ServiceConfiguration;
-    using Domain.ModelLayer.Response.Pagination;
     using Helper.Infrastructure.Filters;
 
     /// <summary>
@@ -21,19 +20,20 @@ namespace ShopPromotion.API.Controllers
     [Authorize(Policy = ConfigurePolicyService.AppUserPolicy)]
     [ValidateModel]
     [ApiExceptionFilter]
+    [ServiceFilter(typeof(PaginationDefaultValueFilter))]
     public class BaseController : Controller
     {
         /// <summary>
         /// Pagination settings.
         /// </summary>
-        protected readonly IPagingOptions DefaultPagingOptions;
+        protected readonly ResolvedPaginationValue DefaultPagingOptions;
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        protected BaseController(IOptions<PagingOptions> defaultPagingOptionsAccessor)
+        protected BaseController(ResolvedPaginationValue defaultPagingOptionsAccessor)
         {
-            DefaultPagingOptions = defaultPagingOptionsAccessor.Value;
+            DefaultPagingOptions = defaultPagingOptionsAccessor;
         }
     }
 }

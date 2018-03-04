@@ -3,20 +3,15 @@
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
 using Microsoft.Extensions.DependencyInjection;
-using ShopPromotion.Helper.Infrastructure.Filters;
 
 namespace ShopPromotion.API.ServiceConfiguration
 {
-    using Domain.EntityLayer;
-    using Domain.ModelLayer.Form;
-    using Domain.ModelLayer.Resource;
-    using Domain.Services;
-    using Domain.Services.PaginationHelper;
+    using Services;
 
     /// <summary>
-    /// Configure ShopPromotion core services.
+    /// Configure ShopPromotion api services.
     /// </summary>
-    public class ConfigureShopPromotionDomainService : IConfigureService
+    public class ConfigureShopPromotionApiService : IConfigureService
     {
         /// <inheritdoc />
         void IConfigureService.Configure(IServiceCollection services)
@@ -34,12 +29,14 @@ namespace ShopPromotion.API.ServiceConfiguration
         /// <param name="services"></param>
         public static void Configure(IServiceCollection services)
         {
-            // Helper class for use in pagination required values.
-            services.AddScoped<ResolvedPaginationValue>();
-            // Filter with resolved DI
-            services.AddScoped<PaginationDefaultValueFilter>();
-            // Shop
-            services.AddScoped<IBaseService<ShopForm, MinimumShopResource, Shop>, DefaultShopService>();
+            // Cunstomized user manager.
+            services.AddTransient<IShopPromotionUserManager, ShopPromotionUserManager>();
+            // Token provider.
+            services.AddTransient<TokenProviderService>();
+            // SMS APIs.
+            services.AddTransient<SmsIrRestful.Token>();
+            services.AddTransient<SmsIrRestful.MessageSend>();
+            services.AddTransient<ISmsSender, AuthMessageSender>();
         }
     }
 }

@@ -13,13 +13,5 @@ namespace ShopPromotion.Domain.ModelLayer.Response.Pagination
         int? Page { get; set; }
 
         int? PageSize { get; set; }
-
-        int GetSkipValue(IPagingOptions currentPagingOptions, IPagingOptions defaultValues);
-
-        int GetTakeValue(IPagingOptions currentPagingOptions, IPagingOptions defaultValues);
-
-        string GetOrderBy(IPagingOptions currentPagingOptions, IPagingOptions defaultValues);
-
-        bool GetAscending(IPagingOptions currentPagingOptions, IPagingOptions defaultValues);
     }
 }

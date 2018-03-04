@@ -8,7 +8,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
 namespace ShopPromotion.API.Controllers.Admin
 {
@@ -22,6 +21,7 @@ namespace ShopPromotion.API.Controllers.Admin
     using Domain.ModelLayer.Response.Pagination;
     using Domain.ModelLayer.Response;
     using Domain.EntityLayer;
+    using Domain.Services.PaginationHelper;
     // Helper
     using Helper.Infrastructure.ActionResults;
 
@@ -37,7 +37,7 @@ namespace ShopPromotion.API.Controllers.Admin
 
         /// <inheritdoc />
         public UserManagementController(
-            IOptions<PagingOptions> defaultPagingOptionsAccessor,
+            ResolvedPaginationValue defaultPagingOptionsAccessor,
             IShopPromotionUserManager shopPromotionUserManager,
             UserManager<BaseIdentityUser> baseIdentityUserManager) : base(
             defaultPagingOptionsAccessor)
@@ -102,7 +102,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="500">Internal Server Error</response>
         [HttpPut("{UserName}")]
         [ProducesResponseType(typeof(ApiError), 400)]
-        public async Task<IActionResult> UpdateUser(GetItemByUserNameParameters itemByUserNameParameters,
+        public async Task<IActionResult> UpdateUserAsync(GetItemByUserNameParameters itemByUserNameParameters,
             [FromBody] UpdateUserFormModel model)
         {
             var user = await _baseIdentityUserManager.FindByEmailAsync(itemByUserNameParameters.UserName);
@@ -129,7 +129,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="500">Internal Server Error</response>
         [HttpPost("claim")]
         [ProducesResponseType(typeof(ApiError), 400)]
-        public async Task<IActionResult> AddEmployeeClaim([FromBody] AddClaimFormModel claimFormModel)
+        public async Task<IActionResult> AddEmployeeClaimAsync([FromBody] AddClaimFormModel claimFormModel)
         {
             var user = await _baseIdentityUserManager.FindByEmailAsync(claimFormModel.Email);
             // 404
@@ -156,7 +156,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="500">Internal Server Error</response>
         [HttpDelete("{UserName}")]
         [ProducesResponseType(typeof(ApiError), 400)]
-        public async Task<IActionResult> DeleteUser(GetItemByUserNameParameters itemByUserNameParameters)
+        public async Task<IActionResult> DeleteUserAsync(GetItemByUserNameParameters itemByUserNameParameters)
         {
             var user = await _baseIdentityUserManager.FindByEmailAsync(itemByUserNameParameters.UserName);
             // 404

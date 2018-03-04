@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+using ShopPromotion.Domain.Services.PaginationHelper;
 
 namespace ShopPromotion.API.Controllers.User
 {
@@ -23,7 +23,6 @@ namespace ShopPromotion.API.Controllers.User
     using ServiceConfiguration;
     // Domain
     using Domain.EntityLayer;
-    using Domain.ModelLayer.Response.Pagination;
     // Helper
     using Helper.Infrastructure.ActionResults;
 
@@ -45,7 +44,7 @@ namespace ShopPromotion.API.Controllers.User
         /// <param name="shopPromotionUserManager"></param>
         /// <param name="smsSender"></param>
         public IdentityController(
-            IOptions<PagingOptions> defaultPagingOptionsAccessor,
+            ResolvedPaginationValue defaultPagingOptionsAccessor,
             UserManager<BaseIdentityUser> userManager,
             IShopPromotionUserManager shopPromotionUserManager,
             ISmsSender smsSender

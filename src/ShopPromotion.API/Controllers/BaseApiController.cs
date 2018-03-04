@@ -9,17 +9,20 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
 namespace ShopPromotion.API.Controllers
 {
+    // API
     using Infrastructure.Models.Parameter;
+    // Domain
+    using Domain.Services.PaginationHelper;
     using Domain.EntityLayer;
     using Domain.ModelLayer.Parameter;
     using Domain.ModelLayer.Resource;
     using Domain.ModelLayer.Response;
     using Domain.ModelLayer.Response.Pagination;
     using Domain.Services;
+    // Helper
     using Helper.Infrastructure.ActionResults;
 
     /// <summary>
@@ -44,9 +47,9 @@ namespace ShopPromotion.API.Controllers
         /// <param name="defaultPagingOptionsAccessor"></param>
         /// <param name="entityService"></param>
         /// <param name="userManager"></param>
-        protected BaseApiController(IOptions<PagingOptions> defaultPagingOptionsAccessor,
-            IBaseService<TForm, TMinimumTResource, T> entityService, UserManager<BaseIdentityUser> userManager) : base(
-            defaultPagingOptionsAccessor)
+        protected BaseApiController(ResolvedPaginationValue defaultPagingOptionsAccessor,
+            IBaseService<TForm, TMinimumTResource, T> entityService, 
+            UserManager<BaseIdentityUser> userManager) : base(defaultPagingOptionsAccessor)
         {
             EntityService = entityService;
             _userManager = userManager;

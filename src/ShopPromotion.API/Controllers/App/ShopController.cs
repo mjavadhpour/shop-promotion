@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
 namespace ShopPromotion.API.Controllers.App
 {
@@ -20,6 +19,7 @@ namespace ShopPromotion.API.Controllers.App
     using Domain.ModelLayer.Response.Pagination;
     using Domain.ModelLayer.Response;
     using Domain.Services;
+    using Domain.Services.PaginationHelper;
 
     /// <summary>
     /// Shop controller.
@@ -28,9 +28,9 @@ namespace ShopPromotion.API.Controllers.App
     public class ShopController : BaseApiController<ShopForm, MinimumShopResource, Shop, GetAllShopsParameters>
     {
         /// <inheritdoc />
-        public ShopController(IOptions<PagingOptions> defaultPagingOptionsAccessor,
-            IBaseService<ShopForm, MinimumShopResource, Shop> shopService, UserManager<BaseIdentityUser> userManager) :
-            base(defaultPagingOptionsAccessor, shopService, userManager)
+        public ShopController(ResolvedPaginationValue defaultPagingOptionsAccessor,
+            IBaseService<ShopForm, MinimumShopResource, Shop> shopService, 
+            UserManager<BaseIdentityUser> userManager) : base(defaultPagingOptionsAccessor, shopService, userManager)
         {
         }
 
