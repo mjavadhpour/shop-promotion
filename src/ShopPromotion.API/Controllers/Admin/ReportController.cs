@@ -13,7 +13,7 @@ namespace ShopPromotion.API.Controllers.Admin
     // API
     using ServiceConfiguration;
     using Infrastructure.Models.Parameter;
-    using Infrastructure.ActionResults;
+    using Infrastructure.Models.ActionResults;
     // Domain
     using Domain.Services.PaginationHelper;
 
