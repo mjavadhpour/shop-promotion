@@ -5,7 +5,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ShopPromotion.API.Infrastructure.Models.ActionResults;
 using ShopPromotion.API.Services.Statistics;
 
 namespace ShopPromotion.API.Controllers.Admin
@@ -18,7 +17,7 @@ namespace ShopPromotion.API.Controllers.Admin
     using Domain.Services.PaginationHelper;
 
     /// <summary>
-    /// Shop controller.
+    /// Report controller.
     /// </summary>
     [Area("Admin")]
     [Authorize(Policy = ConfigurePolicyService.AdminUserPolicy)]

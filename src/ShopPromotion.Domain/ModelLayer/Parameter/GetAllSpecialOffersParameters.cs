@@ -7,21 +7,21 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ShopPromotion.Domain.ModelLayer.Parameter
 {
-    public class GetAllShopsParameters : IEntityTypeParameters
+    public class GetAllSpecialOffersParameters : IEntityTypeParameters
     {
         /// <summary>
-        /// Filter human by contract id
+        /// Filter special offers by shop id.
         /// </summary>
         [FromQuery]
-        public int? ContractId { get; set; }
+        public int? ShopId { get; set; }
 
         /// <inheritdoc />
         public object GetParameter(string nameOfParam)
         {
             switch (nameOfParam)
             {
-                case "ContractId":
-                    return ContractId;
+                case "ShopId":
+                    return ShopId;
                 default:
                     throw new KeyNotFoundException();
             }

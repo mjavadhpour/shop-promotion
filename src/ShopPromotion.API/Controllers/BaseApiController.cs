@@ -28,11 +28,12 @@ namespace ShopPromotion.API.Controllers
     /// <summary>
     /// Base controller.
     /// </summary>
-    public abstract class BaseApiController<TForm, TMinimumTResource, T, TGetAllParameters> : BaseController
+    public abstract class BaseApiController<TForm, TMinimumTResource, T, TGetAllParameters, TGetItemParameters> : BaseController
         where T : BaseEntity, new()
         where TForm : BaseEntity
         where TMinimumTResource : MinimumBaseEntity
         where TGetAllParameters : IEntityTypeParameters
+        where TGetItemParameters : GetItemByIdParameters
     {
         private readonly UserManager<BaseIdentityUser> _userManager;
 
@@ -83,7 +84,7 @@ namespace ShopPromotion.API.Controllers
         /// <returns></returns>
         [HttpGet("{itemId}")]
         [ProducesResponseType(typeof(ApiError), 400)]
-        public virtual async Task<IActionResult> GetEntityByIdAsync(GetItemByIdParameters itemByIdParameters,
+        public virtual async Task<IActionResult> GetEntityByIdAsync(TGetItemParameters itemByIdParameters,
             CancellationToken ct)
         {
             var response =
@@ -119,7 +120,7 @@ namespace ShopPromotion.API.Controllers
         /// <returns></returns>
         [HttpPut("{itemId}")]
         [ProducesResponseType(typeof(ApiError), 400)]
-        public virtual async Task<IActionResult> UpdateEntityAsync(GetItemByIdParameters itemByIdParameters,
+        public virtual async Task<IActionResult> UpdateEntityAsync(TGetItemParameters itemByIdParameters,
             [FromBody] TForm form, CancellationToken ct)
         {
             // Check entity exists or not.
@@ -138,7 +139,7 @@ namespace ShopPromotion.API.Controllers
         /// <returns></returns>
         [HttpDelete("{itemId}")]
         [ProducesResponseType(typeof(ApiError), 400)]
-        public virtual async Task<IActionResult> DeleteEntityAsync(GetItemByIdParameters itemByIdParameters,
+        public virtual async Task<IActionResult> DeleteEntityAsync(TGetItemParameters itemByIdParameters,
             CancellationToken ct)
         {
             // Check entity exists or not.
