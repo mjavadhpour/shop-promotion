@@ -40,7 +40,7 @@ namespace ShopPromotion.API.ServiceConfiguration
             services.AddTransient<ISmsSender, AuthMessageSender>();
             // Report services.
             services.AddScoped<IAppUserReportService, AppUserReportService>();
-            services.AddScoped<IPaymentReportService, PaymentReportService>();
+            services.AddScoped<IPaymentReportTracker, PaymentReportService>();
             services.AddScoped<IShopReportService, ShopReportService>();
             services.AddScoped<IUsageStatisticservice, UsageStatisticservice>();
         }

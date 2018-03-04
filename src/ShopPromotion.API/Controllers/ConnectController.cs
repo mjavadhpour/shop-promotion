@@ -14,9 +14,9 @@ namespace ShopPromotion.API.Controllers
 {
     // ShopPromotion API
     using Services;
-    using Infrastructure.ActionResults;
     using Infrastructure.Models.Form;
     using Infrastructure.Models.Resource;
+    using Infrastructure.Models.ActionResults;
     // ShopPromotion Domain
     using Domain.EntityLayer;
     using Domain.Services.PaginationHelper;

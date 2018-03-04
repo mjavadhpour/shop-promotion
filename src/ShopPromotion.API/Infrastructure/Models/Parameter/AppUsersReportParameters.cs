@@ -12,11 +12,11 @@ namespace ShopPromotion.API.Infrastructure.Models.Parameter
         /// <summary>
         /// Filter by username.
         /// </summary>
-        public string UserName;
+        public string UserName { get; set; }
 
         /// <summary>
         /// Filter by ID.
         /// </summary>
-        public string Id;
+        public string Id { get; set; }
     }
 }

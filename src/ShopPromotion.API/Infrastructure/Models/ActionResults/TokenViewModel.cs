@@ -6,9 +6,9 @@ using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
-namespace ShopPromotion.API.Infrastructure.ActionResults
+namespace ShopPromotion.API.Infrastructure.Models.ActionResults
 {
-    using Models.Resource;
+    using Resource;
 
     /// <summary>
     /// View model for token response.

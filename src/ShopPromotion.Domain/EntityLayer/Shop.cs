@@ -13,5 +13,7 @@ namespace ShopPromotion.Domain.EntityLayer
     {
         public string OwnerId { get; set; }
         public ShopKeeperUser Owner { get; set; }
+
+        public string Title { get; set; }
     }
 }

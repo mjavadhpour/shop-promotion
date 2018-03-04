@@ -2,7 +2,7 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
-namespace ShopPromotion.API.Infrastructure.ActionResults
+namespace ShopPromotion.API.Infrastructure.Models.ActionResults
 {
     /// <summary>
     /// Reponse model for Report controller.

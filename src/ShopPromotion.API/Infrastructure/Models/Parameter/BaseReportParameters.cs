@@ -14,11 +14,11 @@ namespace ShopPromotion.API.Infrastructure.Models.Parameter
         /// <summary>
         /// Filter result with Date.
         /// </summary>
-        public DateTime FromDate;
+        public DateTime FromDate { get; set; }
 
         /// <summary>
         /// Filter result with Date.
         /// </summary>
-        public DateTime ToDate;
+        public DateTime ToDate { get; set; }
     }
 }

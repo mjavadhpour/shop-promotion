@@ -5,6 +5,8 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ShopPromotion.API.Infrastructure.Models.ActionResults;
+using ShopPromotion.API.Services.Statistics;
 
 namespace ShopPromotion.API.Controllers.Admin
 {
@@ -12,7 +14,6 @@ namespace ShopPromotion.API.Controllers.Admin
     using ServiceConfiguration;
     using Infrastructure.Models.Parameter;
     using Infrastructure.ActionResults;
-    using Services.Statistics;
     // Domain
     using Domain.Services.PaginationHelper;
 
@@ -23,7 +24,7 @@ namespace ShopPromotion.API.Controllers.Admin
     [Authorize(Policy = ConfigurePolicyService.AdminUserPolicy)]
     public class ReportController : BaseController
     {
-        private readonly IPaymentReportService _paymentReportService;
+        private readonly IPaymentReportTracker _paymentReportService;
         private readonly IShopReportService _shopReportService;
         private readonly IAppUserReportService _appUserReportService;
         private readonly IUsageStatisticservice _usageStatisticservice;
@@ -31,7 +32,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <inheritdoc />
         public ReportController(
             ResolvedPaginationValueService defaultPagingOptionsAccessor,
-            IPaymentReportService paymentReportService,
+            IPaymentReportTracker paymentReportService,
             IShopReportService shopReportService,
             IUsageStatisticservice usageStatisticservice,
             IAppUserReportService appUserReportService) : base(

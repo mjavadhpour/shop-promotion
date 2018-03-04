@@ -4,7 +4,10 @@
 
 namespace ShopPromotion.API.Infrastructure.Models.Parameter
 {
-    public class UsageStatisticsParameters
+    /// <summary>
+    /// Model for query on usages statistics results.
+    /// </summary>
+    public class UsageStatisticsParameters : BaseReportParameters
     {
         
     }

@@ -11,18 +11,18 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ShopPromotion.Domain.Services.PaginationHelper;
 
 namespace ShopPromotion.API.Controllers.User
 {
     // API
     using Services;
-    using Infrastructure.ActionResults;
+    using Infrastructure.Models.ActionResults;
     using Infrastructure.Models.Resource;
     using Infrastructure.Models.Form;
     using ServiceConfiguration;
     // Domain
     using Domain.EntityLayer;
+    using Domain.Services.PaginationHelper;
     // Helper
     using Helper.Infrastructure.ActionResults;
 

@@ -3,14 +3,15 @@
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
 using System.Threading.Tasks;
-using ShopPromotion.API.Infrastructure.Models.Parameter;
 
 namespace ShopPromotion.API.Services.Statistics
 {
+    using Infrastructure.Models.Parameter;
+
     /// <summary>
     /// Payment Report service.
     /// </summary>
-    public interface IPaymentReportService
+    public interface IPaymentReportTracker
     {
         Task<object> GetNumberOfPayments(PaymentsReportParameters reportParameters);
         Task<object> GetSumOfPayments(PaymentsReportParameters reportParameters);

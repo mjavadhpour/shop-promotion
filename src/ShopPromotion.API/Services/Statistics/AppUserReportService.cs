@@ -3,10 +3,11 @@
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
 using System.Threading.Tasks;
-using ShopPromotion.API.Infrastructure.Models.Parameter;
 
 namespace ShopPromotion.API.Services.Statistics
 {
+    using Infrastructure.Models.Parameter;
+
     /// <inheritdoc />
     public class AppUserReportService : IAppUserReportService
     {

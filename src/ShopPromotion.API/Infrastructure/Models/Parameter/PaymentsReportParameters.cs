@@ -12,16 +12,16 @@ namespace ShopPromotion.API.Infrastructure.Models.Parameter
         /// <summary>
         /// Filter result by price. 
         /// </summary>
-        public int FromPrice;
+        public int FromPrice { get; set; }
 
         /// <summary>
         /// Filter result by price.
         /// </summary>
-        public int ToPrice;
+        public int ToPrice { get; set; }
 
         /// <summary>
         /// Filter by payment method.
         /// </summary>
-        public int PaymentMethodId;
+        public int PaymentMethodId { get; set; }
     }
 }

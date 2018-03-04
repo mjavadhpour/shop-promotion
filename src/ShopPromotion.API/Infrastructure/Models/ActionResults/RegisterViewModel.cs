@@ -4,7 +4,7 @@
 
 using System.Collections.Generic;
 
-namespace ShopPromotion.API.Infrastructure.ActionResults
+namespace ShopPromotion.API.Infrastructure.Models.ActionResults
 {
     using Models.Resource;
 
