@@ -66,7 +66,7 @@ namespace ShopPromotion.API
             // Lowercase routes
             services.AddRouting(options => options.LowercaseUrls = true);
             // Add Database Initializer
-            services.AddTransient<IDbInitializer, DbInitializer>();
+            services.AddSingleton<IDbInitializer, DbInitializer>();
             // Swagger
             ConfigureSwaggerService.Configure(services);
             // User identity

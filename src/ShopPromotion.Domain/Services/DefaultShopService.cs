@@ -24,7 +24,7 @@ namespace ShopPromotion.Domain.Services
     {
         public DefaultShopService(IOptions<ShopPromotionDomainAppSettings> appSettings,
             ShopPromotionDomainContext context,
-            ResolvedPaginationValue resolvedPaginationValue) : base(appSettings,
+            ResolvedPaginationValueService resolvedPaginationValue) : base(appSettings,
             context, resolvedPaginationValue)
         {
         }

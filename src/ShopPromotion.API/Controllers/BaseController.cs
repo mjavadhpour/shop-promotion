@@ -26,12 +26,12 @@ namespace ShopPromotion.API.Controllers
         /// <summary>
         /// Pagination settings.
         /// </summary>
-        protected readonly ResolvedPaginationValue DefaultPagingOptions;
+        protected readonly ResolvedPaginationValueService DefaultPagingOptions;
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        protected BaseController(ResolvedPaginationValue defaultPagingOptionsAccessor)
+        protected BaseController(ResolvedPaginationValueService defaultPagingOptionsAccessor)
         {
             DefaultPagingOptions = defaultPagingOptionsAccessor;
         }

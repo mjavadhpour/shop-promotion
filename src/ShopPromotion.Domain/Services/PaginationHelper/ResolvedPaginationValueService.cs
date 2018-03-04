@@ -7,7 +7,7 @@ namespace ShopPromotion.Domain.Services.PaginationHelper
     /// <summary>
     /// Resolved value in the filter inside of helper project. <see cref="ShopPromotion.Helper.Infrastructure.Filters.PaginationDefaultValueFilter"/>
     /// </summary>
-    public class ResolvedPaginationValue
+    public class ResolvedPaginationValueService
     {
         public string OrderBy { get; set; }
         public bool Ascending { get; set; }

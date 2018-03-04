@@ -46,7 +46,7 @@ namespace ShopPromotion.Domain.ModelLayer.Response.Pagination
         /// <param name="defaultPagingOptions"></param>
         /// <returns></returns>
         public static Page<TModel> Create(TModel[] items, int totalItemsNumber,
-            ResolvedPaginationValue defaultPagingOptions)
+            ResolvedPaginationValueService defaultPagingOptions)
         {
             return new Page<TModel>
             {

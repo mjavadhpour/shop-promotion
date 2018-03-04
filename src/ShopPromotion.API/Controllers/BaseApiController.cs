@@ -47,7 +47,7 @@ namespace ShopPromotion.API.Controllers
         /// <param name="defaultPagingOptionsAccessor"></param>
         /// <param name="entityService"></param>
         /// <param name="userManager"></param>
-        protected BaseApiController(ResolvedPaginationValue defaultPagingOptionsAccessor,
+        protected BaseApiController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
             IBaseService<TForm, TMinimumTResource, T> entityService, 
             UserManager<BaseIdentityUser> userManager) : base(defaultPagingOptionsAccessor)
         {

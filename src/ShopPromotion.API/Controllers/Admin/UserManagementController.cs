@@ -37,7 +37,7 @@ namespace ShopPromotion.API.Controllers.Admin
 
         /// <inheritdoc />
         public UserManagementController(
-            ResolvedPaginationValue defaultPagingOptionsAccessor,
+            ResolvedPaginationValueService defaultPagingOptionsAccessor,
             IShopPromotionUserManager shopPromotionUserManager,
             UserManager<BaseIdentityUser> baseIdentityUserManager) : base(
             defaultPagingOptionsAccessor)

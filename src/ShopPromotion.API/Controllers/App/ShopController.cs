@@ -28,7 +28,7 @@ namespace ShopPromotion.API.Controllers.App
     public class ShopController : BaseApiController<ShopForm, MinimumShopResource, Shop, GetAllShopsParameters>
     {
         /// <inheritdoc />
-        public ShopController(ResolvedPaginationValue defaultPagingOptionsAccessor,
+        public ShopController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
             IBaseService<ShopForm, MinimumShopResource, Shop> shopService, 
             UserManager<BaseIdentityUser> userManager) : base(defaultPagingOptionsAccessor, shopService, userManager)
         {

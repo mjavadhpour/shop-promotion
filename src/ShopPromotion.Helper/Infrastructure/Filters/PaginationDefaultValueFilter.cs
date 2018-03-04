@@ -25,10 +25,10 @@ namespace ShopPromotion.Helper.Infrastructure.Filters
     /// </remarks>
     public class PaginationDefaultValueFilter : ActionFilterAttribute
     {
-        private readonly ResolvedPaginationValue _resolvedPaginationValue;
+        private readonly ResolvedPaginationValueService _resolvedPaginationValue;
         private readonly IConfiguration _appSettings;
 
-        public PaginationDefaultValueFilter(ResolvedPaginationValue resolvedPaginationValue)
+        public PaginationDefaultValueFilter(ResolvedPaginationValueService resolvedPaginationValue)
         {
             _resolvedPaginationValue = resolvedPaginationValue;
 

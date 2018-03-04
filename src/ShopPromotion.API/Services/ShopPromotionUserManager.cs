@@ -33,7 +33,7 @@ namespace ShopPromotion.API.Services
         /// <summary>
         /// Resolved velue for pagination.
         /// </summary>
-        private readonly ResolvedPaginationValue _paginationValue;
+        private readonly ResolvedPaginationValueService _paginationValue;
 
         /// <summary>
         /// Constructor.
@@ -45,7 +45,7 @@ namespace ShopPromotion.API.Services
         public ShopPromotionUserManager(
             ShopPromotionDomainContext shopPromotionDomainContext,
             UserManager<BaseIdentityUser> userManager,
-            ResolvedPaginationValue resolvedPaginationValue,
+            ResolvedPaginationValueService resolvedPaginationValue,
             ShopPromotionDomainContext domainContext)
         {
             _context = shopPromotionDomainContext;

@@ -44,7 +44,7 @@ namespace ShopPromotion.API.Controllers.User
         /// <param name="shopPromotionUserManager"></param>
         /// <param name="smsSender"></param>
         public IdentityController(
-            ResolvedPaginationValue defaultPagingOptionsAccessor,
+            ResolvedPaginationValueService defaultPagingOptionsAccessor,
             UserManager<BaseIdentityUser> userManager,
             IShopPromotionUserManager shopPromotionUserManager,
             ISmsSender smsSender

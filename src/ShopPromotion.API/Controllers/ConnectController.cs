@@ -37,7 +37,7 @@ namespace ShopPromotion.API.Controllers
 
         /// <inheritdoc />
         public ConnectController(
-            ResolvedPaginationValue defaultPagingOptionsAccessor,
+            ResolvedPaginationValueService defaultPagingOptionsAccessor,
             UserManager<BaseIdentityUser> userManager, 
             IShopPromotionUserManager shopPromotionUserManager,
             TokenProviderService tokenProviderService)

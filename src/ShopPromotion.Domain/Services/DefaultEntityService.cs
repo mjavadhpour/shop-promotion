@@ -32,7 +32,7 @@ namespace ShopPromotion.Domain.Services
         /// <summary>
         /// Resolved velue for pagination.
         /// </summary>
-        private readonly ResolvedPaginationValue _paginationValue;
+        private readonly ResolvedPaginationValueService _paginationValue;
         /// <summary>
         /// Hold the actions that specify what actually happening in this class.
         /// </summary>
@@ -51,7 +51,7 @@ namespace ShopPromotion.Domain.Services
         public DefaultEntityService(
             IOptions<ShopPromotionDomainAppSettings> appSettings, 
             TContext context,
-            ResolvedPaginationValue resolvedPaginationValue) : base(appSettings)
+            ResolvedPaginationValueService resolvedPaginationValue) : base(appSettings)
         {
             Context = context;
             Entities = Context.Set<TModel>();

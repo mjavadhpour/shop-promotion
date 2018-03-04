@@ -35,7 +35,7 @@ namespace ShopPromotion.API.ServiceConfiguration
         public static void Configure(IServiceCollection services)
         {
             // Helper class for use in pagination required values.
-            services.AddScoped<ResolvedPaginationValue>();
+            services.AddScoped<ResolvedPaginationValueService>();
             // Filter with resolved DI
             services.AddScoped<PaginationDefaultValueFilter>();
             // Shop
