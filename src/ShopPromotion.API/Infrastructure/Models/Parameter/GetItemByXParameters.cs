@@ -36,7 +36,7 @@ namespace ShopPromotion.API.Infrastructure.Models.Parameter
     /// <summary>
     /// Controller paramter for get Barcode by Code.
     /// </summary>
-    public class GetItemCodeParameters
+    public class GetItemByCodeParameters
     {
         /// <summary>
         /// Code
@@ -45,5 +45,4 @@ namespace ShopPromotion.API.Infrastructure.Models.Parameter
         [Required]
         public long Code { get; set; }
     }
-
 }

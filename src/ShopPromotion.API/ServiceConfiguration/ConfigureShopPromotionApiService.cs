@@ -3,6 +3,7 @@
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
 using Microsoft.Extensions.DependencyInjection;
+using ShopPromotion.API.Services.Statistics;
 
 namespace ShopPromotion.API.ServiceConfiguration
 {
@@ -37,6 +38,11 @@ namespace ShopPromotion.API.ServiceConfiguration
             services.AddTransient<SmsIrRestful.Token>();
             services.AddTransient<SmsIrRestful.MessageSend>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+            // Report services.
+            services.AddScoped<IAppUserReportService, AppUserReportService>();
+            services.AddScoped<IPaymentReportService, PaymentReportService>();
+            services.AddScoped<IShopReportService, ShopReportService>();
+            services.AddScoped<IUsageStatisticservice, UsageStatisticservice>();
         }
     }
 }
