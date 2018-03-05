@@ -69,4 +69,7 @@
     <!-- ShopPromotion Helper Package -->
     <ProjectReference Include="..\ShopPromotion.Helper\ShopPromotion.Helper.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Private.CoreLib" />
+  </ItemGroup>
 </Project>
