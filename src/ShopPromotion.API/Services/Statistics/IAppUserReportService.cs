@@ -5,7 +5,8 @@
 using System.Threading.Tasks;
 
 namespace ShopPromotion.API.Services.Statistics
-{   
+{
+    using Infrastructure.Models.ActionResults;
     using Infrastructure.Models.Parameter;
 
     /// <summary>
@@ -13,6 +14,11 @@ namespace ShopPromotion.API.Services.Statistics
     /// </summary>
     public interface IAppUserReportService
     {
-        Task<object> GetNumberOfAppUsers(AppUsersReportParameters reportParameters);
+        /// <summary>
+        /// Get report for amount of users with requested filters.
+        /// </summary>
+        /// <param name="reportParameters"></param>
+        /// <returns></returns>
+        Task<AppUsersReportViewModel> GetNumberOfAppUsers(AppUsersReportParameters reportParameters);
     }
 }

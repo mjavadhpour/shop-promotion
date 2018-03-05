@@ -6,19 +6,20 @@ using System.Threading.Tasks;
 
 namespace ShopPromotion.API.Services.Statistics
 {
+    using Infrastructure.Models.ActionResults;
     using Infrastructure.Models.Parameter;
 
     /// <inheritdoc />
     public class PaymentReportService : IPaymentReportTracker
     {
         /// <inheritdoc />
-        public Task<object> GetNumberOfPayments(PaymentsReportParameters reportParameters)
+        public Task<NumberOfPaymentsReportViewModel> GetNumberOfPayments(PaymentsReportParameters reportParameters)
         {
             throw new System.NotImplementedException();
         }
 
         /// <inheritdoc />
-        public Task<object> GetSumOfPayments(PaymentsReportParameters reportParameters)
+        public Task<SumOfPaymentsReportViewModel> GetSumOfPayments(PaymentsReportParameters reportParameters)
         {
             throw new System.NotImplementedException();
         }

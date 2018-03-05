@@ -3,15 +3,22 @@
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
 using System.Threading.Tasks;
-using ShopPromotion.API.Infrastructure.Models.Parameter;
 
 namespace ShopPromotion.API.Services.Statistics
 {
+    using Infrastructure.Models.ActionResults;
+    using Infrastructure.Models.Parameter;
+
     /// <summary>
     /// Shop Report service.
     /// </summary>
     public interface IShopReportService
     {
-        Task<object> GetNumberOfShops(ShopsReportParameters reportParameters);
+        /// <summary>
+        /// Get report for amount of shops with requested filters.
+        /// </summary>
+        /// <param name="reportParameters"></param>
+        /// <returns></returns>
+        Task<ShopsReportViewModel> GetNumberOfShops(ShopsReportParameters reportParameters);
     }
 }

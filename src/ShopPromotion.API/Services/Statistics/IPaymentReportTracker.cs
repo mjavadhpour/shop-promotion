@@ -7,13 +7,25 @@ using System.Threading.Tasks;
 namespace ShopPromotion.API.Services.Statistics
 {
     using Infrastructure.Models.Parameter;
+    using Infrastructure.Models.ActionResults;
 
     /// <summary>
     /// Payment Report service.
     /// </summary>
     public interface IPaymentReportTracker
     {
-        Task<object> GetNumberOfPayments(PaymentsReportParameters reportParameters);
-        Task<object> GetSumOfPayments(PaymentsReportParameters reportParameters);
+        /// <summary>
+        /// Get report for number of payments with requested filters.
+        /// </summary>
+        /// <param name="reportParameters"></param>
+        /// <returns></returns>
+        Task<NumberOfPaymentsReportViewModel> GetNumberOfPayments(PaymentsReportParameters reportParameters);
+
+        /// <summary>
+        /// Get report for sum of payments amount with requested filters.
+        /// </summary>
+        /// <param name="reportParameters"></param>
+        /// <returns></returns>
+        Task<SumOfPaymentsReportViewModel> GetSumOfPayments(PaymentsReportParameters reportParameters);
     }
 }

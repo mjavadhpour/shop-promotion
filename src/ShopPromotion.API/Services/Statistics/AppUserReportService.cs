@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 namespace ShopPromotion.API.Services.Statistics
 {
     using Infrastructure.Models.Parameter;
+    using Infrastructure.Models.ActionResults;
 
     /// <inheritdoc />
     public class AppUserReportService : IAppUserReportService
     {
         /// <inheritdoc />
-        public Task<object> GetNumberOfAppUsers(AppUsersReportParameters reportParameters)
+        public Task<AppUsersReportViewModel> GetNumberOfAppUsers(AppUsersReportParameters reportParameters)
         {
             throw new System.NotImplementedException();
         }
