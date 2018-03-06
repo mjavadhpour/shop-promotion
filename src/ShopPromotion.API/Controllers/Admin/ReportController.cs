@@ -5,7 +5,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ShopPromotion.API.Services.Statistics;
 
 namespace ShopPromotion.API.Controllers.Admin
 {
@@ -13,6 +12,7 @@ namespace ShopPromotion.API.Controllers.Admin
     using ServiceConfiguration;
     using Infrastructure.Models.Parameter;
     using Infrastructure.Models.ActionResults;
+    using Services.Statistics;
     // Domain
     using Domain.Services.PaginationHelper;
 

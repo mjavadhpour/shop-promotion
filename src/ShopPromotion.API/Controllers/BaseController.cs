@@ -4,12 +4,14 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ShopPromotion.Domain.Services.PaginationHelper;
 
 namespace ShopPromotion.API.Controllers
 {
+    // API
     using ServiceConfiguration;
     using Helper.Infrastructure.Filters;
+    // Domain
+    using Domain.Services.PaginationHelper;
 
     /// <summary>
     /// Base Controller that SOULD extended from all APIs.
