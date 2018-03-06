@@ -22,6 +22,7 @@ namespace ShopPromotion.API.Controllers.User
     using ServiceConfiguration;
     // Domain
     using Domain.EntityLayer;
+    using Domain.Services;
     using Domain.Services.PaginationHelper;
     // Helper
     using Helper.Infrastructure.ActionResults;

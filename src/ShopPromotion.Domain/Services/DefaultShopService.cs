@@ -13,10 +13,10 @@ namespace ShopPromotion.Domain.Services
     using EntityLayer;
     using Infrastructure;
     using Infrastructure.AppSettings;
-    using ModelLayer.Form;
-    using ModelLayer.Parameter;
-    using ModelLayer.Resource;
-    using ModelLayer.Response.Pagination;
+    using Infrastructure.Models.Form;
+    using Infrastructure.Models.Resource;
+    using Infrastructure.Models.Parameter;
+    using Infrastructure.Models.Response.Pagination;
     using PaginationHelper;
 
     public class

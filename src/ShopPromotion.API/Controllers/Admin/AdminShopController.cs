@@ -14,12 +14,12 @@ namespace ShopPromotion.API.Controllers.Admin
     using Infrastructure.Models.Parameter;
     using ServiceConfiguration;
     // Domain
-    using Domain.ModelLayer.Form;
-    using Domain.ModelLayer.Resource;
     using Domain.EntityLayer;
-    using Domain.ModelLayer.Parameter;
-    using Domain.ModelLayer.Response.Pagination;
-    using Domain.ModelLayer.Response;
+    using ShopPromotion.Domain.Infrastructure.Models.Form;
+    using ShopPromotion.Domain.Infrastructure.Models.Parameter;
+    using ShopPromotion.Domain.Infrastructure.Models.Resource;
+    using ShopPromotion.Domain.Infrastructure.Models.Response;
+    using ShopPromotion.Domain.Infrastructure.Models.Response.Pagination;
     using Domain.Services;
     using Domain.Services.PaginationHelper;
 

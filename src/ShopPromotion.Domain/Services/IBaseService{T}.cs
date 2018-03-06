@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 namespace ShopPromotion.Domain.Services
 {
     using EntityLayer;
-    using ModelLayer.Parameter;
-    using ModelLayer.Response.Pagination;
+    using Infrastructure.Models.Parameter;
+    using Infrastructure.Models.Response.Pagination;
     
     /// <summary>
     /// Base service for implement in BaseEntityService.

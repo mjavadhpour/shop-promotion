@@ -4,6 +4,7 @@
 
 namespace ShopPromotion.Domain.Extensions
 {
+    using System;
     using System.Linq;
     using System.Linq.Expressions;
 
@@ -37,6 +38,21 @@ namespace ShopPromotion.Domain.Extensions
                 new[] {elementType, propertyOrFieldExpression.Type}, queryable.Expression, selector);
 
             return queryable.Provider.CreateQuery<T>(orderByExpression);
+        }
+
+        /// <summary>
+        /// Generate unique 6 digit number.
+        /// </summary>
+        /// <returns></returns>
+        public static string GenerateNewUniqueRandom()
+        {
+            Random generator = new Random();
+            String r = generator.Next(0, 1000000).ToString("D6");
+            if (r.Distinct().Count() == 1)
+            {
+                r = GenerateNewUniqueRandom();
+            }
+            return r;
         }
     }
 }

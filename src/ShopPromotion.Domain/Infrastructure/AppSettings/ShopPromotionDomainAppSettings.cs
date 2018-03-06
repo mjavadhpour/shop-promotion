@@ -4,7 +4,7 @@
 
 namespace ShopPromotion.Domain.Infrastructure.AppSettings
 {
-    using ModelLayer.Response.Pagination;
+    using Models.Response.Pagination;
 
     /// <summary>
     /// App settings mapping object to use in DI for Domain base settings.

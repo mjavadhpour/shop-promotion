@@ -10,10 +10,10 @@ namespace ShopPromotion.API.Controllers.Admin
 {
     // API
     using ServiceConfiguration;
-    using Infrastructure.Models.Form;
-    using Services.ShopStatus;
     // Domain
     using Domain.Services.PaginationHelper;
+    using ShopPromotion.Domain.Infrastructure.Models.Form.Custom;
+    using ShopPromotion.Domain.Services.ShopStatus;
 
     /// <summary>
     /// Shop status controller.

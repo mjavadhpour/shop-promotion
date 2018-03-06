@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 namespace ShopPromotion.Domain.Services
 {
     using Infrastructure.AppSettings;
-    using ModelLayer.Response.Pagination;
+    using Infrastructure.Models.Response.Pagination;
 
     public abstract class BaseEntityService
     {

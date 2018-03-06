@@ -10,6 +10,7 @@ namespace ShopPromotion.API.Infrastructure.AutoMapper
     using Models.Resource;
     // Domain
     using Domain.EntityLayer;
+    using Domain.Infrastructure.Models.Resource.Custom;
 
     /// <summary>
     /// Default auto mapping configuration and define supported mapping in project.

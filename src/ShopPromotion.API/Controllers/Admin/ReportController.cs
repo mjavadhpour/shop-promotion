@@ -10,11 +10,11 @@ namespace ShopPromotion.API.Controllers.Admin
 {
     // API
     using ServiceConfiguration;
-    using Infrastructure.Models.Parameter;
-    using Infrastructure.Models.ActionResults;
-    using Services.Statistics;
     // Domain
     using Domain.Services.PaginationHelper;
+    using ShopPromotion.Domain.Infrastructure.Models.Parameter.Custom;
+    using ShopPromotion.Domain.Infrastructure.Models.Resource.Custom;
+    using ShopPromotion.Domain.Services.Statistics;
 
     /// <summary>
     /// Report controller.

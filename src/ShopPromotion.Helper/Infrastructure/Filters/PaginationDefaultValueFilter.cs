@@ -9,7 +9,7 @@ using System.IO;
 namespace ShopPromotion.Helper.Infrastructure.Filters
 {
     // Domain
-    using Domain.ModelLayer.Response.Pagination;
+    using Domain.Infrastructure.Models.Response.Pagination;
     using Domain.Services.PaginationHelper;
 
     /// <summary>

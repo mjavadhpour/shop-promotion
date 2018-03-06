@@ -17,10 +17,10 @@ namespace ShopPromotion.API.Controllers
     // Domain
     using Domain.Services.PaginationHelper;
     using Domain.EntityLayer;
-    using Domain.ModelLayer.Parameter;
-    using Domain.ModelLayer.Resource;
-    using Domain.ModelLayer.Response;
-    using Domain.ModelLayer.Response.Pagination;
+    using Domain.Infrastructure.Models.Parameter;
+    using Domain.Infrastructure.Models.Resource;
+    using Domain.Infrastructure.Models.Response;
+    using Domain.Infrastructure.Models.Response.Pagination;
     using Domain.Services;
     // Helper
     using Helper.Infrastructure.ActionResults;

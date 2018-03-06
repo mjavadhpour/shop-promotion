@@ -16,8 +16,8 @@ namespace ShopPromotion.Domain.Services
     using EntityLayer;
     using Extensions;
     using Infrastructure.AppSettings;
-    using ModelLayer.Parameter;
-    using ModelLayer.Response.Pagination;
+    using Infrastructure.Models.Parameter;
+    using Infrastructure.Models.Response.Pagination;
     // Helper
     using PaginationHelper;
 

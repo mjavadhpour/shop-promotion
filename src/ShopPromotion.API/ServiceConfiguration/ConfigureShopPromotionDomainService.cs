@@ -3,15 +3,18 @@
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
 using Microsoft.Extensions.DependencyInjection;
-using ShopPromotion.Helper.Infrastructure.Filters;
 
 namespace ShopPromotion.API.ServiceConfiguration
 {
+    // Helper
+    using Helper.Infrastructure.Filters;
+    // Domain
     using Domain.EntityLayer;
-    using Domain.ModelLayer.Form;
-    using Domain.ModelLayer.Resource;
     using Domain.Services;
     using Domain.Services.PaginationHelper;
+    using Domain.Infrastructure.Models.Form;
+    using Domain.Infrastructure.Models.Resource;
+    using Domain.Services.Statistics;
 
     /// <summary>
     /// Configure ShopPromotion core services.
@@ -40,6 +43,13 @@ namespace ShopPromotion.API.ServiceConfiguration
             services.AddScoped<PaginationDefaultValueFilter>();
             // Shop
             services.AddScoped<IBaseService<ShopForm, MinimumShopResource, Shop>, DefaultShopService>();
+            // Report services.
+            services.AddScoped<IAppUserReportService, AppUserReportService>();
+            services.AddScoped<IPaymentReportTracker, PaymentReportService>();
+            services.AddScoped<IShopReportService, ShopReportService>();
+            services.AddScoped<IUsageStatisticservice, UsageStatisticservice>();
+            // Cunstomized user manager.
+            services.AddTransient<IShopPromotionUserManager, ShopPromotionUserManager>();
         }
     }
 }

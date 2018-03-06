@@ -15,10 +15,10 @@ namespace ShopPromotion.API.Controllers.Admin
     using ServiceConfiguration;
     // Doamin
     using Domain.EntityLayer;
-    using Domain.ModelLayer.Form;
-    using Domain.ModelLayer.Parameter;
-    using Domain.ModelLayer.Resource;
-    using Domain.ModelLayer.Response.Pagination;
+    using ShopPromotion.Domain.Infrastructure.Models.Form;
+    using ShopPromotion.Domain.Infrastructure.Models.Parameter;
+    using ShopPromotion.Domain.Infrastructure.Models.Resource;
+    using ShopPromotion.Domain.Infrastructure.Models.Response.Pagination;
     using Domain.Services;
     using Domain.Services.PaginationHelper;
 
