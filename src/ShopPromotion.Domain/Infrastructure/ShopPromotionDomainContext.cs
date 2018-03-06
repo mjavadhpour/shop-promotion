@@ -41,9 +41,15 @@ namespace ShopPromotion.Domain.Infrastructure
 
         public DbSet<DiscountCoupon> DiscountCoupons { get; set; }
 
+        public DbSet<GatewayConfig> GatewayConfigs { get; set; }
+
         public DbSet<Order> Orders { get; set; }
 
         public DbSet<OrderItem> OrderItems { get; set; }
+
+        public DbSet<Payment> Payments { get; set; }
+
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
 
         public DbSet<Message> Messages { get; set; }
 
