@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -139,16 +140,28 @@ namespace ShopPromotion.API.Controllers.User
                 await _smsSender.SendSmsAsync(user.PhoneNumber, user.VerificationCode);
             }
 
+            // Current claims.
+            var claims = await _userManager.GetClaimsAsync(user);
+
             // Add user claim
             switch (userClaimOptions)
             {
                 case UserClaimOptions.AppUserClaim:
-                    await _userManager.AddClaimAsync(user,
-                        new Claim(ConfigurePolicyService.ClaimType, ConfigurePolicyService.AppUserClaimVelue));
+                    if (claims.All(x => x.Value != ConfigurePolicyService.AppUserClaimVelue))
+                    {
+                        await _userManager.AddClaimAsync(user,
+                            new Claim(ConfigurePolicyService.ClaimType, ConfigurePolicyService.AppUserClaimVelue));
+                    }
+
                     break;
                 case UserClaimOptions.ShopKeeperClaim:
-                    await _userManager.AddClaimAsync(user,
-                        new Claim(ConfigurePolicyService.ClaimType, ConfigurePolicyService.ShopKeeperUserClaimVelue));
+                    if (claims.All(x => x.Value != ConfigurePolicyService.ShopKeeperUserClaimVelue))
+                    {
+                        await _userManager.AddClaimAsync(user,
+                            new Claim(ConfigurePolicyService.ClaimType,
+                                ConfigurePolicyService.ShopKeeperUserClaimVelue));
+                    }
+
                     break;
                 default:
                     throw new NotImplementedException("Requested claim was not supported!");
