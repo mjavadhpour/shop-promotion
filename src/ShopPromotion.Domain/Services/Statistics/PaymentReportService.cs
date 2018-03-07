@@ -2,26 +2,43 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace ShopPromotion.Domain.Services.Statistics
 {
+    using EntityLayer;
+    using Infrastructure;
+    using PaginationHelper;
     using Infrastructure.Models.Parameter.Custom;
     using Infrastructure.Models.Resource.Custom;
 
-    /// <inheritdoc />
-    public class PaymentReportService : IPaymentReportTracker
+    /// <inheritdoc cref="IPaymentReportTracker" />
+    public class PaymentReportService : BaseEntityService<ShopPromotionDomainContext>, IPaymentReportTracker
     {
-        /// <inheritdoc />
-        public Task<NumberOfPaymentsReportViewModel> GetNumberOfPayments(PaymentsReportParameters reportParameters)
+        private readonly DbSet<Payment> _payments;
+
+        public PaymentReportService(ResolvedPaginationValueService resolvedPaginationValue,
+            ShopPromotionDomainContext context) : base(resolvedPaginationValue, context)
         {
-            throw new System.NotImplementedException();
+            _payments = Context.Set<Payment>();
         }
 
         /// <inheritdoc />
-        public Task<SumOfPaymentsReportViewModel> GetSumOfPayments(PaymentsReportParameters reportParameters)
+        public async Task<NumberOfPaymentsReportViewModel> GetNumberOfPayments(
+            PaymentsReportParameters reportParameters, CancellationToken ct)
         {
-            throw new System.NotImplementedException();
+            var count = await _payments.CountAsync(ct);
+            return new NumberOfPaymentsReportViewModel(count);
+        }
+
+        /// <inheritdoc />
+        public async Task<SumOfPaymentsReportViewModel> GetSumOfPayments(PaymentsReportParameters reportParameters,
+            CancellationToken ct)
+        {
+            var sum = await _payments.SumAsync(x => x.Amount);
+            return new SumOfPaymentsReportViewModel(sum);
         }
     }
 }

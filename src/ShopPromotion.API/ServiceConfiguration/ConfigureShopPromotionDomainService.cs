@@ -2,6 +2,7 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using LiteDB;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ShopPromotion.API.ServiceConfiguration
@@ -53,7 +54,7 @@ namespace ShopPromotion.API.ServiceConfiguration
             // ShopReportService
             services.AddScoped<IShopReportService, ShopReportService>();
             // AppUserReportService
-            services.AddScoped<IAppUserReportService, AppUserReportService>();
+            services.AddScoped<IUserReportService, UserReportService>();
             // UsageStatisticservice
             services.AddScoped<IUsageStatisticservice, UsageStatisticservice>();
             // Generic unit of work.
@@ -85,12 +86,15 @@ namespace ShopPromotion.API.ServiceConfiguration
                 .AddScoped<IBaseService<ShopAdminForm, MinimumShopResource, Shop, ShopPromotionDomainContext>,
                     DefaultEntityService<ShopAdminForm, MinimumShopResource, Shop, ShopPromotionDomainContext>>();
             // Report services.
-            services.AddScoped<IAppUserReportService, AppUserReportService>();
+            services.AddScoped<IUserReportService, UserReportService>();
             services.AddScoped<IPaymentReportTracker, PaymentReportService>();
             services.AddScoped<IShopReportService, ShopReportService>();
             services.AddScoped<IUsageStatisticservice, UsageStatisticservice>();
             // Cunstomized user manager.
             services.AddTransient<IShopPromotionUserManager, ShopPromotionUserManager>();
+            // LightDb
+            // TODO: Read path from appsettings.json
+            services.AddSingleton(typeof(LiteDatabase), new LiteDatabase(@"UsageTracker.db"));
         }
     }
 }

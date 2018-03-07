@@ -2,12 +2,16 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
-namespace ShopPromotion.Domain.Infrastructure.Models.Parameter.Custom
+using System;
+
+namespace ShopPromotion.Domain.EntityLayer.LiteDb
 {
-    /// <summary>
-    /// Model for query on appUsers report results.
-    /// </summary>
-    public class AppUsersReportParameters : BaseReportParameters
+    public class SmsUsage
     {
+        public int Id { get; set; }
+
+        public DateTime SentAt { get; set; }
+
+        public bool IsSucceed { get; set; }
     }
 }

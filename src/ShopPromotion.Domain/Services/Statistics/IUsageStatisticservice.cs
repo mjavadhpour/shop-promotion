@@ -2,6 +2,8 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ShopPromotion.Domain.Services.Statistics
@@ -18,7 +20,9 @@ namespace ShopPromotion.Domain.Services.Statistics
         /// Get usage report to showing in the chart.
         /// </summary>
         /// <param name="reportParameters"></param>
+        /// <param name="ct"></param>
         /// <returns></returns>
-        Task<UsagesStatisticsViewModel> GetUsagesChartReport(UsageStatisticsParameters reportParameters);
+        Task<IList<UsagesStatisticsViewModel>> GetUsagesChartReport(UsageStatisticsParameters reportParameters,
+            CancellationToken ct);
     }
 }

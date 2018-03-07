@@ -24,20 +24,20 @@ namespace ShopPromotion.Domain.Infrastructure.DAL
         private readonly IShopPromotionUserManager _shopPromotionUserManager;
         private readonly IShopStatusService _shopStatusService;
         private readonly IUsageStatisticservice _usageStatisticservice;
-        private readonly IAppUserReportService _appUserReportService;
+        private readonly IUserReportService _userReportService;
         private readonly IShopReportService _shopReportService;
         private readonly IPaymentReportTracker _paymentReportService;
 
         public UnitOfWork(ShopPromotionDomainContext context, IShopPromotionUserManager shopPromotionUserManager,
             IShopStatusService shopStatusService, IUsageStatisticservice usageStatisticservice,
-            IAppUserReportService appUserReportService, IShopReportService shopReportService,
+            IUserReportService userReportService, IShopReportService shopReportService,
             IPaymentReportTracker paymentReportService)
         {
             _context = context;
             _shopPromotionUserManager = shopPromotionUserManager;
             _shopStatusService = shopStatusService;
             _usageStatisticservice = usageStatisticservice;
-            _appUserReportService = appUserReportService;
+            _userReportService = userReportService;
             _shopReportService = shopReportService;
             _paymentReportService = paymentReportService;
         }
@@ -48,7 +48,7 @@ namespace ShopPromotion.Domain.Infrastructure.DAL
 
         public IUsageStatisticservice UsageStatisticservice => _usageStatisticservice;
 
-        public IAppUserReportService AppUserReportService => _appUserReportService;
+        public IUserReportService UserReportService => _userReportService;
 
         public IShopReportService ShopReportService => _shopReportService;
 

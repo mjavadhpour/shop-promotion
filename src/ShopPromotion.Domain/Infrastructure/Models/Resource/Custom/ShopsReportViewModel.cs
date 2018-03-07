@@ -9,6 +9,14 @@ namespace ShopPromotion.Domain.Infrastructure.Models.Resource.Custom
     /// </summary>
     public class ShopsReportViewModel
     {
-        
+        public ShopsReportViewModel(int count)
+        {
+            Count = count;
+        }
+
+        /// <summary>
+        /// Amount of shops.
+        /// </summary>
+        public int Count { get; }
     }
 }

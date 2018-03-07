@@ -2,6 +2,7 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ShopPromotion.Domain.Services.Statistics
@@ -18,14 +19,18 @@ namespace ShopPromotion.Domain.Services.Statistics
         /// Get report for number of payments with requested filters.
         /// </summary>
         /// <param name="reportParameters"></param>
+        /// <param name="ct"></param>
         /// <returns></returns>
-        Task<NumberOfPaymentsReportViewModel> GetNumberOfPayments(PaymentsReportParameters reportParameters);
+        Task<NumberOfPaymentsReportViewModel> GetNumberOfPayments(PaymentsReportParameters reportParameters,
+            CancellationToken ct);
 
         /// <summary>
         /// Get report for sum of payments amount with requested filters.
         /// </summary>
         /// <param name="reportParameters"></param>
+        /// <param name="ct"></param>
         /// <returns></returns>
-        Task<SumOfPaymentsReportViewModel> GetSumOfPayments(PaymentsReportParameters reportParameters);
+        Task<SumOfPaymentsReportViewModel> GetSumOfPayments(PaymentsReportParameters reportParameters,
+            CancellationToken ct);
     }
 }

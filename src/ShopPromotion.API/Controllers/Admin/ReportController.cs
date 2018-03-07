@@ -2,6 +2,8 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +15,7 @@ namespace ShopPromotion.API.Controllers.Admin
     // Domain
     using Domain.Services.PaginationHelper;
     using Domain.Infrastructure.DAL;
+    using Domain.Infrastructure.Models.Response;
     using Domain.Infrastructure.Models.Parameter.Custom;
     using Domain.Infrastructure.Models.Resource.Custom;
 
@@ -38,12 +41,16 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet("payment/number")]
-        [ProducesResponseType(typeof(NumberOfPaymentsReportViewModel), 200)]
+        [ProducesResponseType(typeof(SingleModelResponse<NumberOfPaymentsReportViewModel>), 200)]
         public async Task<IActionResult> GetNumberOfPaymentsReportAsync(
-            [FromQuery] PaymentsReportParameters reportParameters)
+            [FromQuery] PaymentsReportParameters reportParameters, CancellationToken ct)
         {
-            var result = await UnitOfWork.PaymentReportService.GetNumberOfPayments(reportParameters);
-            return Ok(result);
+            var response =
+                new SingleModelResponse<NumberOfPaymentsReportViewModel>() as
+                    ISingleModelResponse<NumberOfPaymentsReportViewModel>;
+            response.Model = await UnitOfWork.PaymentReportService.GetNumberOfPayments(reportParameters, ct);
+
+            return Ok(response);
         }
 
         /// <summary>
@@ -55,12 +62,15 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet("payment/sum")]
-        [ProducesResponseType(typeof(SumOfPaymentsReportViewModel), 200)]
+        [ProducesResponseType(typeof(SingleModelResponse<SumOfPaymentsReportViewModel>), 200)]
         public async Task<IActionResult> GetSumOfPaymentsReportAsync(
-            [FromQuery] PaymentsReportParameters reportParameters)
+            [FromQuery] PaymentsReportParameters reportParameters, CancellationToken ct)
         {
-            var result = await UnitOfWork.PaymentReportService.GetSumOfPayments(reportParameters);
-            return Ok(result);
+            var response =
+                new SingleModelResponse<SumOfPaymentsReportViewModel>() as
+                    ISingleModelResponse<SumOfPaymentsReportViewModel>;
+            response.Model = await UnitOfWork.PaymentReportService.GetSumOfPayments(reportParameters, ct);
+            return Ok(response);
         }
 
         /// <summary>
@@ -72,12 +82,15 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet("shop/number")]
-        [ProducesResponseType(typeof(ShopsReportViewModel), 200)]
+        [ProducesResponseType(typeof(SingleModelResponse<ShopsReportViewModel>), 200)]
         public async Task<IActionResult> GetShopsReportAsync(
-            [FromQuery] ShopsReportParameters reportParameters)
+            [FromQuery] ShopsReportParameters reportParameters, CancellationToken ct)
         {
-            var result = await UnitOfWork.ShopReportService.GetNumberOfShops(reportParameters);
-            return Ok(result);
+            var response =
+                new SingleModelResponse<ShopsReportViewModel>() as
+                    ISingleModelResponse<ShopsReportViewModel>;
+            response.Model = await UnitOfWork.ShopReportService.GetNumberOfShops(reportParameters, ct);
+            return Ok(response);
         }
 
         /// <summary>
@@ -88,13 +101,16 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="401">Unauthorized</response>
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpGet("appuser/number")]
-        [ProducesResponseType(typeof(AppUsersReportViewModel), 200)]
-        public async Task<IActionResult> GetAppUsersReportAsync(
-            [FromQuery] AppUsersReportParameters reportParameters)
+        [HttpGet("user/number")]
+        [ProducesResponseType(typeof(SingleModelResponse<AppUsersReportViewModel>), 200)]
+        public async Task<IActionResult> GetUsersReportAsync(
+            [FromQuery] AppUsersReportParameters reportParameters, CancellationToken ct)
         {
-            var result = await UnitOfWork.AppUserReportService.GetNumberOfAppUsers(reportParameters);
-            return Ok(result);
+            var response =
+                new SingleModelResponse<AppUsersReportViewModel>() as
+                    ISingleModelResponse<AppUsersReportViewModel>;
+            response.Model = await UnitOfWork.UserReportService.GetNumberOfUsers(reportParameters, ct);
+            return Ok(response);
         }
 
         /// <summary>
@@ -106,12 +122,15 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
         [HttpGet("usages/chart")]
-        [ProducesResponseType(typeof(UsagesStatisticsViewModel), 200)]
+        [ProducesResponseType(typeof(SingleModelResponse<IList<UsagesStatisticsViewModel>>), 200)]
         public async Task<IActionResult> GetUsagesStatisticsAsync(
-            [FromQuery] UsageStatisticsParameters reportParameters)
+            [FromQuery] UsageStatisticsParameters reportParameters, CancellationToken ct)
         {
-            var result = await UnitOfWork.UsageStatisticservice.GetUsagesChartReport(reportParameters);
-            return Ok(result);
+            var response =
+                new SingleModelResponse<IList<UsagesStatisticsViewModel>>() as
+                    ISingleModelResponse<IList<UsagesStatisticsViewModel>>;
+            response.Model = await UnitOfWork.UsageStatisticservice.GetUsagesChartReport(reportParameters, ct);
+            return Ok(response);
         }
     }
 }

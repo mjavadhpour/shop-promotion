@@ -4,10 +4,13 @@
 
 using System;
 using System.Threading.Tasks;
+using LiteDB;
 using SmsIrRestful;
 
 namespace ShopPromotion.API.Services
 {
+    using Domain.EntityLayer.LiteDb;
+
     /// <inheritdoc />
     /// IrSmsRestful SMS service.
     public class AuthMessageSender : ISmsSender
@@ -20,30 +23,50 @@ namespace ShopPromotion.API.Services
         private readonly string _token;
         private readonly MessageSend _messageSend;
 
+        private readonly LiteDatabase _liteDatabase;
+
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="token"></param>
         /// <param name="messageSend"></param>
-        public AuthMessageSender(Token token, MessageSend messageSend)
+        /// <param name="lightDb"></param>
+        public AuthMessageSender(Token token, MessageSend messageSend, LiteDatabase lightDb)
         {
             _token = token.GetToken(UserApiKey, SecretKey);
             _messageSend = messageSend;
+            _liteDatabase = lightDb;
         }
 
         /// <inheritdoc />
         public Task SendSmsAsync(string number, string message)
         {
             Console.WriteLine(message);
-            return Task.FromResult(
-                _messageSend
-                    .Send(_token, new MessageSendObject
-                    {
-                        Messages = new [] {$@"{BaseMessage}{message}"},
-                        MobileNumbers = new [] {number},
-                        LineNumber = LineNumber
-                    })
-                );
+            return Task.FromResult(Send(number, message));
+        }
+
+        private bool Send(string number, string message)
+        {
+            // Send
+            var messageResponse = _messageSend
+                .Send(_token, new MessageSendObject
+                {
+                    Messages = new[] {$@"{BaseMessage}{message}"},
+                    MobileNumbers = new[] {number},
+                    LineNumber = LineNumber
+                });
+
+            // Log
+            var smsUsageLog = _liteDatabase.GetCollection<SmsUsage>();
+            var smsUsage = new SmsUsage
+            {
+                IsSucceed = messageResponse.IsSuccessful,
+                SentAt = DateTime.Now
+            };
+            // Insert new customer document (Id will be auto-incremented)
+            smsUsageLog.Insert(smsUsage);
+
+            return true;
         }
     }
 }

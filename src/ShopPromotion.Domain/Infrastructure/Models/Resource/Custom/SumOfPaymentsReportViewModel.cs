@@ -9,6 +9,14 @@ namespace ShopPromotion.Domain.Infrastructure.Models.Resource.Custom
     /// </summary>
     public class SumOfPaymentsReportViewModel
     {
-        
+        public SumOfPaymentsReportViewModel(int sum)
+        {
+            Sum = sum;
+        }
+
+        /// <summary>
+        /// Sum of payments.
+        /// </summary>
+        public int Sum { get; }
     }
 }
