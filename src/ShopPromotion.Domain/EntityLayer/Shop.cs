@@ -2,6 +2,8 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using System.Collections.Generic;
+
 namespace ShopPromotion.Domain.EntityLayer
 {
     /// <summary>
@@ -13,6 +15,8 @@ namespace ShopPromotion.Domain.EntityLayer
     {
         public string OwnerId { get; set; }
         public ShopKeeperUser Owner { get; set; }
+
+        public IList<ShopStatus> ShopStatuses { get; set; }
 
         public string Title { get; set; }
     }

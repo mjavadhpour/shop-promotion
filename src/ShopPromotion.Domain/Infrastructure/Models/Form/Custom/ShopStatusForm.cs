@@ -4,6 +4,8 @@
 
 namespace ShopPromotion.Domain.Infrastructure.Models.Form.Custom
 {
+    using EntityLayer;
+
     /// <summary>
     /// Form for change shop status.
     /// </summary>
@@ -17,6 +19,6 @@ namespace ShopPromotion.Domain.Infrastructure.Models.Form.Custom
         /// <summary>
         /// Target status. <br /> Approved: 0 <br /> Disapproved: 1 <br /> NeedChange: 2
         /// </summary>
-        public ShopStatusOptions StatusOptions { get; set; }
+        public ShopStatusOption StatusOptions { get; set; }
     }
 }

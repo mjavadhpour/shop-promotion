@@ -2,6 +2,7 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -42,6 +43,16 @@ namespace ShopPromotion.Domain.Services
         {
             // Map shop and resource.
             var shop = Mapper.Map<Shop>(form);
+
+            // Assign default status to new shop.
+            if (GetCurrentAction() == CreateEntity)
+            {
+                Context.Set<ShopStatus>().Add(new ShopStatus
+                {
+                    CreatedAt = DateTime.Now,
+                    Shop = shop
+                });
+            }
 
             return shop;
         }

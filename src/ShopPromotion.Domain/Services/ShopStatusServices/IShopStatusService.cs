@@ -2,9 +2,10 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using System.Threading;
 using System.Threading.Tasks;
 
-namespace ShopPromotion.Domain.Services.ShopStatus
+namespace ShopPromotion.Domain.Services.ShopStatusServices
 {   
     using Infrastructure.Models.Form.Custom;
 
@@ -17,7 +18,8 @@ namespace ShopPromotion.Domain.Services.ShopStatus
         /// Change shop status.
         /// </summary>
         /// <param name="shopStatusForm"></param>
+        /// <param name="ct"></param>
         /// <returns></returns>
-        Task ChangeShopStatus(ShopStatusForm shopStatusForm);
+        Task ChangeShopStatus(ShopStatusForm shopStatusForm, CancellationToken ct);
     }
 }

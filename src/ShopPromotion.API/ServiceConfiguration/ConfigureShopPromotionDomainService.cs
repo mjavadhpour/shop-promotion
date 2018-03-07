@@ -15,10 +15,10 @@ namespace ShopPromotion.API.ServiceConfiguration
     using Domain.Services.PaginationHelper;
     using Domain.Infrastructure.Models.Form;
     using Domain.Infrastructure.Models.Resource;
-    using Domain.Services.Statistics;
     using Domain.Infrastructure;
     using Domain.Infrastructure.DAL;
-    using Domain.Services.ShopStatus;
+    using Domain.Services.ShopStatusServices;
+    using Domain.Services.StatisticsServices;
 
     /// <summary>
     /// Configure ShopPromotion core services.

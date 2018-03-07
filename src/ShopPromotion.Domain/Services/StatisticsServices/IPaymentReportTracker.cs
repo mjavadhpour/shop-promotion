@@ -5,7 +5,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ShopPromotion.Domain.Services.Statistics
+namespace ShopPromotion.Domain.Services.StatisticsServices
 {
     using Infrastructure.Models.Parameter.Custom;
     using Infrastructure.Models.Resource.Custom;

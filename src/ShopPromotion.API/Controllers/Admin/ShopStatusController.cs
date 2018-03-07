@@ -60,7 +60,8 @@ namespace ShopPromotion.API.Controllers.Admin
             var entity = new ShopController(_defaultPagingOptionsAccessor, UnitOfWork, _userManager, _genericUnitOfWork)
                 .GetEntityByIdAsync(new GetItemByIdParameters {ItemId = shopStatusForm.ShopId}, ct).Result;
             if (entity.GetType() != typeof(OkObjectResult)) return NotFound();
-            await UnitOfWork.ShopStatusService.ChangeShopStatus(shopStatusForm);
+            await UnitOfWork.ShopStatusService.ChangeShopStatus(shopStatusForm, ct);
+            await UnitOfWork.SaveAsync();
             return NoContent();
         }
     }

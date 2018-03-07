@@ -5,22 +5,23 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ShopPromotion.Domain.Services.Statistics
+namespace ShopPromotion.Domain.Services.StatisticsServices
 {
     using Infrastructure.Models.Parameter.Custom;
     using Infrastructure.Models.Resource.Custom;
 
     /// <summary>
-    /// Shop Report service.
+    /// AppUser Report service.
     /// </summary>
-    public interface IShopReportService
+    public interface IUserReportService
     {
         /// <summary>
-        /// Get report for amount of shops with requested filters.
+        /// Get report for amount of users with requested filters.
         /// </summary>
         /// <param name="reportParameters"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<ShopsReportViewModel> GetNumberOfShops(ShopsReportParameters reportParameters, CancellationToken ct);
+        Task<AppUsersReportViewModel> GetNumberOfUsers(AppUsersReportParameters reportParameters,
+            CancellationToken ct);
     }
 }

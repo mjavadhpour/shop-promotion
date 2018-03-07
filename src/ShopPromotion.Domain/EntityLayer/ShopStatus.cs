@@ -9,8 +9,15 @@ namespace ShopPromotion.Domain.EntityLayer
     /// <see cref="ShopStatusOption"/>
     /// </summary>
     public class ShopStatus : BaseEntity
-    {   
+    {
+        public ShopStatus()
+        {
+            Status = ShopStatusOption.Disapproved;
+        }
+
         public int ShopId { get; set; }
         public Shop Shop { get; set; }
+
+        public ShopStatusOption Status { get; set; }
     }
 }

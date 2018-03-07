@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ShopPromotion.Domain.Infrastructure;
 using ShopPromotion.Domain.Services.PaginationHelper;
 
-namespace ShopPromotion.Domain.Services.Statistics
+namespace ShopPromotion.Domain.Services.StatisticsServices
 {
     using Infrastructure.Models.Parameter.Custom;
     using Infrastructure.Models.Resource.Custom;

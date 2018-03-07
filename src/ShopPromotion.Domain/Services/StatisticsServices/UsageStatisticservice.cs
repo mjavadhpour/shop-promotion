@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using LiteDB;
 using Microsoft.EntityFrameworkCore;
 
-namespace ShopPromotion.Domain.Services.Statistics
+namespace ShopPromotion.Domain.Services.StatisticsServices
 {
     using EntityLayer.LiteDb;
     using Infrastructure;

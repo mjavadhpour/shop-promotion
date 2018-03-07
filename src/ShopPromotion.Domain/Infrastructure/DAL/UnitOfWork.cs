@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 namespace ShopPromotion.Domain.Infrastructure.DAL
 {
     using Services;
-    using Services.ShopStatus;
-    using Services.Statistics;
+    using Services.ShopStatusServices;
+    using Services.StatisticsServices;
 
     /// <summary>
     /// The unit of work class serves one purpose: to make sure that when you use multiple repositories, they share a

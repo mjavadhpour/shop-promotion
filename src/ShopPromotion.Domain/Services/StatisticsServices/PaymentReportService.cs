@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace ShopPromotion.Domain.Services.Statistics
+namespace ShopPromotion.Domain.Services.StatisticsServices
 {
     using EntityLayer;
     using Infrastructure;
