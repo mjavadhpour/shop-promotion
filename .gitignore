@@ -6,3 +6,6 @@
 # ASP.NET Core build files
 **/bin
 **/obj
+
+# db Files
+**/*.db
