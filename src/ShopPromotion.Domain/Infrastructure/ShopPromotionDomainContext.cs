@@ -2,7 +2,10 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -82,7 +85,36 @@ namespace ShopPromotion.Domain.Infrastructure
         public DbSet<ShopStatus> ShopStatuses { get; set; }
 
         public DbSet<SpecialOffer> SpecialOffers { get; set; }
-        
+
+        /// <inheritdoc />
+        public override int SaveChanges()
+        {
+            AddTimestamps();
+            return base.SaveChanges();
+        }
+
+        /// <inheritdoc />
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+            AddTimestamps();
+            return base.SaveChanges(acceptAllChangesOnSuccess);
+        }
+
+        /// <inheritdoc />
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
+            AddTimestamps();
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
+        /// <inheritdoc />
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
+            CancellationToken cancellationToken = new CancellationToken())
+        {
+            AddTimestamps();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+
         /// <summary>
         /// Top of all confiuration for context. all things can be override here.
         /// </summary>
@@ -129,6 +161,23 @@ namespace ShopPromotion.Domain.Infrastructure
             foreach (var entity in changedEntriesCopy)
             {
                 Entry(entity.Entity).State = EntityState.Detached;
+            }
+        }
+
+        /// <summary>
+        /// Set updated at.
+        /// </summary>
+        /// <remarks>
+        /// The created at filed not work here.
+        /// </remarks>
+        private void AddTimestamps()
+        {
+            var entities = ChangeTracker.Entries()
+                .Where(x => x.Entity is BaseEntity && x.State == EntityState.Modified);
+
+            foreach (var entity in entities)
+            {
+                ((BaseEntity) entity.Entity).UpdatedAt = DateTime.Now;
             }
         }
     }

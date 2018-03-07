@@ -9,13 +9,12 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 namespace ShopPromotion.Domain.Services
 {
     using EntityLayer;
     using Extensions;
-    using Infrastructure.AppSettings;
+    using Infrastructure.Models.Resource;
     using Infrastructure.Models.Parameter;
     using Infrastructure.Models.Response.Pagination;
     // Helper
@@ -25,6 +24,7 @@ namespace ShopPromotion.Domain.Services
         IBaseService<TForm, TModelResource, TModel, TContext> where TModel : BaseEntity
         where TForm : BaseEntity
         where TContext : DbContext
+        where TModelResource : MinimumBaseEntity
     {
         protected readonly DbSet<TModel> Entities;
         protected IQueryable<TModel> Query;
@@ -112,9 +112,8 @@ namespace ShopPromotion.Domain.Services
 
             // Map to real entity object.
             var mappedEntity = MappingFromModelToTModelDestination(form, ct);
-            // Change update at field to date now.
-            mappedEntity.UpdatedAt = DateTime.Now;
-
+            // Fill Old CreatedAt
+            mappedEntity.CreatedAt = entity.CreatedAt;
             Context.Set<TModel>().Update(mappedEntity);
         }
 
