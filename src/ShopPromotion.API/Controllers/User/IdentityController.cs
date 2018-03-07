@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ShopPromotion.Domain.Infrastructure.DAL;
 
 namespace ShopPromotion.API.Controllers.User
 {
@@ -22,7 +23,6 @@ namespace ShopPromotion.API.Controllers.User
     using ServiceConfiguration;
     // Domain
     using Domain.EntityLayer;
-    using Domain.Services;
     using Domain.Services.PaginationHelper;
     // Helper
     using Helper.Infrastructure.ActionResults;
@@ -34,25 +34,20 @@ namespace ShopPromotion.API.Controllers.User
     public class IdentityController : BaseController
     {
         private readonly UserManager<BaseIdentityUser> _userManager;
-        private readonly IShopPromotionUserManager _shopPromotionUserManager;
         private readonly ISmsSender _smsSender;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="defaultPagingOptionsAccessor"></param>
+        /// <param name="unitOfWork"></param>
         /// <param name="userManager"></param>
-        /// <param name="shopPromotionUserManager"></param>
         /// <param name="smsSender"></param>
-        public IdentityController(
-            ResolvedPaginationValueService defaultPagingOptionsAccessor,
-            UserManager<BaseIdentityUser> userManager,
-            IShopPromotionUserManager shopPromotionUserManager,
-            ISmsSender smsSender
-        ) : base(defaultPagingOptionsAccessor)
+        public IdentityController(ResolvedPaginationValueService defaultPagingOptionsAccessor, UnitOfWork unitOfWork,
+            UserManager<BaseIdentityUser> userManager, ISmsSender smsSender) : base(defaultPagingOptionsAccessor,
+            unitOfWork)
         {
             _userManager = userManager;
-            _shopPromotionUserManager = shopPromotionUserManager;
             _smsSender = smsSender;
         }
 
@@ -127,9 +122,9 @@ namespace ShopPromotion.API.Controllers.User
             try
             {
                 // Create user
-                user = await _shopPromotionUserManager.CreateByPhoneNumberAsync(formModel.PhoneNumber);
+                user = await UnitOfWork.ShopPromotionUserManager.CreateByPhoneNumberAsync(formModel.PhoneNumber);
                 // Generate new verification code for user
-                await _shopPromotionUserManager.GenerateVerificationCodeAsync(user);
+                await UnitOfWork.ShopPromotionUserManager.GenerateVerificationCodeAsync(user);
                 // Send SMS for verification code
                 await _smsSender.SendSmsAsync(user.PhoneNumber, user.VerificationCode);
             }
@@ -137,9 +132,9 @@ namespace ShopPromotion.API.Controllers.User
             {
                 // The user exists and duplicate ky exception was thrown. then we just publish and event
                 // Get old user.
-                user = await _shopPromotionUserManager.FindByPhoneAsync(formModel.PhoneNumber);
+                user = await UnitOfWork.ShopPromotionUserManager.FindByPhoneAsync(formModel.PhoneNumber);
                 // Generate new verification code for user
-                await _shopPromotionUserManager.GenerateVerificationCodeAsync(user);
+                await UnitOfWork.ShopPromotionUserManager.GenerateVerificationCodeAsync(user);
                 // Send SMS for verification code
                 await _smsSender.SendSmsAsync(user.PhoneNumber, user.VerificationCode);
             }

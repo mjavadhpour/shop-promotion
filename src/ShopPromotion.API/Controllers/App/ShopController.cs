@@ -13,12 +13,12 @@ namespace ShopPromotion.API.Controllers.App
     using Infrastructure.Models.Parameter;
     // Domain
     using Domain.EntityLayer;
+    using Domain.Infrastructure.DAL;
     using Domain.Infrastructure.Models.Form;
     using Domain.Infrastructure.Models.Parameter;
     using Domain.Infrastructure.Models.Resource;
     using Domain.Infrastructure.Models.Response;
     using Domain.Infrastructure.Models.Response.Pagination;
-    using Domain.Services;
     using Domain.Services.PaginationHelper;
 
     /// <summary>
@@ -29,9 +29,10 @@ namespace ShopPromotion.API.Controllers.App
         GetItemByIdParameters>
     {
         /// <inheritdoc />
-        public ShopController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
-            IBaseService<ShopForm, MinimumShopResource, Shop> shopService, 
-            UserManager<BaseIdentityUser> userManager) : base(defaultPagingOptionsAccessor, shopService, userManager)
+        public ShopController(ResolvedPaginationValueService defaultPagingOptionsAccessor, UnitOfWork unitOfWork,
+            UserManager<BaseIdentityUser> userManager,
+            UnitOfWork<ShopForm, MinimumShopResource, Shop> genericUnitOfWork) : base(defaultPagingOptionsAccessor,
+            unitOfWork, userManager, genericUnitOfWork)
         {
         }
 

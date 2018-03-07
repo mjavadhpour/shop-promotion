@@ -22,7 +22,7 @@ namespace ShopPromotion.Domain.Services
     using PaginationHelper;
 
     public class DefaultEntityService<TForm, TModelResource, TModel, TContext> : BaseEntityService,
-        IBaseService<TForm, TModelResource, TModel> where TModel : BaseEntity
+        IBaseService<TForm, TModelResource, TModel, TContext> where TModel : BaseEntity
         where TForm : BaseEntity
         where TContext : DbContext
     {
@@ -44,7 +44,7 @@ namespace ShopPromotion.Domain.Services
         internal const short Initialize = 1; 
         internal const short GetEntity = 2; 
         internal const short GetEntities = 3; 
-        internal const short AddEntity = 4; 
+        internal const short CreateEntity = 4; 
         internal const short UpdateEntity = 5; 
         internal const short DeleteEntity = 6;
 
@@ -91,9 +91,9 @@ namespace ShopPromotion.Domain.Services
         /// <inheritdoc>
         /// <cref>IBaseService{TForm, TEntityResource,TEntityModel}</cref>
         /// </inheritdoc>
-        public async Task<TModelResource> AddEntityAsync(TForm form, CancellationToken ct)
+        public TModelResource AddEntity(TForm form, CancellationToken ct)
         {
-            _currentAction = AddEntity;
+            _currentAction = CreateEntity;
             // Set create at field.
             form.CreatedAt = DateTime.Now;
 
@@ -103,10 +103,6 @@ namespace ShopPromotion.Domain.Services
             // Map model and resource.
             var model = MappingFromModelToTModelDestination(form, ct);
             Context.Set<TModel>().Add(model);
-
-            await Context.SaveChangesAsync(ct);
-            // Fill new generated id.
-            form.Id = model.Id;
 
             return Mapper.Map<TModelResource>(form);
         }
@@ -128,7 +124,6 @@ namespace ShopPromotion.Domain.Services
             mappedEntity.UpdatedAt = DateTime.Now;
 
             Context.Set<TModel>().Update(mappedEntity);
-            await Context.SaveChangesAsync(ct);
         }
 
         /// <inheritdoc>
@@ -144,7 +139,6 @@ namespace ShopPromotion.Domain.Services
             var model = Mapper.Map<TModel>(modelDto);
 
             Context.Set<TModel>().Remove(model);
-            await Context.SaveChangesAsync(ct);
         }
 
         /// <summary>

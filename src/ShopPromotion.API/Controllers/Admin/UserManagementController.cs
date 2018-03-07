@@ -16,10 +16,10 @@ namespace ShopPromotion.API.Controllers.Admin
     using Infrastructure.Models.Form;
     using Infrastructure.Models.Parameter;
     // Domain
+    using Domain.Infrastructure.DAL;
     using Domain.Infrastructure.Models.Resource.Custom;
     using Domain.Infrastructure.Models.Response;
     using Domain.Infrastructure.Models.Response.Pagination;
-    using Domain.Services;
     using Domain.EntityLayer;
     using Domain.Services.PaginationHelper;
     // Helper
@@ -32,17 +32,13 @@ namespace ShopPromotion.API.Controllers.Admin
     [Authorize(Policy = ConfigurePolicyService.AdminUserPolicy)]
     public class UserManagementController : BaseController
     {
-        private readonly IShopPromotionUserManager _shopPromotionUserManager;
         private readonly UserManager<BaseIdentityUser> _baseIdentityUserManager;
 
         /// <inheritdoc />
-        public UserManagementController(
-            ResolvedPaginationValueService defaultPagingOptionsAccessor,
-            IShopPromotionUserManager shopPromotionUserManager,
-            UserManager<BaseIdentityUser> baseIdentityUserManager) : base(
-            defaultPagingOptionsAccessor)
+        public UserManagementController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
+            UnitOfWork unitOfWork, UserManager<BaseIdentityUser> baseIdentityUserManager) : base(
+            defaultPagingOptionsAccessor, unitOfWork)
         {
-            _shopPromotionUserManager = shopPromotionUserManager;
             _baseIdentityUserManager = baseIdentityUserManager;
         }
 
@@ -58,7 +54,7 @@ namespace ShopPromotion.API.Controllers.Admin
         [ProducesResponseType(typeof(Page<MinimumIdentityUserResource>), 200)]
         public async Task<IActionResult> GetUsersAsync([FromQuery] PagingOptions pagingOptions)
         {
-            var result = await _shopPromotionUserManager.GetAllUsersAsync(pagingOptions);
+            var result = await UnitOfWork.ShopPromotionUserManager.GetAllUsersAsync(pagingOptions);
             return Ok(result);
         }
 

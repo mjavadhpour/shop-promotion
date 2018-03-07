@@ -14,7 +14,7 @@ namespace ShopPromotion.Domain.Services
     /// <summary>
     /// Base service for implement in BaseEntityService.
     /// </summary>
-    public interface IBaseService<TForm, TEntityResource, in TEntityModel>
+    public interface IBaseService<TForm, TEntityResource, in TEntityModel, TContext>
         where TEntityModel : BaseEntity where TForm : BaseEntity
     {
         /// <summary>
@@ -42,7 +42,7 @@ namespace ShopPromotion.Domain.Services
         /// <param name="form"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<TEntityResource> AddEntityAsync(TForm form, CancellationToken ct);
+        TEntityResource AddEntity(TForm form, CancellationToken ct);
 
         /// <summary>
         /// Update a entity.

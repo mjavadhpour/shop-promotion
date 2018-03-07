@@ -15,12 +15,12 @@ namespace ShopPromotion.API.Controllers.Admin
     using ServiceConfiguration;
     // Domain
     using Domain.EntityLayer;
-    using ShopPromotion.Domain.Infrastructure.Models.Form;
-    using ShopPromotion.Domain.Infrastructure.Models.Parameter;
-    using ShopPromotion.Domain.Infrastructure.Models.Resource;
-    using ShopPromotion.Domain.Infrastructure.Models.Response;
-    using ShopPromotion.Domain.Infrastructure.Models.Response.Pagination;
-    using Domain.Services;
+    using Domain.Infrastructure.DAL;
+    using Domain.Infrastructure.Models.Form;
+    using Domain.Infrastructure.Models.Parameter;
+    using Domain.Infrastructure.Models.Resource;
+    using Domain.Infrastructure.Models.Response;
+    using Domain.Infrastructure.Models.Response.Pagination;
     using Domain.Services.PaginationHelper;
 
     /// <summary>
@@ -33,9 +33,10 @@ namespace ShopPromotion.API.Controllers.Admin
         GetItemByIdParameters>
     {
         /// <inheritdoc />
-        public AdminShopController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
-            IBaseService<ShopAdminForm, MinimumShopResource, Shop> shopService, 
-            UserManager<BaseIdentityUser> userManager) : base(defaultPagingOptionsAccessor, shopService, userManager)
+        public AdminShopController(ResolvedPaginationValueService defaultPagingOptionsAccessor, UnitOfWork unitOfWork,
+            UserManager<BaseIdentityUser> userManager,
+            UnitOfWork<ShopAdminForm, MinimumShopResource, Shop> genericUnitOfWork) : base(defaultPagingOptionsAccessor,
+            unitOfWork, userManager, genericUnitOfWork)
         {
         }
 
@@ -56,6 +57,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="200">OK</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
+        /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
         [ProducesResponseType(typeof(Page<MinimumShopResource>), 200)]
         public override async Task<IActionResult> GetEntitiesAsync([FromQuery] PagingOptions pagingOptions,
@@ -80,6 +82,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="200">OK</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
+        /// <response code="403">Forbidden</response>
         /// <response code="404">Not Found</response>
         /// <response code="500">Internal Server Error</response>
         [ProducesResponseType(typeof(SingleModelResponse<MinimumShopResource>), 200)]

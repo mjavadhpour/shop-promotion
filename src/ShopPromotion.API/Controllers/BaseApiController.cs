@@ -17,11 +17,11 @@ namespace ShopPromotion.API.Controllers
     // Domain
     using Domain.Services.PaginationHelper;
     using Domain.EntityLayer;
+    using Domain.Infrastructure.DAL;
     using Domain.Infrastructure.Models.Parameter;
     using Domain.Infrastructure.Models.Resource;
     using Domain.Infrastructure.Models.Response;
     using Domain.Infrastructure.Models.Response.Pagination;
-    using Domain.Services;
     // Helper
     using Helper.Infrastructure.ActionResults;
 
@@ -40,20 +40,21 @@ namespace ShopPromotion.API.Controllers
         /// <summary>
         /// The Base entity service. SHOULD pass by child with real service that was related to API.
         /// </summary>
-        protected readonly IBaseService<TForm, TMinimumTResource, T> EntityService;
+        protected readonly UnitOfWork<TForm, TMinimumTResource, T> GenericUnitOfWork;
 
         /// <summary>
         /// Base controller constructor.
         /// </summary>
         /// <param name="defaultPagingOptionsAccessor"></param>
-        /// <param name="entityService"></param>
+        /// <param name="unitOfWork"></param>
         /// <param name="userManager"></param>
-        protected BaseApiController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
-            IBaseService<TForm, TMinimumTResource, T> entityService, 
-            UserManager<BaseIdentityUser> userManager) : base(defaultPagingOptionsAccessor)
+        /// <param name="genericUnitOfWork"></param>
+        protected BaseApiController(ResolvedPaginationValueService defaultPagingOptionsAccessor, UnitOfWork unitOfWork,
+            UserManager<BaseIdentityUser> userManager, UnitOfWork<TForm, TMinimumTResource, T> genericUnitOfWork) :
+            base(defaultPagingOptionsAccessor, unitOfWork)
         {
-            EntityService = entityService;
             _userManager = userManager;
+            GenericUnitOfWork = genericUnitOfWork;
         }
 
         /// <summary>
@@ -67,7 +68,8 @@ namespace ShopPromotion.API.Controllers
         public virtual async Task<IActionResult> GetEntitiesAsync(PagingOptions pagingOptions,
             TGetAllParameters entityTypeParameters, CancellationToken ct)
         {
-            var entities = await EntityService.GetEntitiesAsync(pagingOptions, entityTypeParameters, ct);
+            var entities = await GenericUnitOfWork.GenericRepository()
+                .GetEntitiesAsync(pagingOptions, entityTypeParameters, ct);
 
             var collection = Page<TMinimumTResource>.Create(
                 entities.Results.ToArray(),
@@ -90,7 +92,7 @@ namespace ShopPromotion.API.Controllers
             var response =
                 new SingleModelResponse<TMinimumTResource>() as ISingleModelResponse<TMinimumTResource>;
             // Unified model for single response.
-            response.Model = await EntityService.GetEntityAsync(itemByIdParameters.ItemId, ct);
+            response.Model = await GenericUnitOfWork.GenericRepository().GetEntityAsync(itemByIdParameters.ItemId, ct);
             if (response.Model == null) return NotFound();
             return Ok(response);
         }
@@ -108,7 +110,8 @@ namespace ShopPromotion.API.Controllers
                 new SingleModelResponse<TMinimumTResource>() as ISingleModelResponse<TMinimumTResource>;
             // Unified model for single response.
             form.CreatedById = GetUserId(HttpContext);
-            response.Model = await EntityService.AddEntityAsync(form, ct);
+            response.Model = GenericUnitOfWork.GenericRepository().AddEntity(form, ct);
+            await GenericUnitOfWork.SaveAsync();
             return CreatedAtAction(nameof(GetEntityByIdAsync), new {itemId = response.Model.Id}, response);
         }
 
@@ -128,7 +131,8 @@ namespace ShopPromotion.API.Controllers
             if (entity.GetType() != typeof(OkObjectResult)) return NotFound();
 
             form.Id = itemByIdParameters.ItemId;
-            await EntityService.UpdateEntityAsync(form, ct);
+            await GenericUnitOfWork.GenericRepository().UpdateEntityAsync(form, ct);
+            await GenericUnitOfWork.SaveAsync();
             return NoContent();
         }
 
@@ -146,7 +150,8 @@ namespace ShopPromotion.API.Controllers
             var entity = GetEntityByIdAsync(itemByIdParameters, ct).Result;
             if (entity.GetType() != typeof(OkObjectResult)) return NotFound();
 
-            await EntityService.DeleteEntityAsync(new T {Id = itemByIdParameters.ItemId}, ct);
+            await GenericUnitOfWork.GenericRepository().DeleteEntityAsync(new T {Id = itemByIdParameters.ItemId}, ct);
+            await GenericUnitOfWork.SaveAsync();
             return NoContent();
         }
 

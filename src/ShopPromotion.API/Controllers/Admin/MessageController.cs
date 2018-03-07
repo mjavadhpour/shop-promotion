@@ -15,11 +15,11 @@ namespace ShopPromotion.API.Controllers.Admin
     using ServiceConfiguration;
     // Doamin
     using Domain.EntityLayer;
-    using ShopPromotion.Domain.Infrastructure.Models.Form;
-    using ShopPromotion.Domain.Infrastructure.Models.Parameter;
-    using ShopPromotion.Domain.Infrastructure.Models.Resource;
-    using ShopPromotion.Domain.Infrastructure.Models.Response.Pagination;
-    using Domain.Services;
+    using Domain.Infrastructure.DAL;
+    using Domain.Infrastructure.Models.Form;
+    using Domain.Infrastructure.Models.Parameter;
+    using Domain.Infrastructure.Models.Resource;
+    using Domain.Infrastructure.Models.Response.Pagination;
     using Domain.Services.PaginationHelper;
 
     /// <summary>
@@ -31,9 +31,10 @@ namespace ShopPromotion.API.Controllers.Admin
         , GetAllMessagesParameters, GetItemByIdParameters>
     {
         /// <inheritdoc />
-        public MessageController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
-            IBaseService<MessageForm, MinimumMessageResource, Message> entityService,
-            UserManager<BaseIdentityUser> userManager) : base(defaultPagingOptionsAccessor, entityService, userManager)
+        public MessageController(ResolvedPaginationValueService defaultPagingOptionsAccessor, UnitOfWork unitOfWork,
+            UserManager<BaseIdentityUser> userManager,
+            UnitOfWork<MessageForm, MinimumMessageResource, Message> genericUnitOfWork) : base(
+            defaultPagingOptionsAccessor, unitOfWork, userManager, genericUnitOfWork)
         {
         }
 

@@ -8,7 +8,7 @@ namespace ShopPromotion.Domain.Infrastructure.Models.Form
 {
     using EntityLayer;
 
-    public class SpeicialOfferForm : BaseEntity
+    public class SpecialOfferForm : BaseEntity
     {
         [Required]
         public string FirstName { get; set; }

@@ -15,12 +15,12 @@ namespace ShopPromotion.API.Controllers.Admin
     using ServiceConfiguration;
     // Domain
     using Domain.EntityLayer;
-    using ShopPromotion.Domain.Infrastructure.Models.Form;
-    using ShopPromotion.Domain.Infrastructure.Models.Parameter;
-    using ShopPromotion.Domain.Infrastructure.Models.Resource;
-    using ShopPromotion.Domain.Infrastructure.Models.Response;
-    using ShopPromotion.Domain.Infrastructure.Models.Response.Pagination;
-    using Domain.Services;
+    using Domain.Infrastructure.DAL;
+    using Domain.Infrastructure.Models.Form;
+    using Domain.Infrastructure.Models.Parameter;
+    using Domain.Infrastructure.Models.Resource;
+    using Domain.Infrastructure.Models.Response;
+    using Domain.Infrastructure.Models.Response.Pagination;
     using Domain.Services.PaginationHelper;
 
     /// <summary>
@@ -29,13 +29,14 @@ namespace ShopPromotion.API.Controllers.Admin
     [Area("Admin")]
     [Route("api/v1/[area]")]
     [Authorize(Policy = ConfigurePolicyService.AdminUserPolicy)]
-    public class SpecialOfferController : BaseApiController<SpeicialOfferForm, MinimumSpecialOfferResource, SpecialOffer
+    public class SpecialOfferController : BaseApiController<SpecialOfferForm, MinimumSpecialOfferResource, SpecialOffer
         , GetAllSpecialOffersParameters, GetItemByIdAndShopParameters>
     {
         /// <inheritdoc />
         public SpecialOfferController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
-            IBaseService<SpeicialOfferForm, MinimumSpecialOfferResource, SpecialOffer> entityService,
-            UserManager<BaseIdentityUser> userManager) : base(defaultPagingOptionsAccessor, entityService, userManager)
+            UnitOfWork unitOfWork, UserManager<BaseIdentityUser> userManager,
+            UnitOfWork<SpecialOfferForm, MinimumSpecialOfferResource, SpecialOffer> genericUnitOfWork) : base(
+            defaultPagingOptionsAccessor, unitOfWork, userManager, genericUnitOfWork)
         {
         }
 
@@ -113,7 +114,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="500">Internal Server Error</response>
         [HttpPost("shop/{shopId}/[controller]")]
         [ProducesResponseType(typeof(SingleModelResponse<MinimumSpecialOfferResource>), 201)]
-        public override Task<IActionResult> CreateEntityAsync(SpeicialOfferForm form, CancellationToken ct)
+        public override Task<IActionResult> CreateEntityAsync(SpecialOfferForm form, CancellationToken ct)
         {
             return base.CreateEntityAsync(form, ct);
         }
@@ -140,7 +141,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="500">Internal Server Error</response>
         [HttpPut("shop/{shopId}/[controller]/{itemId}")]
         public override Task<IActionResult> UpdateEntityAsync(GetItemByIdAndShopParameters itemByIdParameters,
-            SpeicialOfferForm form, CancellationToken ct)
+            SpecialOfferForm form, CancellationToken ct)
         {
             return base.UpdateEntityAsync(itemByIdParameters, form, ct);
         }

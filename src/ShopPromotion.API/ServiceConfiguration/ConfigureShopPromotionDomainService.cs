@@ -15,6 +15,9 @@ namespace ShopPromotion.API.ServiceConfiguration
     using Domain.Infrastructure.Models.Form;
     using Domain.Infrastructure.Models.Resource;
     using Domain.Services.Statistics;
+    using Domain.Infrastructure;
+    using Domain.Infrastructure.DAL;
+    using Domain.Services.ShopStatus;
 
     /// <summary>
     /// Configure ShopPromotion core services.
@@ -41,8 +44,46 @@ namespace ShopPromotion.API.ServiceConfiguration
             services.AddScoped<ResolvedPaginationValueService>();
             // Filter with resolved DI
             services.AddScoped<PaginationDefaultValueFilter>();
+            //Unit of work
+            services.AddScoped<UnitOfWork>();
+            // ShopStatusService
+            services.AddScoped<IShopPromotionUserManager, ShopPromotionUserManager>();
+            // PaymentReportService
+            services.AddScoped<IPaymentReportTracker, PaymentReportService>();
+            // ShopReportService
+            services.AddScoped<IShopReportService, ShopReportService>();
+            // AppUserReportService
+            services.AddScoped<IAppUserReportService, AppUserReportService>();
+            // UsageStatisticservice
+            services.AddScoped<IUsageStatisticservice, UsageStatisticservice>();
+            // Generic unit of work.
+            services.AddScoped<UnitOfWork<ShopAdminForm, MinimumShopResource, Shop>>();
+            // Generic unit of work.
+            services.AddScoped<UnitOfWork<ShopForm, MinimumShopResource, Shop>>();
+            // Generic unit of work.
+            services.AddScoped<UnitOfWork<MessageForm, MinimumMessageResource, Message>>();
+            // Generic unit of work.
+            services.AddScoped<UnitOfWork<SpecialOfferForm, MinimumSpecialOfferResource, SpecialOffer>>();
+            // ShopStatusService
+            services.AddScoped<IShopStatusService, ShopStatusService>();
             // Shop
-            services.AddScoped<IBaseService<ShopForm, MinimumShopResource, Shop>, DefaultShopService>();
+            services
+                .AddScoped<IBaseService<ShopForm, MinimumShopResource, Shop, ShopPromotionDomainContext>,
+                    DefaultShopService>();
+            // Message
+            services
+                .AddScoped<IBaseService<MessageForm, MinimumMessageResource, Message, ShopPromotionDomainContext>,
+                    DefaultEntityService<MessageForm, MinimumMessageResource, Message, ShopPromotionDomainContext>>();
+            // SpecialOffer
+            services
+                .AddScoped<
+                    IBaseService<SpecialOfferForm, MinimumSpecialOfferResource, SpecialOffer, ShopPromotionDomainContext
+                    >, DefaultEntityService<SpecialOfferForm, MinimumSpecialOfferResource, SpecialOffer,
+                        ShopPromotionDomainContext>>();
+            // Shop Admin
+            services
+                .AddScoped<IBaseService<ShopAdminForm, MinimumShopResource, Shop, ShopPromotionDomainContext>,
+                    DefaultEntityService<ShopAdminForm, MinimumShopResource, Shop, ShopPromotionDomainContext>>();
             // Report services.
             services.AddScoped<IAppUserReportService, AppUserReportService>();
             services.AddScoped<IPaymentReportTracker, PaymentReportService>();

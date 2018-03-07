@@ -12,6 +12,7 @@ namespace ShopPromotion.API.Controllers
     using Helper.Infrastructure.Filters;
     // Domain
     using Domain.Services.PaginationHelper;
+    using Domain.Infrastructure.DAL;
 
     /// <summary>
     /// Base Controller that SOULD extended from all APIs.
@@ -29,13 +30,18 @@ namespace ShopPromotion.API.Controllers
         /// Pagination settings.
         /// </summary>
         protected readonly ResolvedPaginationValueService DefaultPagingOptions;
+        /// <summary>
+        /// Unit of work with all registered services.
+        /// </summary>
+        protected readonly UnitOfWork UnitOfWork;
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        protected BaseController(ResolvedPaginationValueService defaultPagingOptionsAccessor)
+        protected BaseController(ResolvedPaginationValueService defaultPagingOptionsAccessor, UnitOfWork unitOfWork)
         {
             DefaultPagingOptions = defaultPagingOptionsAccessor;
+            UnitOfWork = unitOfWork;
         }
     }
 }

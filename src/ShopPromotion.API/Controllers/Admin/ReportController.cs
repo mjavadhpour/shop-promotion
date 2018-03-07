@@ -12,9 +12,9 @@ namespace ShopPromotion.API.Controllers.Admin
     using ServiceConfiguration;
     // Domain
     using Domain.Services.PaginationHelper;
-    using ShopPromotion.Domain.Infrastructure.Models.Parameter.Custom;
-    using ShopPromotion.Domain.Infrastructure.Models.Resource.Custom;
-    using ShopPromotion.Domain.Services.Statistics;
+    using Domain.Infrastructure.DAL;
+    using Domain.Infrastructure.Models.Parameter.Custom;
+    using Domain.Infrastructure.Models.Resource.Custom;
 
     /// <summary>
     /// Report controller.
@@ -23,24 +23,10 @@ namespace ShopPromotion.API.Controllers.Admin
     [Authorize(Policy = ConfigurePolicyService.AdminUserPolicy)]
     public class ReportController : BaseController
     {
-        private readonly IPaymentReportTracker _paymentReportService;
-        private readonly IShopReportService _shopReportService;
-        private readonly IAppUserReportService _appUserReportService;
-        private readonly IUsageStatisticservice _usageStatisticservice;
-
         /// <inheritdoc />
-        public ReportController(
-            ResolvedPaginationValueService defaultPagingOptionsAccessor,
-            IPaymentReportTracker paymentReportService,
-            IShopReportService shopReportService,
-            IUsageStatisticservice usageStatisticservice,
-            IAppUserReportService appUserReportService) : base(
-            defaultPagingOptionsAccessor)
+        public ReportController(ResolvedPaginationValueService defaultPagingOptionsAccessor, UnitOfWork unitOfWork) :
+            base(defaultPagingOptionsAccessor, unitOfWork)
         {
-            _paymentReportService = paymentReportService;
-            _appUserReportService = appUserReportService;
-            _shopReportService = shopReportService;
-            _usageStatisticservice = usageStatisticservice;
         }
 
         /// <summary>
@@ -56,7 +42,7 @@ namespace ShopPromotion.API.Controllers.Admin
         public async Task<IActionResult> GetNumberOfPaymentsReportAsync(
             [FromQuery] PaymentsReportParameters reportParameters)
         {
-            var result = await _paymentReportService.GetNumberOfPayments(reportParameters);
+            var result = await UnitOfWork.PaymentReportService.GetNumberOfPayments(reportParameters);
             return Ok(result);
         }
 
@@ -73,7 +59,7 @@ namespace ShopPromotion.API.Controllers.Admin
         public async Task<IActionResult> GetSumOfPaymentsReportAsync(
             [FromQuery] PaymentsReportParameters reportParameters)
         {
-            var result = await _paymentReportService.GetSumOfPayments(reportParameters);
+            var result = await UnitOfWork.PaymentReportService.GetSumOfPayments(reportParameters);
             return Ok(result);
         }
 
@@ -90,7 +76,7 @@ namespace ShopPromotion.API.Controllers.Admin
         public async Task<IActionResult> GetShopsReportAsync(
             [FromQuery] ShopsReportParameters reportParameters)
         {
-            var result = await _shopReportService.GetNumberOfShops(reportParameters);
+            var result = await UnitOfWork.ShopReportService.GetNumberOfShops(reportParameters);
             return Ok(result);
         }
 
@@ -107,7 +93,7 @@ namespace ShopPromotion.API.Controllers.Admin
         public async Task<IActionResult> GetAppUsersReportAsync(
             [FromQuery] AppUsersReportParameters reportParameters)
         {
-            var result = await _appUserReportService.GetNumberOfAppUsers(reportParameters);
+            var result = await UnitOfWork.AppUserReportService.GetNumberOfAppUsers(reportParameters);
             return Ok(result);
         }
 
@@ -124,7 +110,7 @@ namespace ShopPromotion.API.Controllers.Admin
         public async Task<IActionResult> GetUsagesStatisticsAsync(
             [FromQuery] UsageStatisticsParameters reportParameters)
         {
-            var result = await _usageStatisticservice.GetUsagesChartReport(reportParameters);
+            var result = await UnitOfWork.UsageStatisticservice.GetUsagesChartReport(reportParameters);
             return Ok(result);
         }
     }

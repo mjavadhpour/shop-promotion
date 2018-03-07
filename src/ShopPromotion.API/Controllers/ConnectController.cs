@@ -9,6 +9,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using ShopPromotion.Domain.Infrastructure.DAL;
 
 namespace ShopPromotion.API.Controllers
 {
@@ -19,7 +20,6 @@ namespace ShopPromotion.API.Controllers
     using Infrastructure.Models.ActionResults;
     // ShopPromotion Domain
     using Domain.EntityLayer;
-    using Domain.Services;
     using Domain.Services.PaginationHelper;
     // ShopPromotion Helper
     using Helper.Infrastructure.ActionResults;
@@ -33,19 +33,14 @@ namespace ShopPromotion.API.Controllers
     public class ConnectController : BaseController
     {
         private readonly UserManager<BaseIdentityUser> _userManager;
-        private readonly IShopPromotionUserManager _shopPromotionUserManager;
         private readonly TokenProviderService _tokenProviderService;
 
         /// <inheritdoc />
-        public ConnectController(
-            ResolvedPaginationValueService defaultPagingOptionsAccessor,
-            UserManager<BaseIdentityUser> userManager, 
-            IShopPromotionUserManager shopPromotionUserManager,
-            TokenProviderService tokenProviderService)
-            : base(defaultPagingOptionsAccessor)
+        public ConnectController(ResolvedPaginationValueService defaultPagingOptionsAccessor, UnitOfWork unitOfWork,
+            UserManager<BaseIdentityUser> userManager, TokenProviderService tokenProviderService) : base(
+            defaultPagingOptionsAccessor, unitOfWork)
         {
             _userManager = userManager;
-            _shopPromotionUserManager = shopPromotionUserManager;
             _tokenProviderService = tokenProviderService;
         }
 
@@ -64,7 +59,7 @@ namespace ShopPromotion.API.Controllers
         // TODO: Add more situation handlling.
         public async Task<IActionResult> Token([FromBody] LoginFormModel loginFormModel)
         {
-            var user = await _shopPromotionUserManager.FindByCodeAsync(loginFormModel.Code);
+            var user = await UnitOfWork.ShopPromotionUserManager.FindByCodeAsync(loginFormModel.Code);
 
             if (user == null) return BadRequest(new ApiError("Could not create token"));
 
