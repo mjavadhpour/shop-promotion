@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace ShopPromotion.Domain.Services.ShopStatusServices
 {   
     using EntityLayer;
+    using Exceptions;
     using Infrastructure;
     using Infrastructure.Models.Form.Custom;
     using PaginationHelper;
@@ -27,7 +28,7 @@ namespace ShopPromotion.Domain.Services.ShopStatusServices
         public async Task ChangeShopStatus(ShopStatusForm shopStatusForm, CancellationToken ct)
         {
             var shop = await Context.Shops.AsNoTracking().SingleOrDefaultAsync(x => x.Id == shopStatusForm.ShopId, ct);
-            if (shop == null) throw new EntryPointNotFoundException("Shop not found");
+            if (shop == null) throw new ShopNotFoundException();
             var shopStatus = new ShopStatus
             {
                 CreatedAt = DateTime.Now,

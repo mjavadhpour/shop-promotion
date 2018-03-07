@@ -13,7 +13,6 @@ namespace ShopPromotion.API.Controllers.Admin
     // API
     using App;
     using ServiceConfiguration;
-    using Infrastructure.Models.Parameter;
     // Domain
     using Domain.Services.PaginationHelper;
     using Domain.EntityLayer;
@@ -57,9 +56,6 @@ namespace ShopPromotion.API.Controllers.Admin
         public async Task<IActionResult> UpdateShopStatusAsync([FromForm] ShopStatusForm shopStatusForm,
             CancellationToken ct)
         {
-            var entity = new ShopController(_defaultPagingOptionsAccessor, UnitOfWork, _userManager, _genericUnitOfWork)
-                .GetEntityByIdAsync(new GetItemByIdParameters {ItemId = shopStatusForm.ShopId}, ct).Result;
-            if (entity.GetType() != typeof(OkObjectResult)) return NotFound();
             await UnitOfWork.ShopStatusService.ChangeShopStatus(shopStatusForm, ct);
             await UnitOfWork.SaveAsync();
             return NoContent();

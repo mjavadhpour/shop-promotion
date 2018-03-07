@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
+using ShopPromotion.Domain.Exceptions;
 
 namespace ShopPromotion.Helper.Infrastructure.Filters
 {
@@ -25,7 +26,13 @@ namespace ShopPromotion.Helper.Infrastructure.Filters
 
         public ApiExceptionFilter()
         {
+            AddHandler<ShopNotFoundException>(OnShopNotFoundException);
             AddHandler<Exception>(OnOtherException);
+        }
+
+        private IActionResult OnShopNotFoundException(ShopNotFoundException ex)
+        {
+            return ErrorResult(404, new ApiError { Message = "Requested shop was not found!" });
         }
 
         private IActionResult OnOtherException(Exception ex)
