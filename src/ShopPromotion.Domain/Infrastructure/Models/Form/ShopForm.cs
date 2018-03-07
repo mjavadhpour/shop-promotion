@@ -11,6 +11,6 @@ namespace ShopPromotion.Domain.Infrastructure.Models.Form
     public class ShopForm : BaseEntity
     {
         [Required]
-        public string FirstName { get; set; }
+        public string Title { get; set; }
     }
 }

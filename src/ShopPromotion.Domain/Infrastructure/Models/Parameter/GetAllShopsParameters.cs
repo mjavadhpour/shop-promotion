@@ -13,15 +13,15 @@ namespace ShopPromotion.Domain.Infrastructure.Models.Parameter
         /// Filter human by contract id
         /// </summary>
         [FromQuery]
-        public int? ContractId { get; set; }
+        public int? Title { get; set; }
 
         /// <inheritdoc />
         public object GetParameter(string nameOfParam)
         {
             switch (nameOfParam)
             {
-                case "ContractId":
-                    return ContractId;
+                case "Title":
+                    return Title;
                 default:
                     throw new KeyNotFoundException();
             }

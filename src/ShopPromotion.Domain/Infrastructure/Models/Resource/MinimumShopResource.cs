@@ -6,6 +6,6 @@ namespace ShopPromotion.Domain.Infrastructure.Models.Resource
 {
     public class MinimumShopResource : MinimumBaseEntity
     {
-        public string FirstName { get; set; }
+        public string Title { get; set; }
     }
 }
