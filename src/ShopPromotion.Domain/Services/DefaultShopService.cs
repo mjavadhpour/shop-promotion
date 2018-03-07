@@ -6,13 +6,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 namespace ShopPromotion.Domain.Services
 {
     using EntityLayer;
     using Infrastructure;
-    using Infrastructure.AppSettings;
     using Infrastructure.Models.Form;
     using Infrastructure.Models.Resource;
     using Infrastructure.Models.Parameter;
@@ -22,10 +20,8 @@ namespace ShopPromotion.Domain.Services
     public class
         DefaultShopService : DefaultEntityService<ShopForm, MinimumShopResource, Shop, ShopPromotionDomainContext>
     {
-        public DefaultShopService(IOptions<ShopPromotionDomainAppSettings> appSettings,
-            ShopPromotionDomainContext context,
-            ResolvedPaginationValueService resolvedPaginationValue) : base(appSettings,
-            context, resolvedPaginationValue)
+        public DefaultShopService(ShopPromotionDomainContext context,
+            ResolvedPaginationValueService resolvedPaginationValue) : base(context, resolvedPaginationValue)
         {
         }
 

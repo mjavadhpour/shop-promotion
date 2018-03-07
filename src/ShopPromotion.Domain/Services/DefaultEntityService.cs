@@ -21,18 +21,13 @@ namespace ShopPromotion.Domain.Services
     // Helper
     using PaginationHelper;
 
-    public class DefaultEntityService<TForm, TModelResource, TModel, TContext> : BaseEntityService,
+    public class DefaultEntityService<TForm, TModelResource, TModel, TContext> : BaseEntityService<TContext>,
         IBaseService<TForm, TModelResource, TModel, TContext> where TModel : BaseEntity
         where TForm : BaseEntity
         where TContext : DbContext
     {
-        protected readonly TContext Context;
         protected readonly DbSet<TModel> Entities;
         protected IQueryable<TModel> Query;
-        /// <summary>
-        /// Resolved velue for pagination.
-        /// </summary>
-        private readonly ResolvedPaginationValueService _paginationValue;
         /// <summary>
         /// Hold the actions that specify what actually happening in this class.
         /// </summary>
@@ -48,15 +43,12 @@ namespace ShopPromotion.Domain.Services
         internal const short UpdateEntity = 5; 
         internal const short DeleteEntity = 6;
 
-        public DefaultEntityService(
-            IOptions<ShopPromotionDomainAppSettings> appSettings, 
+        public DefaultEntityService( 
             TContext context,
-            ResolvedPaginationValueService resolvedPaginationValue) : base(appSettings)
+            ResolvedPaginationValueService resolvedPaginationValue) : base(resolvedPaginationValue, context)
         {
-            Context = context;
             Entities = Context.Set<TModel>();
             Query = Entities;
-            _paginationValue = resolvedPaginationValue;
             _currentAction = Initialize;
         }
 
@@ -80,12 +72,12 @@ namespace ShopPromotion.Domain.Services
             _currentAction = GetEntities;
             var totalNumberOfRecords = await Query.CountAsync(ct);
             var results = await GetElementsOfTModelSequenceAsync(
-                _paginationValue.PageSize, 
-                _paginationValue.Page,
-                _paginationValue.OrderBy, 
-                _paginationValue.Ascending, ct);
+                PaginationValues.PageSize, 
+                PaginationValues.Page,
+                PaginationValues.OrderBy, 
+                PaginationValues.Ascending, ct);
 
-            return Page<TModelResource>.Create(results, totalNumberOfRecords, _paginationValue);
+            return Page<TModelResource>.Create(results, totalNumberOfRecords, PaginationValues);
         }
 
         /// <inheritdoc>
@@ -184,7 +176,7 @@ namespace ShopPromotion.Domain.Services
         }
 
         /// <summary>
-        /// Custom validation method to thrown intended exceptions in <see cref="AddEntityAsync"/> and
+        /// Custom validation method to thrown intended exceptions in <see cref="CreateEntity"/> and
         /// <see cref="UpdateEntityAsync"/> 
         /// </summary>
         /// <remarks>
