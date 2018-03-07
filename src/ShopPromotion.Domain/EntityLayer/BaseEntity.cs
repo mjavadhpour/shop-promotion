@@ -10,6 +10,11 @@ namespace ShopPromotion.Domain.EntityLayer
 
     public abstract class BaseEntity : IBaseEntity
     {
+        protected BaseEntity()
+        {
+            CreatedAt = DateTime.Now;
+        }
+
         [Key]
         public virtual int Id { get; set; }
 

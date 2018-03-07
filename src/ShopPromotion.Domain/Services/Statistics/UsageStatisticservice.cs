@@ -37,7 +37,9 @@ namespace ShopPromotion.Domain.Services.Statistics
             for (var date = reportParameters.FromDate.Date; date <= reportParameters.ToDate; date = date.AddDays(1))
             {
                 var currentDate = date;
-                var users = await Context.BaseIdentityUsers.CountAsync(ct);
+                var users = await Context.BaseIdentityUsers.Where(
+                        x => x.CreatedAt  >= currentDate.Date && x.CreatedAt < currentDate.Date.AddDays(1))
+                    .CountAsync(ct);
                 var shops = await Context.Shops.Where(
                         x => x.CreatedAt  >= currentDate.Date && x.CreatedAt < currentDate.Date.AddDays(1))
                     .CountAsync(ct);

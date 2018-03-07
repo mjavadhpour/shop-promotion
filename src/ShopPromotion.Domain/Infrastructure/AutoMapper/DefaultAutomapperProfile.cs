@@ -9,6 +9,7 @@ namespace ShopPromotion.Domain.Infrastructure.AutoMapper
     using EntityLayer;
     using Models.Resource;
     using Models.Resource.Custom;
+    using Models.Form;
 
     /// <summary>
     /// Default auto mapping configuration and define supported mapping in project.
@@ -26,6 +27,8 @@ namespace ShopPromotion.Domain.Infrastructure.AutoMapper
             CreateMap<MinimumIdentityUserResource, MinimumIdentityUserResource>();
             // Shop
             CreateMap<Shop, MinimumShopResource>();
+            CreateMap<ShopForm, Shop>();
+            CreateMap<ShopForm, MinimumShopResource>();
             // Message
             CreateMap<Message, MinimumMessageResource>();
             // SpecialOffer

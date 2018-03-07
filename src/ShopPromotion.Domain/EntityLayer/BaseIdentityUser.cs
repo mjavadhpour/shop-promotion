@@ -2,6 +2,8 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using System;
+
 namespace ShopPromotion.Domain.EntityLayer
 {
     using Microsoft.AspNetCore.Identity;
@@ -12,9 +14,16 @@ namespace ShopPromotion.Domain.EntityLayer
     /// </summary>
     public abstract class BaseIdentityUser : IdentityUser
     {
+        protected BaseIdentityUser()
+        {
+            CreatedAt = DateTime.Now;
+        }
+
         /// <summary>
         /// Verification code for SMS login confirmation.
         /// </summary>
         public string VerificationCode { get; set; }
+
+        public DateTime CreatedAt { get; set; }
     }
 }

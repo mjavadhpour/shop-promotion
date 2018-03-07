@@ -37,7 +37,7 @@ namespace ShopPromotion.Domain.Services.Statistics
         public async Task<SumOfPaymentsReportViewModel> GetSumOfPayments(PaymentsReportParameters reportParameters,
             CancellationToken ct)
         {
-            var sum = await _payments.SumAsync(x => x.Amount);
+            var sum = await _payments.SumAsync(x => x.Amount, ct);
             return new SumOfPaymentsReportViewModel(sum);
         }
     }
