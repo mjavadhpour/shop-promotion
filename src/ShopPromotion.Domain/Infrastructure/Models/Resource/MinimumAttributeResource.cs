@@ -2,15 +2,10 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
-namespace ShopPromotion.Domain.EntityLayer
+namespace ShopPromotion.Domain.Infrastructure.Models.Resource
 {
-    /// <summary>
-    /// The available attribute for ShopAttributes.
-    /// </summary>
-    public class Attribute : BaseEntity
+    public class MinimumAttributeResource : MinimumBaseEntity
     {
         public string Name { get; set; }
-
-        public string Description { get; set; }
     }
 }

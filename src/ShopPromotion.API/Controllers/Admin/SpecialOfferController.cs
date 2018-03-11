@@ -114,7 +114,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="500">Internal Server Error</response>
         [HttpPost("shop/{shopId}/[controller]")]
         [ProducesResponseType(typeof(SingleModelResponse<MinimumSpecialOfferResource>), 201)]
-        public override Task<IActionResult> CreateEntityAsync(SpecialOfferForm form, CancellationToken ct)
+        public override Task<IActionResult> CreateEntityAsync([FromBody] SpecialOfferForm form, CancellationToken ct)
         {
             return base.CreateEntityAsync(form, ct);
         }
@@ -141,7 +141,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="500">Internal Server Error</response>
         [HttpPut("shop/{shopId}/[controller]/{itemId}")]
         public override Task<IActionResult> UpdateEntityAsync(GetItemByIdAndShopParameters itemByIdParameters,
-            SpecialOfferForm form, CancellationToken ct)
+            [FromBody] SpecialOfferForm form, CancellationToken ct)
         {
             return base.UpdateEntityAsync(itemByIdParameters, form, ct);
         }

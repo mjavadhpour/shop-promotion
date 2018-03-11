@@ -12,5 +12,13 @@ namespace ShopPromotion.Domain.Infrastructure.Models.Form
     {
         [Required]
         public string Title { get; set; }
+
+        public string Instagram { get; set; }
+
+        public string Telegram { get; set; }
+
+        public string Twitter { get; set; }
+
+        public string Facebook { get; set; }
     }
 }

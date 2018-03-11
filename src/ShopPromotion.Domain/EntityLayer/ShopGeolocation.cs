@@ -11,5 +11,9 @@ namespace ShopPromotion.Domain.EntityLayer
     {
         public int ShopId { get; set; }
         public Shop Shop { get; set; }
+
+        public string latitude { get; set; }
+
+        public string Longitude { get; set; }
     }
 }

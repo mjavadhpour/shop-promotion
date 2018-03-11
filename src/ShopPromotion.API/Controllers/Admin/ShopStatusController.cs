@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace ShopPromotion.API.Controllers.Admin
 {
     // API
-    using App;
     using ServiceConfiguration;
     // Domain
     using Domain.Services.PaginationHelper;

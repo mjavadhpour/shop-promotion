@@ -2,18 +2,10 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
-namespace ShopPromotion.Domain.EntityLayer
+namespace ShopPromotion.Domain.Infrastructure.Models.Resource
 {
-    /// <summary>
-    /// The images of shop.
-    /// </summary>
-    public class ShopImage : BaseEntity
+    public class MinimumShopImageResource : MinimumBaseEntity
     {
-        public int ShopId { get; set; }
-        public Shop Shop { get; set; }
-
-        public string Type { get; set; }
-
         public string Path { get; set; }
     }
 }

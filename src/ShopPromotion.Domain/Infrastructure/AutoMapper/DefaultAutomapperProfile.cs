@@ -2,6 +2,7 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using System.Linq;
 using AutoMapper;
 
 namespace ShopPromotion.Domain.Infrastructure.AutoMapper
@@ -26,13 +27,18 @@ namespace ShopPromotion.Domain.Infrastructure.AutoMapper
             CreateMap<MinimumIdentityUserResource, BaseIdentityUser>();
             CreateMap<MinimumIdentityUserResource, MinimumIdentityUserResource>();
             // Shop
-            CreateMap<Shop, MinimumShopResource>();
+            // TODO: Mapping many to many attributes and latest string image path.
+            CreateMap<Shop, MinimumShopResource>()
+                .ForMember(dto => dto.Image, opt => opt.UseDestinationValue());
             CreateMap<ShopForm, Shop>();
             CreateMap<ShopForm, MinimumShopResource>();
+            CreateMap<ShopAttribute, MinimumAttributeResource>();
             // Message
             CreateMap<Message, MinimumMessageResource>();
             // SpecialOffer
             CreateMap<SpecialOffer, MinimumSpecialOfferResource>();
+            // Attribute
+            CreateMap<Attribute, MinimumAttributeResource>();
         }
     }
 }

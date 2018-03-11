@@ -18,6 +18,20 @@ namespace ShopPromotion.Domain.EntityLayer
 
         public IList<ShopStatus> ShopStatuses { get; set; }
 
+        public IList<ShopImage> ShopImages { get; set; }
+
+        public IList<ShopAddress> ShopAddresses { get; set; }
+
+        public IList<ShopAttribute> ShopAttributes { get; set; }
+
         public string Title { get; set; }
+
+        public string Instagram { get; set; }
+
+        public string Telegram { get; set; }
+
+        public string Twitter { get; set; }
+
+        public string Facebook { get; set; }
     }
 }

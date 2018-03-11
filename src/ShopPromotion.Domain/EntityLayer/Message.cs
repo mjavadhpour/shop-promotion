@@ -11,5 +11,7 @@ namespace ShopPromotion.Domain.EntityLayer
     {
         public string AuthorId { get; set; }
         public AdminUser Author { get; set; }
+
+        public string Note { get; set; }
     }
 }
