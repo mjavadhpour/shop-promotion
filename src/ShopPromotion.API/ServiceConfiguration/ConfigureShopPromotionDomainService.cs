@@ -65,12 +65,18 @@ namespace ShopPromotion.API.ServiceConfiguration
             services.AddScoped<UnitOfWork<MessageForm, MinimumMessageResource, MinimumMessageResource, Message>>();
             // Generic unit of work.
             services.AddScoped<UnitOfWork<SpecialOfferForm, MinimumSpecialOfferResource, MinimumSpecialOfferResource, SpecialOffer>>();
+            // Generic unit of work.
+            services.AddScoped<UnitOfWork<ShopPromotionForm, MinimumShopPromotionResource, MinimumShopPromotionResource, ShopPromotion>>();
             // ShopStatusService
             services.AddScoped<IShopStatusService, ShopStatusService>();
             // Shop
             services
                 .AddScoped<IBaseService<ShopForm, MinimumShopListResource, MinimumShopResource, Shop, ShopPromotionDomainContext>,
                     DefaultShopService>();
+            // ShopPromotion
+            services
+                .AddScoped<IBaseService<ShopPromotionForm, MinimumShopPromotionResource, MinimumShopPromotionResource, ShopPromotion, ShopPromotionDomainContext>,
+                    DefaultShopPromotionService>();
             // Message
             services
                 .AddScoped<IBaseService<MessageForm, MinimumMessageResource, MinimumMessageResource, Message, ShopPromotionDomainContext>,

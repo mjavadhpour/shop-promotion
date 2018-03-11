@@ -2,7 +2,6 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
-using System.Linq;
 using AutoMapper;
 
 namespace ShopPromotion.Domain.Infrastructure.AutoMapper
@@ -37,6 +36,14 @@ namespace ShopPromotion.Domain.Infrastructure.AutoMapper
             CreateMap<ShopForm, Shop>();
             CreateMap<ShopForm, MinimumShopResource>();
             CreateMap<ShopAttribute, MinimumAttributeResource>();
+            // ShopPromotion
+            CreateMap<ShopPromotion, MinimumShopPromotionResource>();
+            CreateMap<ShopPromotionForm, ShopPromotion>();
+            CreateMap<ShopPromotionForm, MinimumShopPromotionResource>();
+            // ShopImage
+            CreateMap<ShopImage, MinimumShopImageResource>();
+            // ShopGeolocations
+            CreateMap<ShopGeolocation, MinimumShopGeolocationsResource>();
             // Message
             CreateMap<Message, MinimumMessageResource>();
             // SpecialOffer
