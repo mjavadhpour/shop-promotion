@@ -30,7 +30,10 @@ namespace ShopPromotion.Domain.Infrastructure.AutoMapper
             // TODO: Mapping many to many attributes and latest string image path.
             CreateMap<Shop, MinimumShopListResource>()
                 .ForMember(dto => dto.Image, opt => opt.UseDestinationValue());
-            CreateMap<Shop, MinimumShopResource>();
+            CreateMap<Shop, MinimumShopResource>()
+                .ForMember(dto => dto.Attributes, opt => opt.MapFrom(y => y.ShopAttributes))
+                .ForMember(dto => dto.Images, opt => opt.MapFrom(y => y.ShopImages))
+                .ForMember(dto => dto.Geolocation, opt => opt.MapFrom(y => y.ShopGeolocation));
             CreateMap<ShopForm, Shop>();
             CreateMap<ShopForm, MinimumShopResource>();
             CreateMap<ShopAttribute, MinimumAttributeResource>();
