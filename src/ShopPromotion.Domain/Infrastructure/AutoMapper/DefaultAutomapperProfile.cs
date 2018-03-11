@@ -28,8 +28,9 @@ namespace ShopPromotion.Domain.Infrastructure.AutoMapper
             CreateMap<MinimumIdentityUserResource, MinimumIdentityUserResource>();
             // Shop
             // TODO: Mapping many to many attributes and latest string image path.
-            CreateMap<Shop, MinimumShopResource>()
+            CreateMap<Shop, MinimumShopListResource>()
                 .ForMember(dto => dto.Image, opt => opt.UseDestinationValue());
+            CreateMap<Shop, MinimumShopResource>();
             CreateMap<ShopForm, Shop>();
             CreateMap<ShopForm, MinimumShopResource>();
             CreateMap<ShopAttribute, MinimumAttributeResource>();

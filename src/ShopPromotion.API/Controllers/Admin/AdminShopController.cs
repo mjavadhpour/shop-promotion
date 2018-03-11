@@ -29,13 +29,13 @@ namespace ShopPromotion.API.Controllers.Admin
     [Area("Admin")]
     [Route("api/v1/[area]/shop")]
     [Authorize(Policy = ConfigurePolicyService.AdminUserPolicy)]
-    public class AdminShopController : BaseApiController<ShopAdminForm, MinimumShopResource, Shop, GetAllShopsParameters,
+    public class AdminShopController : BaseApiController<ShopAdminForm, MinimumShopListResource, MinimumShopResource, Shop, GetAllShopsParameters,
         GetItemByIdParameters>
     {
         /// <inheritdoc />
         public AdminShopController(ResolvedPaginationValueService defaultPagingOptionsAccessor, UnitOfWork unitOfWork,
             UserManager<BaseIdentityUser> userManager,
-            UnitOfWork<ShopAdminForm, MinimumShopResource, Shop> genericUnitOfWork) : base(defaultPagingOptionsAccessor,
+            UnitOfWork<ShopAdminForm, MinimumShopListResource, MinimumShopResource, Shop> genericUnitOfWork) : base(defaultPagingOptionsAccessor,
             unitOfWork, userManager, genericUnitOfWork)
         {
         }

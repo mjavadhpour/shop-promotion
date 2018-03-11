@@ -29,13 +29,13 @@ namespace ShopPromotion.API.Controllers.Admin
     [Area("Admin")]
     [Route("api/v1/[area]")]
     [Authorize(Policy = ConfigurePolicyService.AdminUserPolicy)]
-    public class SpecialOfferController : BaseApiController<SpecialOfferForm, MinimumSpecialOfferResource, SpecialOffer
+    public class SpecialOfferController : BaseApiController<SpecialOfferForm, MinimumSpecialOfferResource, MinimumSpecialOfferResource, SpecialOffer
         , GetAllSpecialOffersParameters, GetItemByIdAndShopParameters>
     {
         /// <inheritdoc />
         public SpecialOfferController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
             UnitOfWork unitOfWork, UserManager<BaseIdentityUser> userManager,
-            UnitOfWork<SpecialOfferForm, MinimumSpecialOfferResource, SpecialOffer> genericUnitOfWork) : base(
+            UnitOfWork<SpecialOfferForm, MinimumSpecialOfferResource, MinimumSpecialOfferResource, SpecialOffer> genericUnitOfWork) : base(
             defaultPagingOptionsAccessor, unitOfWork, userManager, genericUnitOfWork)
         {
         }

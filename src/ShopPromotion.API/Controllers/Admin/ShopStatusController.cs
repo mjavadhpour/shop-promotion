@@ -29,13 +29,13 @@ namespace ShopPromotion.API.Controllers.Admin
     {
         private readonly ResolvedPaginationValueService _defaultPagingOptionsAccessor;
         private readonly UserManager<BaseIdentityUser> _userManager;
-        private readonly UnitOfWork<ShopForm, MinimumShopResource, Shop> _genericUnitOfWork;
+        private readonly UnitOfWork<ShopForm, MinimumShopListResource, MinimumShopResource, Shop> _genericUnitOfWork;
 
         /// <inheritdoc />
         public ShopStatusController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
             UnitOfWork unitOfWork, ResolvedPaginationValueService defaultPagingOptionsAccessor1,
             UserManager<BaseIdentityUser> userManager,
-            UnitOfWork<ShopForm, MinimumShopResource, Shop> genericUnitOfWork) : base(defaultPagingOptionsAccessor,
+            UnitOfWork<ShopForm, MinimumShopListResource, MinimumShopResource, Shop> genericUnitOfWork) : base(defaultPagingOptionsAccessor,
             unitOfWork)
         {
             _defaultPagingOptionsAccessor = defaultPagingOptionsAccessor1;

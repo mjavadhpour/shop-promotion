@@ -18,16 +18,16 @@ namespace ShopPromotion.Domain.Infrastructure.DAL
     /// <remarks>
     /// Used for default entity services.
     /// </remarks>
-    public class UnitOfWork<TForm, TMinimumTResource, T> : IDisposable
+    public class UnitOfWork<TForm, TMinimumTListResource, TMinimumTResource, T> : IDisposable
         where T : BaseEntity
         where TForm : BaseEntity
         where TMinimumTResource : MinimumBaseEntity
     {
         private readonly ShopPromotionDomainContext _context;
-        private readonly IBaseService<TForm, TMinimumTResource, T, ShopPromotionDomainContext> _targetEntityService;
+        private readonly IBaseService<TForm, TMinimumTListResource, TMinimumTResource, T, ShopPromotionDomainContext> _targetEntityService;
 
         public UnitOfWork(ShopPromotionDomainContext context,
-            IBaseService<TForm, TMinimumTResource, T, ShopPromotionDomainContext> baseService)
+            IBaseService<TForm, TMinimumTListResource, TMinimumTResource, T, ShopPromotionDomainContext> baseService)
         {
             _context = context;
             _targetEntityService = baseService;
@@ -37,7 +37,7 @@ namespace ShopPromotion.Domain.Infrastructure.DAL
         /// Get instance of resolved repository.
         /// </summary>
         /// <returns></returns>
-        public IBaseService<TForm, TMinimumTResource, T,ShopPromotionDomainContext> GenericRepository()
+        public IBaseService<TForm, TMinimumTListResource, TMinimumTResource, T,ShopPromotionDomainContext> GenericRepository()
         {
             return _targetEntityService;
         }

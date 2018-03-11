@@ -19,7 +19,7 @@ namespace ShopPromotion.Domain.Services
     using PaginationHelper;
 
     public class
-        DefaultShopService : DefaultEntityService<ShopForm, MinimumShopResource, Shop, ShopPromotionDomainContext>
+        DefaultShopService : DefaultEntityService<ShopForm, MinimumShopListResource, MinimumShopResource, Shop, ShopPromotionDomainContext>
     {
         public DefaultShopService(ShopPromotionDomainContext context,
             ResolvedPaginationValueService resolvedPaginationValue) : base(context, resolvedPaginationValue)
@@ -60,7 +60,7 @@ namespace ShopPromotion.Domain.Services
         /// <inheritdoc>
         /// <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
         /// </inheritdoc>
-        public override async Task<IPage<MinimumShopResource>> GetEntitiesAsync(IPagingOptions pagingOptions,
+        public override async Task<IPage<MinimumShopListResource>> GetEntitiesAsync(IPagingOptions pagingOptions,
             IEntityTypeParameters entityTypeParameters, CancellationToken ct)
         {
             return await base.GetEntitiesAsync(pagingOptions, entityTypeParameters, ct);

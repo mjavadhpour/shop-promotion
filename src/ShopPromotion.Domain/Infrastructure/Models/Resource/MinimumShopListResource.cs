@@ -3,20 +3,15 @@
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
 using System.Collections.Generic;
-using ShopPromotion.Domain.EntityLayer;
 
 namespace ShopPromotion.Domain.Infrastructure.Models.Resource
 {
-    public class MinimumShopResource : MinimumBaseEntity
+    public class MinimumShopListResource : MinimumBaseEntity
     {
         public string Title { get; set; }
 
-        public IList<MinimumShopImageResource> Images { get; set; }
+        public string Image { get; set; }
 
         public IList<MinimumAttributeResource> Attributes { get; set; }
-
-        public MinimumShopGeolocationsResource Geolocation { get; set; }
-
-        public ShopStatusOption Status { get; set; }
     }
 }

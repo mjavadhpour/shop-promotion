@@ -20,10 +20,11 @@ namespace ShopPromotion.Domain.Services
     // Helper
     using PaginationHelper;
 
-    public class DefaultEntityService<TForm, TModelResource, TModel, TContext> : BaseEntityService<TContext>,
-        IBaseService<TForm, TModelResource, TModel, TContext> where TModel : BaseEntity
+    public class DefaultEntityService<TForm, TListModelResource, TModelResource, TModel, TContext> : BaseEntityService<TContext>,
+        IBaseService<TForm, TListModelResource, TModelResource, TModel, TContext> where TModel : BaseEntity
         where TForm : BaseEntity
         where TContext : DbContext
+        where TListModelResource : MinimumBaseEntity
         where TModelResource : MinimumBaseEntity
     {
         protected readonly DbSet<TModel> Entities;
@@ -66,7 +67,7 @@ namespace ShopPromotion.Domain.Services
         /// <inheritdoc>
         /// <cref>IBaseService{TForm, TEntityResource,TEntityModel}</cref>
         /// </inheritdoc>
-        public virtual async Task<IPage<TModelResource>> GetEntitiesAsync(IPagingOptions pagingOptions,
+        public virtual async Task<IPage<TListModelResource>> GetEntitiesAsync(IPagingOptions pagingOptions,
             IEntityTypeParameters entityTypeParameters, CancellationToken ct)
         {
             _currentAction = GetEntities;
@@ -77,7 +78,7 @@ namespace ShopPromotion.Domain.Services
                 PaginationValues.OrderBy, 
                 PaginationValues.Ascending, ct);
 
-            return Page<TModelResource>.Create(results, totalNumberOfRecords, PaginationValues);
+            return Page<TListModelResource>.Create(results, totalNumberOfRecords, PaginationValues);
         }
 
         /// <inheritdoc>
@@ -152,14 +153,14 @@ namespace ShopPromotion.Domain.Services
         /// <param name="ascending"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        protected virtual async Task<TModelResource[]> GetElementsOfTModelSequenceAsync(int pageSize, int pageNumber,
+        protected virtual async Task<TListModelResource[]> GetElementsOfTModelSequenceAsync(int pageSize, int pageNumber,
             string orderBy, bool ascending, CancellationToken ct)
         {
             return await Query
                 .OrderByPropertyOrField(orderBy, ascending)
                 .Skip(pageNumber * pageSize)
                 .Take(pageSize)
-                .ProjectTo<TModelResource>()
+                .ProjectTo<TListModelResource>()
                 .ToArrayAsync(ct);
         }
 

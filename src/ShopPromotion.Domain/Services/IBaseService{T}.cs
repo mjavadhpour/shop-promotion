@@ -14,7 +14,7 @@ namespace ShopPromotion.Domain.Services
     /// <summary>
     /// Base service for implement in BaseEntityService.
     /// </summary>
-    public interface IBaseService<TForm, TEntityResource, in TEntityModel, TContext>
+    public interface IBaseService<TForm, TListEntityResource, TEntityResource, in TEntityModel, TContext>
         where TEntityModel : BaseEntity where TForm : BaseEntity
     {
         /// <summary>
@@ -32,7 +32,7 @@ namespace ShopPromotion.Domain.Services
         /// <param name="entityTypeParameters"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<IPage<TEntityResource>> GetEntitiesAsync(IPagingOptions pagingOptions,
+        Task<IPage<TListEntityResource>> GetEntitiesAsync(IPagingOptions pagingOptions,
             IEntityTypeParameters entityTypeParameters,
             CancellationToken ct);
 

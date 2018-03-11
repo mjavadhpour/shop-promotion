@@ -25,13 +25,13 @@ namespace ShopPromotion.API.Controllers.App
     /// Shop controller.
     /// </summary>
     [Area("App")]
-    public class ShopController : BaseApiController<ShopForm, MinimumShopResource, Shop, GetAllShopsParameters,
+    public class ShopController : BaseApiController<ShopForm, MinimumShopListResource, MinimumShopResource, Shop, GetAllShopsParameters,
         GetItemByIdParameters>
     {
         /// <inheritdoc />
         public ShopController(ResolvedPaginationValueService defaultPagingOptionsAccessor, UnitOfWork unitOfWork,
             UserManager<BaseIdentityUser> userManager,
-            UnitOfWork<ShopForm, MinimumShopResource, Shop> genericUnitOfWork) : base(defaultPagingOptionsAccessor,
+            UnitOfWork<ShopForm, MinimumShopListResource, MinimumShopResource, Shop> genericUnitOfWork) : base(defaultPagingOptionsAccessor,
             unitOfWork, userManager, genericUnitOfWork)
         {
         }

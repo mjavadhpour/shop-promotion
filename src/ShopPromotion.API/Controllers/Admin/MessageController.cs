@@ -27,13 +27,13 @@ namespace ShopPromotion.API.Controllers.Admin
     /// </summary>
     [Area("Admin")]
     [Authorize(Policy = ConfigurePolicyService.AdminUserPolicy)]
-    public class MessageController : BaseApiController<MessageForm, MinimumMessageResource, Message
+    public class MessageController : BaseApiController<MessageForm, MinimumMessageResource, MinimumMessageResource, Message
         , GetAllMessagesParameters, GetItemByIdParameters>
     {
         /// <inheritdoc />
         public MessageController(ResolvedPaginationValueService defaultPagingOptionsAccessor, UnitOfWork unitOfWork,
             UserManager<BaseIdentityUser> userManager,
-            UnitOfWork<MessageForm, MinimumMessageResource, Message> genericUnitOfWork) : base(
+            UnitOfWork<MessageForm, MinimumMessageResource, MinimumMessageResource, Message> genericUnitOfWork) : base(
             defaultPagingOptionsAccessor, unitOfWork, userManager, genericUnitOfWork)
         {
         }

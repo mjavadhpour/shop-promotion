@@ -28,9 +28,10 @@ namespace ShopPromotion.API.Controllers
     /// <summary>
     /// Base controller.
     /// </summary>
-    public abstract class BaseApiController<TForm, TMinimumTResource, T, TGetAllParameters, TGetItemParameters> : BaseController
+    public abstract class BaseApiController<TForm, TMinimumTListResource, TMinimumTResource, T, TGetAllParameters, TGetItemParameters> : BaseController
         where T : BaseEntity, new()
         where TForm : BaseEntity
+        where TMinimumTListResource: MinimumBaseEntity
         where TMinimumTResource : MinimumBaseEntity
         where TGetAllParameters : IEntityTypeParameters
         where TGetItemParameters : GetItemByIdParameters
@@ -40,7 +41,7 @@ namespace ShopPromotion.API.Controllers
         /// <summary>
         /// The Base entity service. SHOULD pass by child with real service that was related to API.
         /// </summary>
-        protected readonly UnitOfWork<TForm, TMinimumTResource, T> GenericUnitOfWork;
+        protected readonly UnitOfWork<TForm, TMinimumTListResource, TMinimumTResource, T> GenericUnitOfWork;
 
         /// <summary>
         /// Base controller constructor.
@@ -50,7 +51,7 @@ namespace ShopPromotion.API.Controllers
         /// <param name="userManager"></param>
         /// <param name="genericUnitOfWork"></param>
         protected BaseApiController(ResolvedPaginationValueService defaultPagingOptionsAccessor, UnitOfWork unitOfWork,
-            UserManager<BaseIdentityUser> userManager, UnitOfWork<TForm, TMinimumTResource, T> genericUnitOfWork) :
+            UserManager<BaseIdentityUser> userManager, UnitOfWork<TForm, TMinimumTListResource, TMinimumTResource, T> genericUnitOfWork) :
             base(defaultPagingOptionsAccessor, unitOfWork)
         {
             _userManager = userManager;
@@ -71,7 +72,7 @@ namespace ShopPromotion.API.Controllers
             var entities = await GenericUnitOfWork.GenericRepository()
                 .GetEntitiesAsync(pagingOptions, entityTypeParameters, ct);
 
-            var collection = Page<TMinimumTResource>.Create(
+            var collection = Page<TMinimumTListResource>.Create(
                 entities.Results.ToArray(),
                 entities.TotalNumberOfRecords,
                 DefaultPagingOptions);
