@@ -19,7 +19,6 @@ namespace ShopPromotion.API.Controllers.Admin
     using Domain.Infrastructure.Models.Form;
     using Domain.Infrastructure.Models.Parameter;
     using Domain.Infrastructure.Models.Resource;
-    using Domain.Infrastructure.Models.Response;
     using Domain.Infrastructure.Models.Response.Pagination;
     using Domain.Services.PaginationHelper;
 
@@ -29,20 +28,20 @@ namespace ShopPromotion.API.Controllers.Admin
     [Area("Admin")]
     [Route("api/v1/[area]")]
     [Authorize(Policy = ConfigurePolicyService.AdminUserPolicy)]
-    public class ShopPromotionController : BaseApiController<ShopPromotionForm, MinimumShopPromotionResource, MinimumShopPromotionResource, ShopPromotion
-        , GetAllShopPromotionParameters, GetItemByIdAndShopParameters>
+    public class ShopPromotionBarcodeController : BaseApiController<ShopPromotionBarcodeForm, MinimumShopPromotionBarcodeResource, MinimumShopPromotionBarcodeResource, ShopPromotionBarcode
+        , GetAllShopPromotionBarcodeParameters, GetItemByIdAndShopAndPromotionParameters>
     {
         /// <inheritdoc />
-        public ShopPromotionController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
+        public ShopPromotionBarcodeController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
             UnitOfWork unitOfWork, UserManager<BaseIdentityUser> userManager,
-            UnitOfWork<ShopPromotionForm, MinimumShopPromotionResource, MinimumShopPromotionResource, ShopPromotion> genericUnitOfWork) : base(
+            UnitOfWork<ShopPromotionBarcodeForm, MinimumShopPromotionBarcodeResource, MinimumShopPromotionBarcodeResource, ShopPromotionBarcode> genericUnitOfWork) : base(
             defaultPagingOptionsAccessor, unitOfWork, userManager, genericUnitOfWork)
         {
         }
 
-        /// Get list of shop promotions.
+        /// Get list of shop promotion barcodes.
         /// <summary>
-        /// Get list of shop promotions.
+        /// Get list of shop promotion barcodes.
         /// </summary>
         /// <param name="ct">
         /// Adding a CancellationToken parameter to your route methods allows ASP.NET Core to notify your
@@ -59,36 +58,17 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="401">Unauthorized</response>
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpGet("[controller]")]
+        [HttpGet("shop/{shopId}/promotion/{promotionId}/[controller]")]
         [ProducesResponseType(typeof(Page<MinimumSpecialOfferResource>), 200)]
         public override Task<IActionResult> GetEntitiesAsync(PagingOptions pagingOptions,
-            GetAllShopPromotionParameters entityTypeParameters, CancellationToken ct)
+            GetAllShopPromotionBarcodeParameters entityTypeParameters, CancellationToken ct)
         {
             return base.GetEntitiesAsync(pagingOptions, entityTypeParameters, ct);
         }
 
-        /// Get a shop  promotion by id.
-        /// <summary>
-        /// Get a shop promotion by id.
-        /// </summary>
-        /// <param name="itemByIdParameters"></param>
-        /// <param name="ct">
-        /// Adding a CancellationToken parameter to your route methods allows ASP.NET Core to notify your
-        /// asynchronous tasks of a cancellation (if the browser closes a connection, for example).
-        /// </param>
-        /// <returns>
-        /// IActionResult gives you the flexibility to return both HTTP status codes and object payloads.
-        /// return type contain a <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult" />.
-        /// </returns>
-        /// <response code="200">OK</response>
-        /// <response code="400">Bad Request</response>
-        /// <response code="401">Unauthorized</response>
-        /// <response code="403">Forbidden</response>
-        /// <response code="404">Not Found</response>
-        /// <response code="500">Internal Server Error</response>
-        [HttpGet("shop/{shopId}/[controller]/{itemId}")]
-        [ProducesResponseType(typeof(SingleModelResponse<MinimumSpecialOfferResource>), 200)]
-        public override Task<IActionResult> GetEntityByIdAsync(GetItemByIdAndShopParameters itemByIdParameters,
+        /// <inheritdoc />
+        [NonAction]
+        public override Task<IActionResult> GetEntityByIdAsync(GetItemByIdAndShopAndPromotionParameters itemByIdParameters,
             CancellationToken ct)
         {
             return base.GetEntityByIdAsync(itemByIdParameters, ct);
@@ -96,22 +76,22 @@ namespace ShopPromotion.API.Controllers.Admin
 
         /// <inheritdoc />
         [NonAction]
-        public override Task<IActionResult> CreateEntityAsync([FromBody] ShopPromotionForm form, CancellationToken ct)
+        public override Task<IActionResult> CreateEntityAsync([FromBody] ShopPromotionBarcodeForm form, CancellationToken ct)
         {
             return base.CreateEntityAsync(form, ct);
         }
 
         /// <inheritdoc />
         [NonAction]
-        public override Task<IActionResult> UpdateEntityAsync(GetItemByIdAndShopParameters itemByIdParameters,
-            [FromBody] ShopPromotionForm form, CancellationToken ct)
+        public override Task<IActionResult> UpdateEntityAsync(GetItemByIdAndShopAndPromotionParameters itemByIdParameters,
+            [FromBody] ShopPromotionBarcodeForm form, CancellationToken ct)
         {
             return base.UpdateEntityAsync(itemByIdParameters, form, ct);
         }
 
         /// <inheritdoc />
         [NonAction]
-        public override Task<IActionResult> DeleteEntityAsync(GetItemByIdAndShopParameters itemByIdParameters,
+        public override Task<IActionResult> DeleteEntityAsync(GetItemByIdAndShopAndPromotionParameters itemByIdParameters,
             CancellationToken ct)
         {
             return base.DeleteEntityAsync(itemByIdParameters, ct);
