@@ -50,6 +50,8 @@ namespace ShopPromotion.Domain.Infrastructure.AutoMapper
             CreateMap<SpecialOffer, MinimumSpecialOfferResource>();
             // Attribute
             CreateMap<Attribute, MinimumAttributeResource>();
+            // Order
+            CreateMap<Order, MinimumOrderResource>();
         }
     }
 }

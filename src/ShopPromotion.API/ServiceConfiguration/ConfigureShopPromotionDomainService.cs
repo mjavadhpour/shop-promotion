@@ -67,6 +67,8 @@ namespace ShopPromotion.API.ServiceConfiguration
             services.AddScoped<UnitOfWork<SpecialOfferForm, MinimumSpecialOfferResource, MinimumSpecialOfferResource, SpecialOffer>>();
             // Generic unit of work.
             services.AddScoped<UnitOfWork<ShopPromotionForm, MinimumShopPromotionResource, MinimumShopPromotionResource, ShopPromotion>>();
+            // Generic unit of work.
+            services.AddScoped<UnitOfWork<OrderForm, MinimumOrderResource, MinimumOrderResource, Order>>();
             // ShopStatusService
             services.AddScoped<IShopStatusService, ShopStatusService>();
             // Shop
@@ -77,6 +79,10 @@ namespace ShopPromotion.API.ServiceConfiguration
             services
                 .AddScoped<IBaseService<ShopPromotionForm, MinimumShopPromotionResource, MinimumShopPromotionResource, ShopPromotion, ShopPromotionDomainContext>,
                     DefaultShopPromotionService>();
+            // Order
+            services
+                .AddScoped<IBaseService<OrderForm, MinimumOrderResource, MinimumOrderResource, Order, ShopPromotionDomainContext>,
+                    DefaultOrderService>();
             // Message
             services
                 .AddScoped<IBaseService<MessageForm, MinimumMessageResource, MinimumMessageResource, Message, ShopPromotionDomainContext>,
