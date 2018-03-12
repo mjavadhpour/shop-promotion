@@ -6,5 +6,6 @@ namespace ShopPromotion.Domain.Infrastructure.Models.Resource
 {
     public class MinimumShopPromotionBarcodeResource : MinimumBaseEntity
     {
+        public string Barcode { get; set; }
     }
 }

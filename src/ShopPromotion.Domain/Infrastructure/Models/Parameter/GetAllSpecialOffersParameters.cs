@@ -10,18 +10,18 @@ namespace ShopPromotion.Domain.Infrastructure.Models.Parameter
     public class GetAllSpecialOffersParameters : IEntityTypeParameters
     {
         /// <summary>
-        /// Filter special offers by shop id.
+        /// Filter special offers by IsEnabled.
         /// </summary>
         [FromQuery]
-        public int? ShopId { get; set; }
+        public bool? IsEnabled { get; set; }
 
         /// <inheritdoc />
         public object GetParameter(string nameOfParam)
         {
             switch (nameOfParam)
             {
-                case "ShopId":
-                    return ShopId;
+                case "IsEnabled":
+                    return IsEnabled;
                 default:
                     throw new KeyNotFoundException();
             }

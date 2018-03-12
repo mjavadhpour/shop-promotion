@@ -28,7 +28,7 @@ namespace ShopPromotion.API.Controllers.App
     /// </summary>
     [Area("App")]
     [Route("api/v1/[area]")]
-    // TODO: [Authorize(Policy = ConfigurePolicyService.AdminUserPolicy)]
+    [Authorize(Policy = ConfigurePolicyService.AdminUserPolicy)]
     public class ShopPromotionController : BaseApiController<ShopPromotionForm, MinimumShopPromotionResource, MinimumShopPromotionResource, ShopPromotion
         , GetAllShopPromotionParameters, GetItemByIdAndShopParameters>
     {
@@ -86,7 +86,7 @@ namespace ShopPromotion.API.Controllers.App
         /// <response code="403">Forbidden</response>
         /// <response code="404">Not Found</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpGet("shop/{shopId}/[controller]/{ItemId}")]
+        [HttpGet("shop/{ShopId}/[controller]/{ItemId}")]
         [ProducesResponseType(typeof(SingleModelResponse<MinimumShopPromotionResource>), 200)]
         public override Task<IActionResult> GetEntityByIdAsync(GetItemByIdAndShopParameters itemByIdParameters,
             CancellationToken ct)
@@ -112,7 +112,7 @@ namespace ShopPromotion.API.Controllers.App
         /// <response code="401">Unauthorized</response>
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpPost("shop/{shopId}/[controller]")]
+        [HttpPost("shop/{ShopId}/[controller]")]
         [ProducesResponseType(typeof(SingleModelResponse<MinimumShopPromotionResource>), 201)]
         public override Task<IActionResult> CreateEntityAsync([FromBody] ShopPromotionForm form, CancellationToken ct)
         {
@@ -139,7 +139,7 @@ namespace ShopPromotion.API.Controllers.App
         /// <response code="403">Forbidden</response>
         /// <response code="404">Not Found</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpPut("shop/{shopId}/[controller]/{ItemId}")]
+        [HttpPut("shop/{ShopId}/[controller]/{ItemId}")]
         public override Task<IActionResult> UpdateEntityAsync(GetItemByIdAndShopParameters itemByIdParameters,
             [FromBody] ShopPromotionForm form, CancellationToken ct)
         {
@@ -165,7 +165,7 @@ namespace ShopPromotion.API.Controllers.App
         /// <response code="403">Forbidden</response>
         /// <response code="404">Not Found</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpDelete("shop/{shopId}/[controller]/{ItemId}")]
+        [HttpDelete("shop/{ShopId}/[controller]/{ItemId}")]
         public override Task<IActionResult> DeleteEntityAsync(GetItemByIdAndShopParameters itemByIdParameters,
             CancellationToken ct)
         {

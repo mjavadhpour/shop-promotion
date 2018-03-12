@@ -11,5 +11,7 @@ namespace ShopPromotion.Domain.EntityLayer
     {        
         public int PromotionId { get; set; }
         public ShopPromotion Promotion { get; set; }
+
+        public string Barcode { get; set; }
     }
 }

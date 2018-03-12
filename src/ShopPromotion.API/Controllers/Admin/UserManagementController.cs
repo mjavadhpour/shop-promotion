@@ -83,7 +83,7 @@ namespace ShopPromotion.API.Controllers.Admin
             response.Model = Mapper.Map<MinimumIdentityUserResource>(user);
             // 404
             if (response.Model == null) return NotFound();
-            return Ok(response.Model);
+            return Ok(response);
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="403">Forbidden</response>
         /// <response code="404">Not Found</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpPost("claim")]
+        [HttpPost("Claim")]
         [ProducesResponseType(typeof(ApiError), 400)]
         public async Task<IActionResult> AddEmployeeClaimAsync([FromBody] AddClaimFormModel claimFormModel)
         {

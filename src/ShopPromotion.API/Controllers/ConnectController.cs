@@ -52,7 +52,7 @@ namespace ShopPromotion.API.Controllers
         /// <response code="200">OK</response>
         /// <response code="400">Bad Request</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpPost("token")]
+        [HttpPost("Token")]
         [ValidateModel]
         [ProducesResponseType(typeof(TokenViewModel), 200)]
         [ProducesResponseType(typeof(ApiError), 400)]

@@ -86,7 +86,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="403">Forbidden</response>
         /// <response code="404">Not Found</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpGet("shop/{shopId}/[controller]/{ItemId}")]
+        [HttpGet("Shop/{ShopId}/[controller]/{ItemId}")]
         [ProducesResponseType(typeof(SingleModelResponse<MinimumShopPromotionResource>), 200)]
         public override Task<IActionResult> GetEntityByIdAsync(GetItemByIdAndShopParameters itemByIdParameters,
             CancellationToken ct)
@@ -121,7 +121,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="403">Forbidden</response>
         /// <response code="404">Not Found</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpPut("shop/{shopId}/[controller]/{ItemId}")]
+        [HttpPut("Shop/{ShopId}/[controller]/{ItemId}")]
         public override Task<IActionResult> UpdateEntityAsync(GetItemByIdAndShopParameters itemByIdParameters,
             [FromBody] ShopPromotionForm form, CancellationToken ct)
         {

@@ -27,7 +27,7 @@ namespace ShopPromotion.API.Controllers.Admin
     /// Shop controller.
     /// </summary>
     [Area("Admin")]
-    [Route("api/v1/[area]/shop")]
+    [Route("api/v1/[area]/Shop")]
     [Authorize(Policy = ConfigurePolicyService.AdminUserPolicy)]
     public class AdminShopController : BaseApiController<ShopAdminForm, MinimumShopListResource, MinimumShopResource, Shop, GetAllShopsParameters,
         GetItemByIdParameters>
@@ -91,7 +91,6 @@ namespace ShopPromotion.API.Controllers.Admin
         {
             return await base.GetEntityByIdAsync(itemByIdParameters, ct);
         }
-
 
         /// <inheritdoc />
         [NonAction]

@@ -2,7 +2,6 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
-using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,9 +21,9 @@ namespace ShopPromotion.Domain.Services
     using PaginationHelper;
 
     public class
-        DefaultShopService : DefaultEntityService<ShopForm, MinimumShopListResource, MinimumShopResource, Shop, ShopPromotionDomainContext>
+        DefaultSpecialOfferService : DefaultEntityService<SpecialOfferForm, MinimumSpecialOfferResource, MinimumSpecialOfferResource, SpecialOffer, ShopPromotionDomainContext>
     {
-        public DefaultShopService(ShopPromotionDomainContext context,
+        public DefaultSpecialOfferService(ShopPromotionDomainContext context,
             ResolvedPaginationValueService resolvedPaginationValue) : base(context, resolvedPaginationValue)
         {
         }
@@ -32,63 +31,51 @@ namespace ShopPromotion.Domain.Services
         /// <inheritdoc>
         /// <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
         /// </inheritdoc>
-        protected override async Task<Shop> GetElementOfTModelSequenceAsync(int id, CancellationToken ct)
+        protected override async Task<SpecialOffer> GetElementOfTModelSequenceAsync(int id, CancellationToken ct)
         {
             return await Entities
                 .AsNoTracking()
-                .Include(shop => shop.ShopAddresses)
-                .Include(shop => shop.ShopAttributes)
-                .ThenInclude(st => st.Attribute)
-                .Include(shop => shop.ShopGeolocation)
-                .Include(shop => shop.ShopImages)
-                .Include(shop => shop.ShopStatuses)
+                .Include(so => so.Shop)
                 .SingleOrDefaultAsync(x => x.Id == id, ct);
         }
 
         /// <inheritdoc>
         ///     <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
         /// </inheritdoc>
-        protected override async Task<MinimumShopListResource[]> GetElementsOfTModelSequenceAsync(int pageSize,
+        protected override async Task<MinimumSpecialOfferResource[]> GetElementsOfTModelSequenceAsync(int pageSize,
             int pageNumber, string orderBy, bool ascending,
             CancellationToken ct)
         {
             return await Query
                 .OrderByPropertyOrField(orderBy, ascending)
-                .Include(shop => shop.ShopImages)
-                .Include(shop => shop.ShopAttributes)
+                .Include(so => so.Shop)
                 .Skip(pageNumber * pageSize)
                 .Take(pageSize)
-                .ProjectTo<MinimumShopListResource>()
+                .ProjectTo<MinimumSpecialOfferResource>()
                 .ToArrayAsync(ct);
         }
 
         /// <inheritdoc>
         /// <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
         /// </inheritdoc>
-        protected override Shop MappingFromModelToTModelDestination(ShopForm form, CancellationToken ct)
+        protected override SpecialOffer MappingFromModelToTModelDestination(SpecialOfferForm form, CancellationToken ct)
         {
-            // Map shop and resource.
-            var shop = Mapper.Map<Shop>(form);
+            // Map shop promotion and resource.
+            var shopPromotion = Mapper.Map<SpecialOffer>(form);
 
-            // Assign default status to new shop.
-            if (GetCurrentAction() == CreateEntity)
-            {
-                Context.Set<ShopStatus>().Add(new ShopStatus
-                {
-                    CreatedAt = DateTime.Now,
-                    Shop = shop
-                });
-            }
-
-            return shop;
+            return shopPromotion;
         }
 
         /// <inheritdoc>
         /// <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
         /// </inheritdoc>
-        public override async Task<IPage<MinimumShopListResource>> GetEntitiesAsync(IPagingOptions pagingOptions,
+        public override async Task<IPage<MinimumSpecialOfferResource>> GetEntitiesAsync(IPagingOptions pagingOptions,
             IEntityTypeParameters entityTypeParameters, CancellationToken ct)
         {
+            // Filter by shop id.
+            if (entityTypeParameters.GetParameter("IsEnabled") != null)
+                Query = Query.Where(x => x.IsEnabled == (bool) entityTypeParameters.GetParameter("IsEnabled"));
+
             return await base.GetEntitiesAsync(pagingOptions, entityTypeParameters, ct);
         }
 
@@ -96,7 +83,7 @@ namespace ShopPromotion.Domain.Services
         /// <summary>
         /// Check if shop have duplicated size for each product group thrown error.
         /// </summary>
-        protected override void ValidateAddOrUpdateRequest(ShopForm form)
+        protected override void ValidateAddOrUpdateRequest(SpecialOfferForm form)
         {
         }
     }

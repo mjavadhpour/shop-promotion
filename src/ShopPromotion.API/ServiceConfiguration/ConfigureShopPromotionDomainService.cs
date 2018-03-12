@@ -69,6 +69,8 @@ namespace ShopPromotion.API.ServiceConfiguration
             services.AddScoped<UnitOfWork<ShopPromotionForm, MinimumShopPromotionResource, MinimumShopPromotionResource, ShopPromotion>>();
             // Generic unit of work. Order
             services.AddScoped<UnitOfWork<OrderForm, MinimumOrderResource, MinimumOrderResource, Order>>();
+            // Generic unit of work. ShopPromotionBarcode
+            services.AddScoped<UnitOfWork<ShopPromotionBarcodeForm, MinimumShopPromotionBarcodeResource, MinimumShopPromotionBarcodeResource, ShopPromotionBarcode>>();
             // ShopStatusService
             services.AddScoped<IShopStatusService, ShopStatusService>();
             // Shop
@@ -83,6 +85,10 @@ namespace ShopPromotion.API.ServiceConfiguration
             services
                 .AddScoped<IBaseService<OrderForm, MinimumOrderResource, MinimumOrderResource, Order, ShopPromotionDomainContext>,
                     DefaultOrderService>();
+            // ShopPromotionBarcode
+            services
+                .AddScoped<IBaseService<ShopPromotionBarcodeForm, MinimumShopPromotionBarcodeResource, MinimumShopPromotionBarcodeResource, ShopPromotionBarcode, ShopPromotionDomainContext>,
+                    DefaultShopPromotionBarcodeService>();
             // Message
             services
                 .AddScoped<IBaseService<MessageForm, MinimumMessageListResource, MinimumMessageResource, Message, ShopPromotionDomainContext>,
@@ -91,8 +97,7 @@ namespace ShopPromotion.API.ServiceConfiguration
             services
                 .AddScoped<
                     IBaseService<SpecialOfferForm, MinimumSpecialOfferResource, MinimumSpecialOfferResource, SpecialOffer, ShopPromotionDomainContext
-                    >, DefaultEntityService<SpecialOfferForm, MinimumSpecialOfferResource, MinimumSpecialOfferResource, SpecialOffer,
-                        ShopPromotionDomainContext>>();
+                    >, DefaultSpecialOfferService>();
             // Shop Admin
             services
                 .AddScoped<IBaseService<ShopAdminForm, MinimumShopListResource, MinimumShopResource, Shop, ShopPromotionDomainContext>,

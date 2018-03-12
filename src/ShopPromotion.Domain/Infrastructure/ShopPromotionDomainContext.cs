@@ -144,6 +144,11 @@ namespace ShopPromotion.Domain.Infrastructure
             {
                 b.HasIndex(u => u.PhoneNumber).HasName("PhoneNumberIndex").IsUnique();
             });
+            // shop promotion barcode configurarions.
+            modelBuilder.Entity<ShopPromotionBarcode>(b =>
+            {
+                b.HasIndex(u => u.Barcode).HasName("BarcodeIndex").IsUnique();
+            });            
             // Execute system onModelCreating to handle other library database.
             base.OnModelCreating(modelBuilder);
         }

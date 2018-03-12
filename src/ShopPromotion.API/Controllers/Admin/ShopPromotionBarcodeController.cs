@@ -58,7 +58,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="401">Unauthorized</response>
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpGet("shop/{shopId}/promotion/{promotionId}/[controller]")]
+        [HttpGet("Shop/{ShopId}/Promotion/{PromotionId}/[controller]")]
         [ProducesResponseType(typeof(Page<MinimumShopPromotionBarcodeResource>), 200)]
         public override Task<IActionResult> GetEntitiesAsync(PagingOptions pagingOptions,
             GetAllShopPromotionBarcodeParameters entityTypeParameters, CancellationToken ct)

@@ -2,6 +2,8 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using System;
+
 namespace ShopPromotion.Domain.EntityLayer
 {
     /// <summary>
@@ -11,5 +13,11 @@ namespace ShopPromotion.Domain.EntityLayer
     {
         public int ShopId { get; set; }
         public Shop Shop { get; set; }
+
+        public DateTime ExpireAt { get; set; }
+
+        public bool IsEnabled { get; set; }
+
+        public string Description { get; set; }
     }
 }

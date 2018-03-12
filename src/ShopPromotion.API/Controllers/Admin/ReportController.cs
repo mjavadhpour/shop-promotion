@@ -40,7 +40,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="401">Unauthorized</response>
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpGet("payment/number")]
+        [HttpGet("Payment/Number")]
         [ProducesResponseType(typeof(SingleModelResponse<NumberOfPaymentsReportViewModel>), 200)]
         public async Task<IActionResult> GetNumberOfPaymentsReportAsync(
             [FromQuery] PaymentsReportParameters reportParameters, CancellationToken ct)
@@ -61,7 +61,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="401">Unauthorized</response>
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpGet("payment/sum")]
+        [HttpGet("Payment/Sum")]
         [ProducesResponseType(typeof(SingleModelResponse<SumOfPaymentsReportViewModel>), 200)]
         public async Task<IActionResult> GetSumOfPaymentsReportAsync(
             [FromQuery] PaymentsReportParameters reportParameters, CancellationToken ct)
@@ -81,7 +81,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="401">Unauthorized</response>
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpGet("shop/number")]
+        [HttpGet("Shop/Number")]
         [ProducesResponseType(typeof(SingleModelResponse<ShopsReportViewModel>), 200)]
         public async Task<IActionResult> GetShopsReportAsync(
             [FromQuery] ShopsReportParameters reportParameters, CancellationToken ct)
@@ -101,7 +101,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="401">Unauthorized</response>
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpGet("user/number")]
+        [HttpGet("User/Number")]
         [ProducesResponseType(typeof(SingleModelResponse<AppUsersReportViewModel>), 200)]
         public async Task<IActionResult> GetUsersReportAsync(
             [FromQuery] AppUsersReportParameters reportParameters, CancellationToken ct)
@@ -121,7 +121,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="401">Unauthorized</response>
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpGet("usages/chart")]
+        [HttpGet("Usages/Chart")]
         [ProducesResponseType(typeof(SingleModelResponse<IList<UsagesStatisticsViewModel>>), 200)]
         public async Task<IActionResult> GetUsagesStatisticsAsync(
             [FromQuery] UsageStatisticsParameters reportParameters, CancellationToken ct)

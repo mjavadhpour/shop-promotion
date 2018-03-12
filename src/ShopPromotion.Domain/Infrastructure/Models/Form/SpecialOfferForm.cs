@@ -2,6 +2,7 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace ShopPromotion.Domain.Infrastructure.Models.Form
@@ -11,6 +12,12 @@ namespace ShopPromotion.Domain.Infrastructure.Models.Form
     public class SpecialOfferForm : BaseEntity
     {
         [Required]
-        public string FirstName { get; set; }
+        public int ShopId { get; set; }
+
+        public DateTime ExpireAt { get; set; }
+
+        public bool IsEnabled { get; set; }
+
+        public string Description { get; set; }
     }
 }

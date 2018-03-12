@@ -30,7 +30,7 @@ namespace ShopPromotion.API.Controllers.Admin
     [Route("api/v1/[area]")]
     [Authorize(Policy = ConfigurePolicyService.AdminUserPolicy)]
     public class SpecialOfferController : BaseApiController<SpecialOfferForm, MinimumSpecialOfferResource, MinimumSpecialOfferResource, SpecialOffer
-        , GetAllSpecialOffersParameters, GetItemByIdAndShopParameters>
+        , GetAllSpecialOffersParameters, GetItemByIdParameters>
     {
         /// <inheritdoc />
         public SpecialOfferController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
@@ -86,9 +86,9 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="403">Forbidden</response>
         /// <response code="404">Not Found</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpGet("shop/{shopId}/[controller]/{ItemId}")]
+        [HttpGet("Shop/{ItemId}/[controller]")]
         [ProducesResponseType(typeof(SingleModelResponse<MinimumSpecialOfferResource>), 200)]
-        public override Task<IActionResult> GetEntityByIdAsync(GetItemByIdAndShopParameters itemByIdParameters,
+        public override Task<IActionResult> GetEntityByIdAsync(GetItemByIdParameters itemByIdParameters,
             CancellationToken ct)
         {
             return base.GetEntityByIdAsync(itemByIdParameters, ct);
@@ -112,7 +112,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="401">Unauthorized</response>
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpPost("shop/{shopId}/[controller]")]
+        [HttpPost("Shop/[controller]")]
         [ProducesResponseType(typeof(SingleModelResponse<MinimumSpecialOfferResource>), 201)]
         public override Task<IActionResult> CreateEntityAsync([FromBody] SpecialOfferForm form, CancellationToken ct)
         {
@@ -139,8 +139,8 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="403">Forbidden</response>
         /// <response code="404">Not Found</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpPut("shop/{shopId}/[controller]/{ItemId}")]
-        public override Task<IActionResult> UpdateEntityAsync(GetItemByIdAndShopParameters itemByIdParameters,
+        [HttpPut("Shop/{ItemId}/[controller]")]
+        public override Task<IActionResult> UpdateEntityAsync(GetItemByIdParameters itemByIdParameters,
             [FromBody] SpecialOfferForm form, CancellationToken ct)
         {
             return base.UpdateEntityAsync(itemByIdParameters, form, ct);
@@ -165,8 +165,8 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="403">Forbidden</response>
         /// <response code="404">Not Found</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpDelete("shop/{shopId}/[controller]/{ItemId}")]
-        public override Task<IActionResult> DeleteEntityAsync(GetItemByIdAndShopParameters itemByIdParameters,
+        [HttpDelete("Shop/{ItemId}/[controller]")]
+        public override Task<IActionResult> DeleteEntityAsync(GetItemByIdParameters itemByIdParameters,
             CancellationToken ct)
         {
             return base.DeleteEntityAsync(itemByIdParameters, ct);

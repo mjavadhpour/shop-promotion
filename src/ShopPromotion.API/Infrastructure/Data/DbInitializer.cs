@@ -2,6 +2,7 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -86,15 +87,144 @@ namespace ShopPromotion.API.Infrastructure.Data
 
         private async void SeedData()
         {
+            // Memory section.
             var adminUser = await _userManager.FindByEmailAsync(_administratorOptions.Email);
+            var shopKeeper = new ShopKeeperUser
+            {
+                Email = "shopkeeper@shoppromotion.com",
+                FirstName = "shop",
+                LastName = "Keeper",
+                PhoneNumber = "1111111111",
+                ProfileImagePath = "http://www.google.com",
+                UserName = "shopkeeper",
+                EmailConfirmed = true,
+                CreatedAt = DateTime.Now
+            };
+            var appUser = new AppUser
+            {
+                Email = "appuser@shoppromotion.com",
+                FirstName = "App",
+                LastName = "User",
+                PhoneNumber = "2222222222",
+                ProfileImagePath = "http://www.google.com",
+                UserName = "appuser",
+                EmailConfirmed = true,
+                CreatedAt = DateTime.Now
+            };
+            var paymentMethod = new PaymentMethod
+            {
+                Code = "XXK-G346436",
+                GatewayConfig = new GatewayConfig
+                {
+                    Config = "The config",
+                    GatewayName = "Shaparak test"
+                },
+                IsEnabled = true,
+                Position = 1,
+                CreatedAt = DateTime.Now
+            };
+            var attribute = new Attribute
+            {
+                Description = "Base shop",
+                Name = "Base",
+                CreatedAt = DateTime.Now
+            };
+            var shopAddress = new ShopAddress
+            {
+                Address = "Tehran",
+                PhoneNumber = "0000000000",
+                CreatedAt = DateTime.Now
+            };
+            var shop = new Shop
+            {
+                Facebook = "http:www.facebook.com",
+                Instagram = "http://instagram.com",
+                Owner = shopKeeper,
+                ShopAddresses = new List<ShopAddress>
+                {
+                    shopAddress
+                },
+                ShopGeolocation = new ShopGeolocation
+                {
+                    latitude = "32.2354657",
+                    Longitude = "57.465768",
+                    CreatedAt = DateTime.Now
+                },
+                ShopImages = new List<ShopImage>
+                {
+                    new ShopImage
+                    {
+                        Path = "http://google.com",
+                        Type = "none",
+                        CreatedAt = DateTime.Now
+                    }
+                },
+                ShopStatuses = new List<ShopStatus>
+                {
+                    new ShopStatus
+                    {
+                        Status = ShopStatusOption.Disapproved,
+                        CreatedAt = DateTime.Now
+                    }
+                },
+                Telegram = "http:www.telegram.com",
+                Title = "KFC",
+                Twitter = "http://www.twitter.com",
+                CreatedAt = DateTime.Now
+            };
+            var promotion = new ShopPromotion
+            {
+                AverageRating = 5,
+                Description = "This is test promotion",
+                DiscountPercent = 10,
+                EntAt = DateTime.Now,
+                Shop = shop,
+                Name = "First promotion",
+                MinimumPaymentAmount = 20000,
+                StartAt = DateTime.Now,
+                PaymentMethod = paymentMethod,
+                UsageLimit = 100,
+                Used = 1,
+                CreatedAt = DateTime.Now
+            };
+            var shopPromotionBarcode = new ShopPromotionBarcode
+            {
+                Promotion = promotion,
+                Barcode = new Guid().ToString(),
+                CreatedAt = DateTime.Now
+            };
+            var shopAttribute = new ShopAttribute
+            {
+                Attribute = attribute,
+                Shop = shop,
+                CreatedAt = DateTime.Now
+            };
+            var order = new Order
+            {
+                Code = new Guid(),
+                CheckoutCompletedAt = DateTime.Now,
+                CheckoutState = "Confirmed",
+                Customer = appUser,
+                ItemsTotal = 1,
+                State = "Confirmed",
+                PaymentState = "Approved",
+                Notes = "This is test order",
+                Total = 1000000,
+                ShopPromotionBarcode = shopPromotionBarcode,
+                CreatedAt = DateTime.Now
+            };
+            var specialOffer = new SpecialOffer
+            {
+                Shop = shop,
+                ExpireAt = DateTime.Now,
+                IsEnabled = true,
+                Description = "This is a test special offer."
+            };
 
+            // Database section.
             if (!_context.Attributes.Any())
             {
-                _context.Attributes.Add(new Attribute
-                {
-                    Description = "Base shop",
-                    Name = "Base"
-                });
+                _context.Attributes.Add(attribute);
                 await _context.SaveChangesAsync();
             }
 
@@ -114,6 +244,28 @@ namespace ShopPromotion.API.Infrastructure.Data
                     Note = "Welcome to the application.",
                     Subject = "Welcome"
                 });
+                await _context.SaveChangesAsync();
+            }
+
+            if (!_context.Shops.Any())
+            {
+                shop.ShopAttributes = new List<ShopAttribute>
+                {
+                    shopAttribute
+                };
+                _context.Shops.Add(shop);
+                await _context.SaveChangesAsync();
+            }
+
+            if (!_context.Orders.Any())
+            {
+                _context.Orders.Add(order);
+                await _context.SaveChangesAsync();
+            }
+
+            if (!_context.SpecialOffers.Any())
+            {
+                _context.SpecialOffers.Add(specialOffer);
                 await _context.SaveChangesAsync();
             }
         }
