@@ -13,5 +13,7 @@ namespace ShopPromotion.Domain.EntityLayer
         public AdminUser Author { get; set; }
 
         public string Note { get; set; }
+
+        public string Subject { get; set; }
     }
 }

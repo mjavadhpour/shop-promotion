@@ -7,15 +7,13 @@ namespace ShopPromotion.Domain.Infrastructure.Models.Resource
     using Custom;
     using EntityLayer;
 
-    public class MinimumMessageResource : MinimumBaseEntity
+    public class MinimumMessageListResource : MinimumBaseEntity
     {
         public MinimumIdentityUserResource Author { get; set; }
 
         public MessageTargetTypeOption Target { get; set; }
 
         public string TargetObjectId { get; set; }
-
-        public string Note { get; set; }
 
         public string Subject { get; set; }
     }

@@ -11,6 +11,14 @@ namespace ShopPromotion.Domain.Infrastructure.Models.Form
     public class MessageForm : BaseEntity
     {
         [Required]
-        public string XXX { get; set; }
+        public string Subject { get; set; }
+
+        [Required]
+        public string Note { get; set; }
+
+        [Required]
+        public MessageTargetTypeOption TargetType { get; set; }
+
+        public string TargetObjectId { get; set; }
     }
 }

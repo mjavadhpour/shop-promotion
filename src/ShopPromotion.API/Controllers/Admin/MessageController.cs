@@ -28,14 +28,14 @@ namespace ShopPromotion.API.Controllers.Admin
     /// </summary>
     [Area("Admin")]
     [Authorize(Policy = ConfigurePolicyService.AdminUserPolicy)]
-    public class MessageController : BaseApiController<MessageForm, MinimumMessageResource, MinimumMessageResource, Message
-        , GetAllMessagesParameters, GetItemByIdParameters>
+    public class MessageController : BaseApiController<MessageForm, MinimumMessageListResource, MinimumMessageResource, 
+        Message, GetAllMessagesParameters, GetItemByIdParameters>
     {
         /// <inheritdoc />
         public MessageController(ResolvedPaginationValueService defaultPagingOptionsAccessor, UnitOfWork unitOfWork,
             UserManager<BaseIdentityUser> userManager,
-            UnitOfWork<MessageForm, MinimumMessageResource, MinimumMessageResource, Message> genericUnitOfWork) : base(
-            defaultPagingOptionsAccessor, unitOfWork, userManager, genericUnitOfWork)
+            UnitOfWork<MessageForm, MinimumMessageListResource, MinimumMessageResource, Message> genericUnitOfWork) 
+            : base(defaultPagingOptionsAccessor, unitOfWork, userManager, genericUnitOfWork)
         {
         }
 
@@ -58,7 +58,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="401">Unauthorized</response>
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
-        [ProducesResponseType(typeof(Page<MinimumMessageResource>), 200)]
+        [ProducesResponseType(typeof(Page<MinimumMessageListResource>), 200)]
         public override Task<IActionResult> GetEntitiesAsync(PagingOptions pagingOptions,
             GetAllMessagesParameters entityTypeParameters, CancellationToken ct)
         {
@@ -110,7 +110,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
         [ProducesResponseType(typeof(SingleModelResponse<MinimumMessageResource>), 201)]
-        public override Task<IActionResult> CreateEntityAsync(MessageForm form, CancellationToken ct)
+        public override Task<IActionResult> CreateEntityAsync([FromBody] MessageForm form, CancellationToken ct)
         {
             // TODO: Create target point to the requested message.
             return base.CreateEntityAsync(form, ct);

@@ -47,6 +47,7 @@ namespace ShopPromotion.Domain.Infrastructure.AutoMapper
             CreateMap<ShopGeolocation, MinimumShopGeolocationsResource>();
             // Message
             CreateMap<Message, MinimumMessageResource>();
+            CreateMap<Message, MinimumMessageListResource>();
             // SpecialOffer
             CreateMap<SpecialOffer, MinimumSpecialOfferResource>();
             // Attribute

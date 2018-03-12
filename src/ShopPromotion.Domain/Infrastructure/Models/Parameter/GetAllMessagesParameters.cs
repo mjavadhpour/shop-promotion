@@ -7,21 +7,23 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ShopPromotion.Domain.Infrastructure.Models.Parameter
 {
+    using EntityLayer;
+
     public class GetAllMessagesParameters : IEntityTypeParameters
     {
         /// <summary>
-        /// Filter human by contract id
+        /// Filter messsages by target
         /// </summary>
         [FromQuery]
-        public int? XXX { get; set; }
+        public MessageTargetTypeOption Target { get; set; }
 
         /// <inheritdoc />
         public object GetParameter(string nameOfParam)
         {
             switch (nameOfParam)
             {
-                case "XXX":
-                    return XXX;
+                case "Target":
+                    return Target;
                 default:
                     throw new KeyNotFoundException();
             }
