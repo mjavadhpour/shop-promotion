@@ -86,7 +86,7 @@ namespace ShopPromotion.API.ServiceConfiguration
             // Message
             services
                 .AddScoped<IBaseService<MessageForm, MinimumMessageListResource, MinimumMessageResource, Message, ShopPromotionDomainContext>,
-                    DefaultEntityService<MessageForm, MinimumMessageListResource, MinimumMessageResource, Message, ShopPromotionDomainContext>>();
+                    DefaultMessageService>();
             // SpecialOffer
             services
                 .AddScoped<

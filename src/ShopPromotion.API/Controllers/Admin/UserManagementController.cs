@@ -30,7 +30,7 @@ namespace ShopPromotion.API.Controllers.Admin
     /// Shop controller.
     /// </summary>
     [Area("Admin")]
-    // TODO: [Authorize(Policy = ConfigurePolicyService.AdminUserPolicy)]
+    [Authorize(Policy = ConfigurePolicyService.AdminUserPolicy)]
     public class UserManagementController : BaseController
     {
         private readonly UserManager<BaseIdentityUser> _baseIdentityUserManager;

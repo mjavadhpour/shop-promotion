@@ -2,19 +2,14 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
-using System.Collections.Generic;
-
 namespace ShopPromotion.Domain.Infrastructure.Models.Resource
 {
-    using Custom;
     using EntityLayer;
 
-    public class MinimumMessageListResource : MinimumBaseEntity
+    public class MinimumMessageTargetResource : MinimumBaseEntity
     {
-        public MinimumIdentityUserResource Author { get; set; }
+        public MessageTargetTypeOption TargetType { get; set; }
 
-        public IList<MinimumMessageTargetResource> MessageTargets { get; set; }
-
-        public string Subject { get; set; }
+        public string TargetObjectId { get; set; }
     }
 }
