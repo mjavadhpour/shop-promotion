@@ -14,7 +14,11 @@ namespace ShopPromotion.Domain.Infrastructure.Models.Resource.Custom
         /// <summary>
         /// The User name.
         /// </summary>
-        public object UserName;
+        public string UserName { get; set; }
+
+        public string ProfileImagePath { get; set; }
+
+        public string PhoneNumber { get; set; }
 
         /// <summary>
         /// The user claim list.

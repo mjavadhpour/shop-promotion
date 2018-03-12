@@ -24,6 +24,8 @@ namespace ShopPromotion.Domain.EntityLayer
         /// </summary>
         public string VerificationCode { get; set; }
 
+        public string ProfileImagePath { get; set; }
+
         public DateTime CreatedAt { get; set; }
     }
 }

@@ -101,8 +101,27 @@ namespace ShopPromotion.API.Controllers.Admin
             return base.CreateEntityAsync(form, ct);
         }
 
-        /// <inheritdoc />
-        [NonAction]
+        /// Update existing shop promotion.
+        /// <summary>
+        /// Update existing shop promotion.
+        /// </summary>
+        /// <param name="itemByIdParameters"></param>
+        /// <param name="form"></param>
+        /// <param name="ct">
+        /// Adding a CancellationToken parameter to your route methods allows ASP.NET Core to notify your
+        /// asynchronous tasks of a cancellation (if the browser closes a connection, for example).
+        /// </param>
+        /// <returns>
+        /// IActionResult gives you the flexibility to return both HTTP status codes and object payloads.
+        /// return type contain a <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult" />.
+        /// </returns>
+        /// <response code="204">Updated</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="403">Forbidden</response>
+        /// <response code="404">Not Found</response>
+        /// <response code="500">Internal Server Error</response>
+        [HttpPut("shop/{shopId}/[controller]/{itemId}")]
         public override Task<IActionResult> UpdateEntityAsync(GetItemByIdAndShopParameters itemByIdParameters,
             [FromBody] ShopPromotionForm form, CancellationToken ct)
         {

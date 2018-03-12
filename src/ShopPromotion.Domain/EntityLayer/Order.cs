@@ -14,7 +14,7 @@ namespace ShopPromotion.Domain.EntityLayer
         public string CustomerId { get; set; }
         public AppUser Customer { get; set; }
 
-        public int DiscountCouponId { get; set; }
+        public int? DiscountCouponId { get; set; }
         public DiscountCoupon DiscountCoupon { get; set; }
 
         public int ShopPromotionBarcodeId { get; set; }
