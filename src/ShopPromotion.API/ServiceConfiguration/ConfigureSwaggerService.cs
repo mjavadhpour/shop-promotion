@@ -2,6 +2,7 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
@@ -9,8 +10,6 @@ using Swashbuckle.AspNetCore.Swagger;
 
 namespace ShopPromotion.API.ServiceConfiguration
 {
-    using Helper.Infrastructure.Filters.Swagger;
-
     /// <summary>
     /// Configure swagger service.
     /// </summary>
@@ -55,6 +54,10 @@ namespace ShopPromotion.API.ServiceConfiguration
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
                 var xmlPath = Path.Combine(basePath, "ShopPromotionApi.xml");
                 c.IncludeXmlComments(xmlPath);
+                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
+                {
+                    { "Bearer", new string[] { } }
+                });
             });
         }
     }
