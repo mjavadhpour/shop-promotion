@@ -2,6 +2,8 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using System;
+using System.Linq;
 using AutoMapper;
 
 namespace ShopPromotion.Domain.Infrastructure.AutoMapper
@@ -27,13 +29,17 @@ namespace ShopPromotion.Domain.Infrastructure.AutoMapper
             CreateMap<MinimumIdentityUserResource, BaseIdentityUser>();
             CreateMap<MinimumIdentityUserResource, MinimumIdentityUserResource>();
             // Shop
-            // TODO: Mapping many to many attributes and latest string image path.
             CreateMap<Shop, MinimumShopListResource>()
-                .ForMember(dto => dto.Image, opt => opt.UseDestinationValue());
+                .ForMember(dto => dto.Image,
+                    opt => { opt.MapFrom(y => y.ShopImages.Select(img => img.Path).FirstOrDefault()); })
+                .ForMember(dto => dto.Attributes, opt => opt.MapFrom(s => s.ShopAttributes.Select(a => a.Attribute)));
             CreateMap<Shop, MinimumShopResource>()
-                .ForMember(dto => dto.Attributes, opt => opt.MapFrom(y => y.ShopAttributes))
-                .ForMember(dto => dto.Images, opt => opt.MapFrom(y => y.ShopImages))
-                .ForMember(dto => dto.Geolocation, opt => opt.MapFrom(y => y.ShopGeolocation));
+                .ForMember(dto => dto.Attributes, opt => opt.MapFrom(y => y.ShopAttributes.Select(a => a.Attribute)))
+                .ForMember(dto => dto.Geolocation, opt => opt.MapFrom(y => y.ShopGeolocation))
+                .ForMember(dto => dto.Status,
+                    opt => opt.MapFrom(y => y.ShopStatuses.Select(s => s.Status).LastOrDefault()))
+                .ForMember(dto => dto.Images,
+                    opt => opt.MapFrom(y => y.ShopImages));
             CreateMap<ShopForm, Shop>();
             CreateMap<ShopForm, MinimumShopResource>();
             CreateMap<ShopAttribute, MinimumAttributeResource>();

@@ -47,10 +47,10 @@
     <!-- Version Your Service with this package -->
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="2.0.0" />
     <!-- Swager Swashbuckle -->
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="2.2.0" />
     <!-- Auto Mapper -->
-    <PackageReference Include="AutoMapper" Version="6.1.1" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="2.0.1" />
+    <PackageReference Include="AutoMapper" Version="6.2.2" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.2.0" />
     <!-- SMS Panel -->
     <PackageReference Include="SmsIrRestful" Version="1.1.0" />
   </ItemGroup>

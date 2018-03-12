@@ -55,8 +55,6 @@ namespace ShopPromotion.API.ServiceConfiguration
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
                 var xmlPath = Path.Combine(basePath, "ShopPromotionApi.xml");
                 c.IncludeXmlComments(xmlPath);
-                // Lowercase all routes in api doc.
-                c.DocumentFilter<LowercaseDocumentFilter>();
             });
         }
     }

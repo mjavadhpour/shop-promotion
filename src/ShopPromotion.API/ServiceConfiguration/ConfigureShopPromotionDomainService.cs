@@ -57,17 +57,17 @@ namespace ShopPromotion.API.ServiceConfiguration
             services.AddScoped<IUserReportService, UserReportService>();
             // UsageStatisticservice
             services.AddScoped<IUsageStatisticservice, UsageStatisticservice>();
-            // Generic unit of work.
+            // Generic unit of work. ShopAdmin
             services.AddScoped<UnitOfWork<ShopAdminForm, MinimumShopListResource, MinimumShopResource, Shop>>();
-            // Generic unit of work.
+            // Generic unit of work. Shop
             services.AddScoped<UnitOfWork<ShopForm, MinimumShopListResource, MinimumShopResource, Shop>>();
-            // Generic unit of work.
+            // Generic unit of work. Message
             services.AddScoped<UnitOfWork<MessageForm, MinimumMessageListResource, MinimumMessageResource, Message>>();
-            // Generic unit of work.
+            // Generic unit of work. SpecialOffer
             services.AddScoped<UnitOfWork<SpecialOfferForm, MinimumSpecialOfferResource, MinimumSpecialOfferResource, SpecialOffer>>();
-            // Generic unit of work.
+            // Generic unit of work. ShopPromotion
             services.AddScoped<UnitOfWork<ShopPromotionForm, MinimumShopPromotionResource, MinimumShopPromotionResource, ShopPromotion>>();
-            // Generic unit of work.
+            // Generic unit of work. Order
             services.AddScoped<UnitOfWork<OrderForm, MinimumOrderResource, MinimumOrderResource, Order>>();
             // ShopStatusService
             services.AddScoped<IShopStatusService, ShopStatusService>();
@@ -96,7 +96,7 @@ namespace ShopPromotion.API.ServiceConfiguration
             // Shop Admin
             services
                 .AddScoped<IBaseService<ShopAdminForm, MinimumShopListResource, MinimumShopResource, Shop, ShopPromotionDomainContext>,
-                    DefaultEntityService<ShopAdminForm, MinimumShopListResource, MinimumShopResource, Shop, ShopPromotionDomainContext>>();
+                    DefaultAdminShopService>();
             // Report services.
             services.AddScoped<IUserReportService, UserReportService>();
             services.AddScoped<IPaymentReportTracker, PaymentReportService>();

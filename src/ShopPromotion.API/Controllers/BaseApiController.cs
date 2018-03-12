@@ -85,7 +85,7 @@ namespace ShopPromotion.API.Controllers
         /// <param name="itemByIdParameters"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        [HttpGet("{itemId}")]
+        [HttpGet("{ItemId}")]
         [ProducesResponseType(typeof(ApiError), 400)]
         public virtual async Task<IActionResult> GetEntityByIdAsync(TGetItemParameters itemByIdParameters,
             CancellationToken ct)
@@ -113,7 +113,7 @@ namespace ShopPromotion.API.Controllers
             form.CreatedById = GetUserId(HttpContext);
             response.Model = GenericUnitOfWork.GenericRepository().AddEntity(form, ct);
             await GenericUnitOfWork.SaveAsync();
-            return CreatedAtAction(nameof(GetEntityByIdAsync), new {itemId = response.Model.Id}, response);
+            return CreatedAtAction(nameof(GetEntityByIdAsync), new {ItemId = response.Model.Id}, response);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace ShopPromotion.API.Controllers
         /// <param name="form"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        [HttpPut("{itemId}")]
+        [HttpPut("{ItemId}")]
         [ProducesResponseType(typeof(ApiError), 400)]
         public virtual async Task<IActionResult> UpdateEntityAsync(TGetItemParameters itemByIdParameters,
             [FromBody] TForm form, CancellationToken ct)
@@ -142,7 +142,7 @@ namespace ShopPromotion.API.Controllers
         /// <param name="itemByIdParameters"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        [HttpDelete("{itemId}")]
+        [HttpDelete("{ItemId}")]
         [ProducesResponseType(typeof(ApiError), 400)]
         public virtual async Task<IActionResult> DeleteEntityAsync(TGetItemParameters itemByIdParameters,
             CancellationToken ct)
