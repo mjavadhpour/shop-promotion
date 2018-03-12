@@ -18,5 +18,13 @@ namespace ShopPromotion.Domain.Infrastructure.Models.Resource
         public MinimumShopGeolocationsResource Geolocation { get; set; }
 
         public ShopStatusOption Status { get; set; }
+
+        public string Instagram { get; set; }
+
+        public string Telegram { get; set; }
+
+        public string Twitter { get; set; }
+
+        public string Facebook { get; set; }
     }
 }

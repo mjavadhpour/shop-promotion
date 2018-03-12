@@ -8,6 +8,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using ShopPromotion.Domain.Services;
 
 namespace ShopPromotion.API.Controllers.Admin
 {
@@ -29,17 +30,20 @@ namespace ShopPromotion.API.Controllers.Admin
     /// Shop controller.
     /// </summary>
     [Area("Admin")]
-    [Authorize(Policy = ConfigurePolicyService.AdminUserPolicy)]
+    // TODO: [Authorize(Policy = ConfigurePolicyService.AdminUserPolicy)]
     public class UserManagementController : BaseController
     {
         private readonly UserManager<BaseIdentityUser> _baseIdentityUserManager;
+        private readonly IShopPromotionUserManager _shopPromotionUserManager;
 
         /// <inheritdoc />
         public UserManagementController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
-            UnitOfWork unitOfWork, UserManager<BaseIdentityUser> baseIdentityUserManager) : base(
+            UnitOfWork unitOfWork, UserManager<BaseIdentityUser> baseIdentityUserManager,
+            IShopPromotionUserManager shopPromotionUserManager) : base(
             defaultPagingOptionsAccessor, unitOfWork)
         {
             _baseIdentityUserManager = baseIdentityUserManager;
+            _shopPromotionUserManager = shopPromotionUserManager;
         }
 
         /// <summary>
@@ -67,12 +71,12 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="403">Forbidden</response>
         /// <response code="404">Not Found</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpGet("{UserName}")]
+        [HttpGet("{PhoneNumber}")]
         [ProducesResponseType(typeof(SingleModelResponse<MinimumIdentityUserResource>), 200)]
         [ProducesResponseType(typeof(ApiError), 404)]
-        public async Task<IActionResult> GetUserAsync(GetItemByUserNameParameters itemByUserNameParameter)
+        public async Task<IActionResult> GetUserAsync(GetItemByPhoneNumberParameters itemByUserNameParameter)
         {
-            var user = await _baseIdentityUserManager.FindByEmailAsync(itemByUserNameParameter.UserName);
+            var user = await _shopPromotionUserManager.FindByPhoneAsync(itemByUserNameParameter.PhoneNumber);
             var response =
                 new SingleModelResponse<MinimumIdentityUserResource>() as
                     ISingleModelResponse<MinimumIdentityUserResource>;
@@ -96,12 +100,12 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="403">Forbidden</response>
         /// <response code="404">Not Found</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpPut("{UserName}")]
+        [HttpPut("{PhoneNumber}")]
         [ProducesResponseType(typeof(ApiError), 400)]
-        public async Task<IActionResult> UpdateUserAsync(GetItemByUserNameParameters itemByUserNameParameters,
+        public async Task<IActionResult> UpdateUserAsync(GetItemByPhoneNumberParameters itemByUserNameParameters,
             [FromBody] UpdateUserFormModel model)
         {
-            var user = await _baseIdentityUserManager.FindByEmailAsync(itemByUserNameParameters.UserName);
+            var user = await _shopPromotionUserManager.FindByPhoneAsync(itemByUserNameParameters.PhoneNumber);
             // 404
             if (user == null) return NotFound();
             await _baseIdentityUserManager.ChangePasswordAsync(user, model.Password, model.NewPassword);
@@ -127,7 +131,7 @@ namespace ShopPromotion.API.Controllers.Admin
         [ProducesResponseType(typeof(ApiError), 400)]
         public async Task<IActionResult> AddEmployeeClaimAsync([FromBody] AddClaimFormModel claimFormModel)
         {
-            var user = await _baseIdentityUserManager.FindByEmailAsync(claimFormModel.Email);
+            var user = await _shopPromotionUserManager.FindByPhoneAsync(claimFormModel.PhoneNumber);
             // 404
             if (user == null) return NotFound();
             // Remove previous claims.
@@ -150,11 +154,11 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="403">Forbidden</response>
         /// <response code="404">Not Found</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpDelete("{UserName}")]
+        [HttpDelete("{PhoneNumber}")]
         [ProducesResponseType(typeof(ApiError), 400)]
-        public async Task<IActionResult> DeleteUserAsync(GetItemByUserNameParameters itemByUserNameParameters)
+        public async Task<IActionResult> DeleteUserAsync(GetItemByPhoneNumberParameters itemByUserNameParameters)
         {
-            var user = await _baseIdentityUserManager.FindByEmailAsync(itemByUserNameParameters.UserName);
+            var user = await _shopPromotionUserManager.FindByPhoneAsync(itemByUserNameParameters.PhoneNumber);
             // 404
             if (user == null) return NotFound();
             await _baseIdentityUserManager.DeleteAsync(user);

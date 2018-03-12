@@ -12,11 +12,11 @@ namespace ShopPromotion.API.Infrastructure.Models.Form
     public class AddClaimFormModel
     {
         /// <summary>
-        /// Email.
+        /// PhoneNumber.
         /// </summary>
         [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Phone]
+        public string PhoneNumber { get; set; }
 
         /// <summary>
         /// Claim value.

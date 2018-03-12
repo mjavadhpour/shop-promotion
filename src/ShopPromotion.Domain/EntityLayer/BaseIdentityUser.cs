@@ -19,6 +19,10 @@ namespace ShopPromotion.Domain.EntityLayer
             CreatedAt = DateTime.Now;
         }
 
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
         /// <summary>
         /// Verification code for SMS login confirmation.
         /// </summary>

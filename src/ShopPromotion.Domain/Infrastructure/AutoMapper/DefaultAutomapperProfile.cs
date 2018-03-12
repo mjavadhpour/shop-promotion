@@ -22,7 +22,8 @@ namespace ShopPromotion.Domain.Infrastructure.AutoMapper
         public DefaultAutomapperProfile()
         {
             // Application User
-            CreateMap<BaseIdentityUser, MinimumIdentityUserResource>();
+            CreateMap<BaseIdentityUser, MinimumIdentityUserResource>()
+                .ForMember(dto => dto.FullName, opt => opt.MapFrom(x => $"{x.FirstName} {x.LastName}"));
             CreateMap<MinimumIdentityUserResource, BaseIdentityUser>();
             CreateMap<MinimumIdentityUserResource, MinimumIdentityUserResource>();
             // Shop

@@ -56,14 +56,14 @@ namespace ShopPromotion.API.Infrastructure.Models.Parameter
     /// <summary>
     /// Controller parameter for get user by UserName.
     /// </summary>
-    public class GetItemByUserNameParameters
+    public class GetItemByPhoneNumberParameters
     {
         /// <summary>
-        /// UserName
+        /// PhoneNumber
         /// </summary>
         [FromRoute]
         [Required]
-        public string UserName { get; set; }
+        public string PhoneNumber { get; set; }
     }
 
     /// <summary>

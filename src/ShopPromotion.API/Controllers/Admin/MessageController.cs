@@ -17,13 +17,14 @@ namespace ShopPromotion.API.Controllers.Admin
     using Domain.EntityLayer;
     using Domain.Infrastructure.DAL;
     using Domain.Infrastructure.Models.Form;
+    using Domain.Infrastructure.Models.Response;
     using Domain.Infrastructure.Models.Parameter;
     using Domain.Infrastructure.Models.Resource;
     using Domain.Infrastructure.Models.Response.Pagination;
     using Domain.Services.PaginationHelper;
 
     /// <summary>
-    /// MEssage controller.
+    /// Message controller.
     /// </summary>
     [Area("Admin")]
     [Authorize(Policy = ConfigurePolicyService.AdminUserPolicy)]
@@ -57,6 +58,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="401">Unauthorized</response>
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
+        [ProducesResponseType(typeof(Page<MinimumMessageResource>), 200)]
         public override Task<IActionResult> GetEntitiesAsync(PagingOptions pagingOptions,
             GetAllMessagesParameters entityTypeParameters, CancellationToken ct)
         {
@@ -82,6 +84,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="403">Forbidden</response>
         /// <response code="404">Not Found</response>
         /// <response code="500">Internal Server Error</response>
+        [ProducesResponseType(typeof(SingleModelResponse<MinimumMessageResource>), 200)]
         public override Task<IActionResult> GetEntityByIdAsync(GetItemByIdParameters itemByIdParameters,
             CancellationToken ct)
         {
@@ -106,6 +109,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="401">Unauthorized</response>
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
+        [ProducesResponseType(typeof(SingleModelResponse<MinimumMessageResource>), 201)]
         public override Task<IActionResult> CreateEntityAsync(MessageForm form, CancellationToken ct)
         {
             // TODO: Create target point to the requested message.
@@ -133,7 +137,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="404">Not Found</response>
         /// <response code="500">Internal Server Error</response>
         public override Task<IActionResult> UpdateEntityAsync(GetItemByIdParameters itemByIdParameters,
-            MessageForm form, CancellationToken ct)
+            [FromBody] MessageForm form, CancellationToken ct)
         {
             return base.UpdateEntityAsync(itemByIdParameters, form, ct);
         }

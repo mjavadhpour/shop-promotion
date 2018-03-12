@@ -11,10 +11,7 @@ namespace ShopPromotion.Domain.Infrastructure.Models.Resource.Custom
     /// </summary>
     public class MinimumIdentityUserResource
     {
-        /// <summary>
-        /// The User name.
-        /// </summary>
-        public string UserName { get; set; }
+        public string FullName { get; set; }
 
         public string ProfileImagePath { get; set; }
 
