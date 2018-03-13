@@ -5,7 +5,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ShopPromotion.Domain.Services
+namespace ShopPromotion.Domain.Services.UserManager
 {
     using EntityLayer;
     using Infrastructure.Models.Response.Pagination;

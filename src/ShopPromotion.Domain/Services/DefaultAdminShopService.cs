@@ -22,7 +22,8 @@ namespace ShopPromotion.Domain.Services
     using PaginationHelper;
 
     public class
-        DefaultAdminShopService : DefaultEntityService<ShopAdminForm, MinimumShopListResource, MinimumShopResource, Shop, ShopPromotionDomainContext>
+        DefaultAdminShopService<T> : DefaultEntityService<T, MinimumShopListResource, MinimumShopResource, Shop, ShopPromotionDomainContext>
+        where T : BaseEntity
     {
         public DefaultAdminShopService(ShopPromotionDomainContext context,
             ResolvedPaginationValueService resolvedPaginationValue) : base(context, resolvedPaginationValue)
@@ -64,7 +65,7 @@ namespace ShopPromotion.Domain.Services
         /// <inheritdoc>
         /// <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
         /// </inheritdoc>
-        protected override Shop MappingFromModelToTModelDestination(ShopAdminForm form, CancellationToken ct)
+        protected override Shop MappingFromModelToTModelDestination(T form, CancellationToken ct)
         {
             // Map shop and resource.
             var shop = Mapper.Map<Shop>(form);
@@ -95,7 +96,7 @@ namespace ShopPromotion.Domain.Services
         /// <summary>
         /// Check if shop have duplicated size for each product group thrown error.
         /// </summary>
-        protected override void ValidateAddOrUpdateRequest(ShopAdminForm form)
+        protected override void ValidateAddOrUpdateRequest(T form)
         {
         }
     }

@@ -5,12 +5,14 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ShopPromotion.Domain.Infrastructure.Models.Parameter
+namespace ShopPromotion.API.Infrastructure.Models.Parameter
 {
-    public class GetAllShopPromotionParameters : IEntityTypeParameters
+    using Domain.Infrastructure.Models.Parameter;
+
+    public class GetAllOrdersParameters : IEntityTypeParameters
     {
         /// <summary>
-        /// Filter special offers by shop id.
+        /// Filter order by shop id
         /// </summary>
         [FromQuery]
         public int? ShopId { get; set; }

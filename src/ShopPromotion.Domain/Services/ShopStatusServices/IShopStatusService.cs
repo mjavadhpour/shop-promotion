@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ShopPromotion.Domain.Services.ShopStatusServices
 {   
-    using Infrastructure.Models.Form.Custom;
+    using ShopPromotion.Domain.Infrastructure.Models.Form;
 
     /// <summary>
     /// AppUser Report service.
@@ -20,6 +20,6 @@ namespace ShopPromotion.Domain.Services.ShopStatusServices
         /// <param name="shopStatusForm"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task ChangeShopStatus(ShopStatusForm shopStatusForm, CancellationToken ct);
+        Task ChangeShopStatus(IShopStatusForm shopStatusForm, CancellationToken ct);
     }
 }

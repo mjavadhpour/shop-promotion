@@ -2,7 +2,7 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
-namespace ShopPromotion.Domain.Infrastructure.Models.Parameter.Custom
+namespace ShopPromotion.API.Infrastructure.Models.Parameter.Custom
 {
     /// <summary>
     /// Model for query on shops report results.
@@ -13,5 +13,17 @@ namespace ShopPromotion.Domain.Infrastructure.Models.Parameter.Custom
         /// Filter by shop's title.
         /// </summary>
         public string Title { get; set; }
+
+        /// <inheritdoc />
+        public override object GetParameter(string nameOfParam)
+        {
+            switch (nameOfParam)
+            {
+                case "Title":
+                    return Title;
+            }
+
+            return base.GetParameter(nameOfParam);
+        }
     }
 }

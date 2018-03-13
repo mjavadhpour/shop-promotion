@@ -11,7 +11,7 @@ namespace ShopPromotion.Domain.Services.StatisticsServices
     using EntityLayer;
     using Infrastructure;
     using PaginationHelper;
-    using Infrastructure.Models.Parameter.Custom;
+    using Infrastructure.Models.Parameter;
     using Infrastructure.Models.Resource.Custom;
 
     /// <inheritdoc cref="IPaymentReportTracker" />
@@ -27,14 +27,14 @@ namespace ShopPromotion.Domain.Services.StatisticsServices
 
         /// <inheritdoc />
         public async Task<NumberOfPaymentsReportViewModel> GetNumberOfPayments(
-            PaymentsReportParameters reportParameters, CancellationToken ct)
+            IEntityTypeParameters reportParameters, CancellationToken ct)
         {
             var count = await _payments.CountAsync(ct);
             return new NumberOfPaymentsReportViewModel(count);
         }
 
         /// <inheritdoc />
-        public async Task<SumOfPaymentsReportViewModel> GetSumOfPayments(PaymentsReportParameters reportParameters,
+        public async Task<SumOfPaymentsReportViewModel> GetSumOfPayments(IEntityTypeParameters reportParameters,
             CancellationToken ct)
         {
             var sum = await _payments.SumAsync(x => x.Amount, ct);

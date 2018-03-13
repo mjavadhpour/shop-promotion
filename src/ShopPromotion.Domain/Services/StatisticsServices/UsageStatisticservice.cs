@@ -2,6 +2,7 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -13,7 +14,7 @@ namespace ShopPromotion.Domain.Services.StatisticsServices
 {
     using EntityLayer.LiteDb;
     using Infrastructure;
-    using Infrastructure.Models.Parameter.Custom;
+    using Infrastructure.Models.Parameter;
     using Infrastructure.Models.Resource.Custom;
     using PaginationHelper;
 
@@ -30,11 +31,15 @@ namespace ShopPromotion.Domain.Services.StatisticsServices
 
         /// <inheritdoc />
         public async Task<IList<UsagesStatisticsViewModel>> GetUsagesChartReport(
-            UsageStatisticsParameters reportParameters, CancellationToken ct)
+            IEntityTypeParameters reportParameters, CancellationToken ct)
         {
             var usageStatisticsList = new List<UsagesStatisticsViewModel>();
+            // FromDate
+            var fromDate = ((DateTime) reportParameters.GetParameter("FromDate")).Date;
+            // ToDate
+            var toDate = (DateTime) reportParameters.GetParameter("ToDate");
 
-            for (var date = reportParameters.FromDate.Date; date <= reportParameters.ToDate; date = date.AddDays(1))
+            for (var date = fromDate; date <= toDate; date = date.AddDays(1))
             {
                 var currentDate = date;
                 var users = await Context.BaseIdentityUsers.Where(

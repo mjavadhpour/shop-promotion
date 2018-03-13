@@ -16,8 +16,8 @@ namespace ShopPromotion.API.Controllers.Admin
     using Domain.Services.PaginationHelper;
     using Domain.EntityLayer;
     using Domain.Infrastructure.DAL;
-    using Domain.Infrastructure.Models.Form;
-    using Domain.Infrastructure.Models.Form.Custom;
+    using Infrastructure.Models.Form;
+    using Infrastructure.Models.Form.Custom;
     using Domain.Infrastructure.Models.Resource;
 
     /// <summary>
@@ -52,7 +52,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="404">Not Found</response>
         /// <response code="500">Internal Server Error</response>
         [HttpPut]
-        public async Task<IActionResult> UpdateShopStatusAsync([FromForm] ShopStatusForm shopStatusForm,
+        public async Task<IActionResult> UpdateShopStatusAsync([FromBody] ShopStatusForm shopStatusForm,
             CancellationToken ct)
         {
             await UnitOfWork.ShopStatusService.ChangeShopStatus(shopStatusForm, ct);

@@ -3,13 +3,16 @@
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
 using System;
+using System.Collections.Generic;
 
-namespace ShopPromotion.Domain.Infrastructure.Models.Parameter.Custom
+namespace ShopPromotion.API.Infrastructure.Models.Parameter.Custom
 {
+    using Domain.Infrastructure.Models.Parameter;
+
     /// <summary>
     /// Base model for query on report results.
     /// </summary>
-    public class BaseReportParameters
+    public class BaseReportParameters : IEntityTypeParameters
     {
         /// <summary>
         /// Filter result with Date.
@@ -20,5 +23,19 @@ namespace ShopPromotion.Domain.Infrastructure.Models.Parameter.Custom
         /// Filter result with Date.
         /// </summary>
         public DateTime ToDate { get; set; }
+
+        /// <inheritdoc />
+        public virtual object GetParameter(string nameOfParam)
+        {
+            switch (nameOfParam)
+            {
+                case "FromDate":
+                    return FromDate;
+                case "ToDate":
+                    return ToDate;
+                default:
+                    throw new KeyNotFoundException();
+            }
+        }
     }
 }

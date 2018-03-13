@@ -5,25 +5,25 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ShopPromotion.Domain.Infrastructure.Models.Parameter
+namespace ShopPromotion.API.Infrastructure.Models.Parameter
 {
-    using EntityLayer;
+    using Domain.Infrastructure.Models.Parameter;
 
-    public class GetAllMessagesParameters : IEntityTypeParameters
+    public class GetAllSpecialOffersParameters : IEntityTypeParameters
     {
         /// <summary>
-        /// Filter messsages by target
+        /// Filter special offers by IsEnabled.
         /// </summary>
         [FromQuery]
-        public MessageTargetTypeOption Target { get; set; }
+        public bool? IsEnabled { get; set; }
 
         /// <inheritdoc />
         public object GetParameter(string nameOfParam)
         {
             switch (nameOfParam)
             {
-                case "Target":
-                    return Target;
+                case "IsEnabled":
+                    return IsEnabled;
                 default:
                     throw new KeyNotFoundException();
             }

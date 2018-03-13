@@ -10,7 +10,7 @@ using ShopPromotion.Domain.Services.PaginationHelper;
 
 namespace ShopPromotion.Domain.Services.StatisticsServices
 {
-    using Infrastructure.Models.Parameter.Custom;
+    using Infrastructure.Models.Parameter;
     using Infrastructure.Models.Resource.Custom;
     using EntityLayer;
 
@@ -26,7 +26,7 @@ namespace ShopPromotion.Domain.Services.StatisticsServices
         }
 
         /// <inheritdoc />
-        public async Task<ShopsReportViewModel> GetNumberOfShops(ShopsReportParameters reportParameters, CancellationToken ct)
+        public async Task<ShopsReportViewModel> GetNumberOfShops(IEntityTypeParameters reportParameters, CancellationToken ct)
         {
             var count = await _shops.CountAsync(ct);
             return new ShopsReportViewModel(count);

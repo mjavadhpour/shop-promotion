@@ -21,7 +21,8 @@ namespace ShopPromotion.Domain.Services
     using PaginationHelper;
 
     public class
-        DefaultMessageService : DefaultEntityService<MessageForm, MinimumMessageListResource, MinimumMessageResource, Message, ShopPromotionDomainContext>
+        DefaultMessageService<T> : DefaultEntityService<T, MinimumMessageListResource, MinimumMessageResource, Message, ShopPromotionDomainContext>
+        where T : BaseEntity
     {
         public DefaultMessageService(ShopPromotionDomainContext context,
             ResolvedPaginationValueService resolvedPaginationValue) : base(context, resolvedPaginationValue)
@@ -59,7 +60,7 @@ namespace ShopPromotion.Domain.Services
         /// <inheritdoc>
         /// <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
         /// </inheritdoc>
-        protected override Message MappingFromModelToTModelDestination(MessageForm form, CancellationToken ct)
+        protected override Message MappingFromModelToTModelDestination(T form, CancellationToken ct)
         {
             // Map message and resource.
             var message = Mapper.Map<Message>(form);
@@ -80,7 +81,7 @@ namespace ShopPromotion.Domain.Services
         /// <summary>
         /// Check if shop have duplicated size for each product group thrown error.
         /// </summary>
-        protected override void ValidateAddOrUpdateRequest(MessageForm form)
+        protected override void ValidateAddOrUpdateRequest(T form)
         {
         }
     }

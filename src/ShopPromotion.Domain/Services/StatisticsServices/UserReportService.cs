@@ -11,7 +11,7 @@ namespace ShopPromotion.Domain.Services.StatisticsServices
     // Domain
     using PaginationHelper;
     using Infrastructure;
-    using Infrastructure.Models.Parameter.Custom;
+    using Infrastructure.Models.Parameter;
     using Infrastructure.Models.Resource.Custom;
 
     /// <inheritdoc cref="IUserReportService" />
@@ -24,7 +24,7 @@ namespace ShopPromotion.Domain.Services.StatisticsServices
         }
 
         /// <inheritdoc />
-        public async Task<AppUsersReportViewModel> GetNumberOfUsers(AppUsersReportParameters reportParameters,
+        public async Task<AppUsersReportViewModel> GetNumberOfUsers(IEntityTypeParameters reportParameters,
             CancellationToken ct)
         {
             var appUserCount = await Context.AppUsers.CountAsync(ct);

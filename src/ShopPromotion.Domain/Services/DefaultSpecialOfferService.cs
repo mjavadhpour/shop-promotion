@@ -21,7 +21,8 @@ namespace ShopPromotion.Domain.Services
     using PaginationHelper;
 
     public class
-        DefaultSpecialOfferService : DefaultEntityService<SpecialOfferForm, MinimumSpecialOfferResource, MinimumSpecialOfferResource, SpecialOffer, ShopPromotionDomainContext>
+        DefaultSpecialOfferService<T> : DefaultEntityService<T, MinimumSpecialOfferResource, MinimumSpecialOfferResource, SpecialOffer, ShopPromotionDomainContext>
+        where T : BaseEntity
     {
         public DefaultSpecialOfferService(ShopPromotionDomainContext context,
             ResolvedPaginationValueService resolvedPaginationValue) : base(context, resolvedPaginationValue)
@@ -58,7 +59,7 @@ namespace ShopPromotion.Domain.Services
         /// <inheritdoc>
         /// <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
         /// </inheritdoc>
-        protected override SpecialOffer MappingFromModelToTModelDestination(SpecialOfferForm form, CancellationToken ct)
+        protected override SpecialOffer MappingFromModelToTModelDestination(T form, CancellationToken ct)
         {
             // Map shop promotion and resource.
             var shopPromotion = Mapper.Map<SpecialOffer>(form);
@@ -83,7 +84,7 @@ namespace ShopPromotion.Domain.Services
         /// <summary>
         /// Check if shop have duplicated size for each product group thrown error.
         /// </summary>
-        protected override void ValidateAddOrUpdateRequest(SpecialOfferForm form)
+        protected override void ValidateAddOrUpdateRequest(T form)
         {
         }
     }

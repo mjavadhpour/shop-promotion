@@ -12,12 +12,11 @@ namespace ShopPromotion.API.Controllers.App
 {
     // API
     using Infrastructure.Models.Parameter;
+    using Infrastructure.Models.Form;
     using ServiceConfiguration;
     // Domain
     using Domain.EntityLayer;
     using Domain.Infrastructure.DAL;
-    using Domain.Infrastructure.Models.Form;
-    using Domain.Infrastructure.Models.Parameter;
     using Domain.Infrastructure.Models.Resource;
     using Domain.Infrastructure.Models.Response;
     using Domain.Infrastructure.Models.Response.Pagination;

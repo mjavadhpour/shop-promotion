@@ -2,14 +2,16 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
-namespace ShopPromotion.Domain.Infrastructure.Models.Form.Custom
+using ShopPromotion.Domain.Infrastructure.Models.Form;
+
+namespace ShopPromotion.API.Infrastructure.Models.Form.Custom
 {
-    using EntityLayer;
+    using Domain.EntityLayer;
 
     /// <summary>
     /// Form for change shop status.
     /// </summary>
-    public class ShopStatusForm
+    public class ShopStatusForm : IShopStatusForm
     {
         /// <summary>
         /// ID of shop.

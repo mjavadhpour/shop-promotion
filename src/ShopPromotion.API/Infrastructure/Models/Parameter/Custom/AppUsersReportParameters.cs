@@ -2,15 +2,12 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
-using System.ComponentModel.DataAnnotations;
-
-namespace ShopPromotion.Domain.Infrastructure.Models.Form
+namespace ShopPromotion.API.Infrastructure.Models.Parameter.Custom
 {
-    using EntityLayer;
-
-    public class ShopAdminForm : BaseEntity
+    /// <summary>
+    /// Model for query on appUsers report results.
+    /// </summary>
+    public class AppUsersReportParameters : BaseReportParameters
     {
-        [Required]
-        public string XXX { get; set; }
     }
 }

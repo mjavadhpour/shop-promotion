@@ -2,13 +2,11 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
-namespace ShopPromotion.Domain.Infrastructure.Models.Parameter.Custom
+namespace ShopPromotion.API.Infrastructure.Models.Form
 {
-    /// <summary>
-    /// Model for query on usages statistics results.
-    /// </summary>
-    public class UsageStatisticsParameters : BaseReportParameters
+    using Domain.EntityLayer;
+
+    public class OrderForm : BaseEntity
     {
-        
     }
 }

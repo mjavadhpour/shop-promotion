@@ -2,7 +2,6 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
-using System;
 using System.Linq;
 using AutoMapper;
 
@@ -11,7 +10,6 @@ namespace ShopPromotion.Domain.Infrastructure.AutoMapper
     using EntityLayer;
     using Models.Resource;
     using Models.Resource.Custom;
-    using Models.Form;
 
     /// <summary>
     /// Default auto mapping configuration and define supported mapping in project.
@@ -40,13 +38,9 @@ namespace ShopPromotion.Domain.Infrastructure.AutoMapper
                     opt => opt.MapFrom(y => y.ShopStatuses.Select(s => s.Status).LastOrDefault()))
                 .ForMember(dto => dto.Images,
                     opt => opt.MapFrom(y => y.ShopImages));
-            CreateMap<ShopForm, Shop>();
-            CreateMap<ShopForm, MinimumShopResource>();
             CreateMap<ShopAttribute, MinimumAttributeResource>();
             // ShopPromotion
             CreateMap<ShopPromotion, MinimumShopPromotionResource>();
-            CreateMap<ShopPromotionForm, ShopPromotion>();
-            CreateMap<ShopPromotionForm, MinimumShopPromotionResource>();
             // ShopImage
             CreateMap<ShopImage, MinimumShopImageResource>();
             // ShopGeolocations

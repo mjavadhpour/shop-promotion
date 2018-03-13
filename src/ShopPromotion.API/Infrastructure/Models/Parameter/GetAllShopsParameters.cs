@@ -5,23 +5,25 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ShopPromotion.Domain.Infrastructure.Models.Parameter
+namespace ShopPromotion.API.Infrastructure.Models.Parameter
 {
-    public class GetAllOrdersParameters : IEntityTypeParameters
+    using Domain.Infrastructure.Models.Parameter;
+
+    public class GetAllShopsParameters : IEntityTypeParameters
     {
         /// <summary>
-        /// Filter order by shop id
+        /// Filter shop by date.
         /// </summary>
         [FromQuery]
-        public int? ShopId { get; set; }
+        public string Title { get; set; }
 
         /// <inheritdoc />
         public object GetParameter(string nameOfParam)
         {
             switch (nameOfParam)
             {
-                case "ShopId":
-                    return ShopId;
+                case "Title":
+                    return Title;
                 default:
                     throw new KeyNotFoundException();
             }

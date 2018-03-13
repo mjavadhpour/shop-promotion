@@ -12,7 +12,7 @@ namespace ShopPromotion.Domain.Services.ShopStatusServices
     using EntityLayer;
     using Exceptions;
     using Infrastructure;
-    using Infrastructure.Models.Form.Custom;
+    using Infrastructure.Models.Form;
     using PaginationHelper;
 
     /// <inheritdoc cref="IShopStatusService" />
@@ -25,7 +25,7 @@ namespace ShopPromotion.Domain.Services.ShopStatusServices
         }
 
         /// <inheritdoc />
-        public async Task ChangeShopStatus(ShopStatusForm shopStatusForm, CancellationToken ct)
+        public async Task ChangeShopStatus(IShopStatusForm shopStatusForm, CancellationToken ct)
         {
             var shop = await Context.Shops.AsNoTracking().SingleOrDefaultAsync(x => x.Id == shopStatusForm.ShopId, ct);
             if (shop == null) throw new ShopNotFoundException();

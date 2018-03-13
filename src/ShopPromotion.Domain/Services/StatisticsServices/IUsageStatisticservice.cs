@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ShopPromotion.Domain.Services.StatisticsServices
 {
-    using Infrastructure.Models.Parameter.Custom;
+    using Infrastructure.Models.Parameter;
     using Infrastructure.Models.Resource.Custom;
 
     /// <summary>
@@ -22,7 +22,7 @@ namespace ShopPromotion.Domain.Services.StatisticsServices
         /// <param name="reportParameters"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<IList<UsagesStatisticsViewModel>> GetUsagesChartReport(UsageStatisticsParameters reportParameters,
+        Task<IList<UsagesStatisticsViewModel>> GetUsagesChartReport(IEntityTypeParameters reportParameters,
             CancellationToken ct);
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ShopPromotion.Domain.Infrastructure.DAL
 {
-    using Services;
+    using Services.UserManager;
     using Services.ShopStatusServices;
     using Services.StatisticsServices;
 

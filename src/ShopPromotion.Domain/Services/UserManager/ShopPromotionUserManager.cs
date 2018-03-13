@@ -10,7 +10,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace ShopPromotion.Domain.Services
+namespace ShopPromotion.Domain.Services.UserManager
 {
     using EntityLayer;
     using Extensions;

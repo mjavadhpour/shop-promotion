@@ -6,8 +6,10 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ShopPromotion.Domain.Infrastructure.Models.Parameter
+namespace ShopPromotion.API.Infrastructure.Models.Parameter
 {
+    using Domain.Infrastructure.Models.Parameter;
+
     public class GetAllShopPromotionBarcodeParameters : IEntityTypeParameters
     {
         /// <summary>

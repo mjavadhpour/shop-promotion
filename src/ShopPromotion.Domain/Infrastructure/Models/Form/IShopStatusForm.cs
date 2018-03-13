@@ -6,7 +6,16 @@ namespace ShopPromotion.Domain.Infrastructure.Models.Form
 {
     using EntityLayer;
 
-    public class ShopPromotionForm : BaseEntity
+    public interface IShopStatusForm
     {
+        /// <summary>
+        /// ID of shop.
+        /// </summary>
+        int ShopId { get; set; }
+
+        /// <summary>
+        /// Target status. <br /> Approved: 0 <br /> Disapproved: 1 <br /> NeedChange: 2
+        /// </summary>
+        ShopStatusOption StatusOptions { get; set; }
     }
 }

@@ -7,13 +7,15 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ShopPromotion.API.ServiceConfiguration
 {
+    // API
+    using Infrastructure.Models.Form;
     // Helper
     using Helper.Infrastructure.Filters;
     // Domain
     using Domain.EntityLayer;
     using Domain.Services;
+    using Domain.Services.UserManager;
     using Domain.Services.PaginationHelper;
-    using Domain.Infrastructure.Models.Form;
     using Domain.Infrastructure.Models.Resource;
     using Domain.Infrastructure;
     using Domain.Infrastructure.DAL;
@@ -76,32 +78,32 @@ namespace ShopPromotion.API.ServiceConfiguration
             // Shop
             services
                 .AddScoped<IBaseService<ShopForm, MinimumShopListResource, MinimumShopResource, Shop, ShopPromotionDomainContext>,
-                    DefaultShopService>();
+                    DefaultShopService<ShopForm>>();
             // ShopPromotion
             services
                 .AddScoped<IBaseService<ShopPromotionForm, MinimumShopPromotionResource, MinimumShopPromotionResource, ShopPromotion, ShopPromotionDomainContext>,
-                    DefaultShopPromotionService>();
+                    DefaultShopPromotionService<ShopPromotionForm>>();
             // Order
             services
                 .AddScoped<IBaseService<OrderForm, MinimumOrderResource, MinimumOrderResource, Order, ShopPromotionDomainContext>,
-                    DefaultOrderService>();
+                    DefaultOrderService<OrderForm>>();
             // ShopPromotionBarcode
             services
                 .AddScoped<IBaseService<ShopPromotionBarcodeForm, MinimumShopPromotionBarcodeResource, MinimumShopPromotionBarcodeResource, ShopPromotionBarcode, ShopPromotionDomainContext>,
-                    DefaultShopPromotionBarcodeService>();
+                    DefaultShopPromotionBarcodeService<ShopPromotionBarcodeForm>>();
             // Message
             services
                 .AddScoped<IBaseService<MessageForm, MinimumMessageListResource, MinimumMessageResource, Message, ShopPromotionDomainContext>,
-                    DefaultMessageService>();
+                    DefaultMessageService<MessageForm>>();
             // SpecialOffer
             services
                 .AddScoped<
                     IBaseService<SpecialOfferForm, MinimumSpecialOfferResource, MinimumSpecialOfferResource, SpecialOffer, ShopPromotionDomainContext
-                    >, DefaultSpecialOfferService>();
+                    >, DefaultSpecialOfferService<SpecialOfferForm>>();
             // Shop Admin
             services
                 .AddScoped<IBaseService<ShopAdminForm, MinimumShopListResource, MinimumShopResource, Shop, ShopPromotionDomainContext>,
-                    DefaultAdminShopService>();
+                    DefaultAdminShopService<ShopAdminForm>>();
             // Report services.
             services.AddScoped<IUserReportService, UserReportService>();
             services.AddScoped<IPaymentReportTracker, PaymentReportService>();

@@ -5,9 +5,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ShopPromotion.Domain.Infrastructure.Models.Form
+namespace ShopPromotion.API.Infrastructure.Models.Form
 {
-    using EntityLayer;
+    using Domain.EntityLayer;
 
     public class SpecialOfferForm : BaseEntity
     {

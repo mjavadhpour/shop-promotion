@@ -8,7 +8,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using ShopPromotion.Domain.Services;
 
 namespace ShopPromotion.API.Controllers.Admin
 {
@@ -17,11 +16,12 @@ namespace ShopPromotion.API.Controllers.Admin
     using Infrastructure.Models.Form;
     using Infrastructure.Models.Parameter;
     // Domain
+    using Domain.EntityLayer;
     using Domain.Infrastructure.DAL;
     using Domain.Infrastructure.Models.Resource.Custom;
     using Domain.Infrastructure.Models.Response;
     using Domain.Infrastructure.Models.Response.Pagination;
-    using Domain.EntityLayer;
+    using Domain.Services.UserManager;
     using Domain.Services.PaginationHelper;
     // Helper
     using Helper.Infrastructure.ActionResults;

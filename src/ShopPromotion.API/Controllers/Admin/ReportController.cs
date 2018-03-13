@@ -12,11 +12,11 @@ namespace ShopPromotion.API.Controllers.Admin
 {
     // API
     using ServiceConfiguration;
+    using Infrastructure.Models.Parameter.Custom;
     // Domain
     using Domain.Services.PaginationHelper;
     using Domain.Infrastructure.DAL;
     using Domain.Infrastructure.Models.Response;
-    using Domain.Infrastructure.Models.Parameter.Custom;
     using Domain.Infrastructure.Models.Resource.Custom;
 
     /// <summary>

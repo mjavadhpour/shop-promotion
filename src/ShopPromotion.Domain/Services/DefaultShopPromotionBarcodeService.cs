@@ -19,7 +19,9 @@ namespace ShopPromotion.Domain.Services
     using PaginationHelper;
 
     public class
-        DefaultShopPromotionBarcodeService : DefaultEntityService<ShopPromotionBarcodeForm, MinimumShopPromotionBarcodeResource, MinimumShopPromotionBarcodeResource, ShopPromotionBarcode, ShopPromotionDomainContext>
+        DefaultShopPromotionBarcodeService<T> : DefaultEntityService<T, MinimumShopPromotionBarcodeResource,
+            MinimumShopPromotionBarcodeResource, ShopPromotionBarcode, ShopPromotionDomainContext>
+        where T : BaseEntity
     {
         public DefaultShopPromotionBarcodeService(ShopPromotionDomainContext context,
             ResolvedPaginationValueService resolvedPaginationValue) : base(context, resolvedPaginationValue)
@@ -29,7 +31,8 @@ namespace ShopPromotion.Domain.Services
         /// <inheritdoc>
         /// <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
         /// </inheritdoc>
-        protected override async Task<ShopPromotionBarcode> GetElementOfTModelSequenceAsync(int id, CancellationToken ct)
+        protected override async Task<ShopPromotionBarcode> GetElementOfTModelSequenceAsync(int id,
+            CancellationToken ct)
         {
             return await Entities
                 .AsNoTracking()
@@ -39,7 +42,7 @@ namespace ShopPromotion.Domain.Services
         /// <inheritdoc>
         /// <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
         /// </inheritdoc>
-        protected override ShopPromotionBarcode MappingFromModelToTModelDestination(ShopPromotionBarcodeForm form, CancellationToken ct)
+        protected override ShopPromotionBarcode MappingFromModelToTModelDestination(T form, CancellationToken ct)
         {
             // Map shop promotion and resource.
             var shopPromotion = Mapper.Map<ShopPromotionBarcode>(form);
@@ -50,7 +53,8 @@ namespace ShopPromotion.Domain.Services
         /// <inheritdoc>
         /// <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
         /// </inheritdoc>
-        public override async Task<IPage<MinimumShopPromotionBarcodeResource>> GetEntitiesAsync(IPagingOptions pagingOptions,
+        public override async Task<IPage<MinimumShopPromotionBarcodeResource>> GetEntitiesAsync(
+            IPagingOptions pagingOptions,
             IEntityTypeParameters entityTypeParameters, CancellationToken ct)
         {
             // Filter by shop id.
@@ -68,7 +72,7 @@ namespace ShopPromotion.Domain.Services
         /// <summary>
         /// Check if shop have duplicated size for each product group thrown error.
         /// </summary>
-        protected override void ValidateAddOrUpdateRequest(ShopPromotionBarcodeForm form)
+        protected override void ValidateAddOrUpdateRequest(T form)
         {
         }
     }
