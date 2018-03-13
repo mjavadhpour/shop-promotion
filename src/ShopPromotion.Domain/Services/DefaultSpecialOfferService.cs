@@ -6,18 +6,14 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace ShopPromotion.Domain.Services
 {
     using EntityLayer;
-    using Extensions;
     using Infrastructure;
-    using Infrastructure.Models.Form;
     using Infrastructure.Models.Resource;
     using Infrastructure.Models.Parameter;
-    using Infrastructure.Models.Response.Pagination;
     using PaginationHelper;
 
     public class
@@ -43,17 +39,16 @@ namespace ShopPromotion.Domain.Services
         /// <inheritdoc>
         ///     <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
         /// </inheritdoc>
-        protected override async Task<MinimumSpecialOfferResource[]> GetElementsOfTModelSequenceAsync(int pageSize,
-            int pageNumber, string orderBy, bool ascending,
-            CancellationToken ct)
+        protected override IQueryable<SpecialOffer> GetElementsOfTModelSequenceAsync(
+            IEntityTypeParameters entityTypeParameters)
         {
-            return await Query
-                .OrderByPropertyOrField(orderBy, ascending)
-                .Include(so => so.Shop)
-                .Skip(pageNumber * pageSize)
-                .Take(pageSize)
-                .ProjectTo<MinimumSpecialOfferResource>()
-                .ToArrayAsync(ct);
+            // Filter by shop id.
+            if (entityTypeParameters.GetParameter("IsEnabled") != null)
+                Query = Query.Where(x => x.IsEnabled == (bool) entityTypeParameters.GetParameter("IsEnabled"));
+
+            Query = Query.Include(so => so.Shop);
+
+            return base.GetElementsOfTModelSequenceAsync(entityTypeParameters);
         }
 
         /// <inheritdoc>
@@ -65,19 +60,6 @@ namespace ShopPromotion.Domain.Services
             var shopPromotion = Mapper.Map<SpecialOffer>(form);
 
             return shopPromotion;
-        }
-
-        /// <inheritdoc>
-        /// <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
-        /// </inheritdoc>
-        public override async Task<IPage<MinimumSpecialOfferResource>> GetEntitiesAsync(IPagingOptions pagingOptions,
-            IEntityTypeParameters entityTypeParameters, CancellationToken ct)
-        {
-            // Filter by shop id.
-            if (entityTypeParameters.GetParameter("IsEnabled") != null)
-                Query = Query.Where(x => x.IsEnabled == (bool) entityTypeParameters.GetParameter("IsEnabled"));
-
-            return await base.GetEntitiesAsync(pagingOptions, entityTypeParameters, ct);
         }
 
         /// <inheritdoc />

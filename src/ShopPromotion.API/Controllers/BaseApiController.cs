@@ -70,7 +70,7 @@ namespace ShopPromotion.API.Controllers
             TGetAllParameters entityTypeParameters, CancellationToken ct)
         {
             var entities = await GenericUnitOfWork.GenericRepository()
-                .GetEntitiesAsync(pagingOptions, entityTypeParameters, ct);
+                .GetEntitiesAsync(entityTypeParameters, ct);
 
             var collection = Page<TMinimumTListResource>.Create(
                 entities.Results.ToArray(),

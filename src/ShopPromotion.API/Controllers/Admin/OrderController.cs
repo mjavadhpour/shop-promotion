@@ -38,7 +38,6 @@ namespace ShopPromotion.API.Controllers.Admin
         {
         }
 
-        /// Get list of orders.
         /// <summary>
         /// Get list of orders.
         /// </summary>

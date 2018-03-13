@@ -28,12 +28,10 @@ namespace ShopPromotion.Domain.Services
         /// <summary>
         /// Get all entitys by pagination and filter queries.
         /// </summary>
-        /// <param name="pagingOptions"></param>
         /// <param name="entityTypeParameters"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<IPage<TListEntityResource>> GetEntitiesAsync(IPagingOptions pagingOptions,
-            IEntityTypeParameters entityTypeParameters,
+        Task<IPage<TListEntityResource>> GetEntitiesAsync(IEntityTypeParameters entityTypeParameters,
             CancellationToken ct);
 
         /// <summary>

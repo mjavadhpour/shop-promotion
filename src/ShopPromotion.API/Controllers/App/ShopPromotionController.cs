@@ -39,7 +39,6 @@ namespace ShopPromotion.API.Controllers.App
         {
         }
 
-        /// Get list of shop promotions.
         /// <summary>
         /// Get list of shop promotions.
         /// </summary>
@@ -66,7 +65,6 @@ namespace ShopPromotion.API.Controllers.App
             return base.GetEntitiesAsync(pagingOptions, entityTypeParameters, ct);
         }
 
-        /// Get a shop promotion by id.
         /// <summary>
         /// Get a shop promotion by id.
         /// </summary>
@@ -93,7 +91,6 @@ namespace ShopPromotion.API.Controllers.App
             return base.GetEntityByIdAsync(itemByIdParameters, ct);
         }
 
-        /// Create new shop promotion.
         /// <summary>
         /// Create new shop promotion.
         /// </summary>
@@ -118,7 +115,6 @@ namespace ShopPromotion.API.Controllers.App
             return base.CreateEntityAsync(form, ct);
         }
 
-        /// Update existing shop promotion.
         /// <summary>
         /// Update existing shop promotion.
         /// </summary>
@@ -145,7 +141,6 @@ namespace ShopPromotion.API.Controllers.App
             return base.UpdateEntityAsync(itemByIdParameters, form, ct);
         }
 
-        /// Delete existing shop promotion.
         /// <summary>
         /// Delete existing shop promotion.
         /// </summary>

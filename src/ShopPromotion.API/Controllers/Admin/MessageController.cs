@@ -38,7 +38,6 @@ namespace ShopPromotion.API.Controllers.Admin
         {
         }
 
-        /// Get list of messages.
         /// <summary>
         /// Get list of messages.
         /// </summary>
@@ -64,7 +63,6 @@ namespace ShopPromotion.API.Controllers.Admin
             return base.GetEntitiesAsync(pagingOptions, entityTypeParameters, ct);
         }
 
-        /// Get a message by id.
         /// <summary>
         /// Get a message by id.
         /// </summary>
@@ -90,7 +88,6 @@ namespace ShopPromotion.API.Controllers.Admin
             return base.GetEntityByIdAsync(itemByIdParameters, ct);
         }
 
-        /// Create new message.
         /// <summary>
         /// Create new message.
         /// </summary>
@@ -115,7 +112,6 @@ namespace ShopPromotion.API.Controllers.Admin
             return base.CreateEntityAsync(form, ct);
         }
 
-        /// Update existing message.
         /// <summary>
         /// Update existing message.
         /// </summary>
@@ -141,7 +137,6 @@ namespace ShopPromotion.API.Controllers.Admin
             return base.UpdateEntityAsync(itemByIdParameters, form, ct);
         }
 
-        /// Delete existing message.
         /// <summary>
         /// Delete existing message.
         /// </summary>

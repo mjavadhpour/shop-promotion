@@ -40,21 +40,17 @@ namespace ShopPromotion.Domain.Services
                 .Include(m => m.MessageTargets)
                 .SingleOrDefaultAsync(x => x.Id == id, ct);
         }
+
         /// <inheritdoc>
         ///     <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
         /// </inheritdoc>
-        protected override async Task<MinimumMessageListResource[]> GetElementsOfTModelSequenceAsync(int pageSize,
-            int pageNumber, string orderBy, bool ascending,
-            CancellationToken ct)
+        protected override IQueryable<Message> GetElementsOfTModelSequenceAsync(IEntityTypeParameters entityTypeParameters)
         {
-            return await Query
-                .OrderByPropertyOrField(orderBy, ascending)
+            Query = Query
                 .Include(m => m.Author)
-                .Include(m => m.MessageTargets)
-                .Skip(pageNumber * pageSize)
-                .Take(pageSize)
-                .ProjectTo<MinimumMessageListResource>()
-                .ToArrayAsync(ct);
+                .Include(m => m.MessageTargets);
+
+            return base.GetElementsOfTModelSequenceAsync(entityTypeParameters);
         }
 
         /// <inheritdoc>
@@ -66,15 +62,6 @@ namespace ShopPromotion.Domain.Services
             var message = Mapper.Map<Message>(form);
 
             return message;
-        }
-
-        /// <inheritdoc>
-        /// <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
-        /// </inheritdoc>
-        public override async Task<IPage<MinimumMessageListResource>> GetEntitiesAsync(IPagingOptions pagingOptions,
-            IEntityTypeParameters entityTypeParameters, CancellationToken ct)
-        {
-            return await base.GetEntitiesAsync(pagingOptions, entityTypeParameters, ct);
         }
 
         /// <inheritdoc />

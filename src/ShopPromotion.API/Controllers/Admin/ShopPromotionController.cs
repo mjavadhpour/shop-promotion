@@ -39,7 +39,6 @@ namespace ShopPromotion.API.Controllers.Admin
         {
         }
 
-        /// Get list of shop promotions.
         /// <summary>
         /// Get list of shop promotions.
         /// </summary>
@@ -66,7 +65,6 @@ namespace ShopPromotion.API.Controllers.Admin
             return base.GetEntitiesAsync(pagingOptions, entityTypeParameters, ct);
         }
 
-        /// Get a shop  promotion by id.
         /// <summary>
         /// Get a shop promotion by id.
         /// </summary>
@@ -100,7 +98,6 @@ namespace ShopPromotion.API.Controllers.Admin
             return base.CreateEntityAsync(form, ct);
         }
 
-        /// Update existing shop promotion.
         /// <summary>
         /// Update existing shop promotion.
         /// </summary>

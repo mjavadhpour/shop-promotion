@@ -38,9 +38,8 @@ namespace ShopPromotion.API.Controllers.Admin
         {
         }
 
-        /// Get list of shops.
         /// <summary>
-        /// Get list of shops.
+        /// Get list of shops for admin.
         /// </summary>
         /// <param name="ct">
         /// Adding a CancellationToken parameter to your route methods allows ASP.NET Core to notify your

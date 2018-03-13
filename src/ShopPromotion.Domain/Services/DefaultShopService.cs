@@ -7,23 +7,20 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace ShopPromotion.Domain.Services
 {
     using EntityLayer;
-    using Extensions;
     using Infrastructure;
-    using Infrastructure.Models.Form;
     using Infrastructure.Models.Resource;
     using Infrastructure.Models.Parameter;
-    using Infrastructure.Models.Response.Pagination;
     using PaginationHelper;
 
     public class
-        DefaultShopService<T> : DefaultEntityService<T, MinimumShopListResource, MinimumShopResource, Shop, ShopPromotionDomainContext>
-        where T :  BaseEntity
+        DefaultShopService<T> : DefaultEntityService<T, MinimumShopListResource, MinimumShopResource, Shop,
+            ShopPromotionDomainContext>
+        where T : BaseEntity
     {
         public DefaultShopService(ShopPromotionDomainContext context,
             ResolvedPaginationValueService resolvedPaginationValue) : base(context, resolvedPaginationValue)
@@ -49,18 +46,16 @@ namespace ShopPromotion.Domain.Services
         /// <inheritdoc>
         ///     <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
         /// </inheritdoc>
-        protected override async Task<MinimumShopListResource[]> GetElementsOfTModelSequenceAsync(int pageSize,
-            int pageNumber, string orderBy, bool ascending,
-            CancellationToken ct)
+        protected override IQueryable<Shop> GetElementsOfTModelSequenceAsync(IEntityTypeParameters entityTypeParameters)
         {
-            return await Query
-                .OrderByPropertyOrField(orderBy, ascending)
+            Query = Query
                 .Include(shop => shop.ShopImages)
                 .Include(shop => shop.ShopAttributes)
-                .Skip(pageNumber * pageSize)
-                .Take(pageSize)
-                .ProjectTo<MinimumShopListResource>()
-                .ToArrayAsync(ct);
+                .Where(shop =>
+                    shop.ShopStatuses.Where(ss => ss.Status == ShopStatusOption.Approved).OrderByDescending(ss => ss.Id)
+                        .FirstOrDefault().Id == shop.ShopStatuses.OrderByDescending(ss => ss.Id).FirstOrDefault().Id);
+
+            return base.GetElementsOfTModelSequenceAsync(entityTypeParameters);
         }
 
         /// <inheritdoc>
@@ -82,15 +77,6 @@ namespace ShopPromotion.Domain.Services
             }
 
             return shop;
-        }
-
-        /// <inheritdoc>
-        /// <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
-        /// </inheritdoc>
-        public override async Task<IPage<MinimumShopListResource>> GetEntitiesAsync(IPagingOptions pagingOptions,
-            IEntityTypeParameters entityTypeParameters, CancellationToken ct)
-        {
-            return await base.GetEntitiesAsync(pagingOptions, entityTypeParameters, ct);
         }
 
         /// <inheritdoc />

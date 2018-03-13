@@ -67,16 +67,18 @@ namespace ShopPromotion.Domain.Services
         /// <inheritdoc>
         /// <cref>IBaseService{TForm, TEntityResource,TEntityModel}</cref>
         /// </inheritdoc>
-        public virtual async Task<IPage<TListModelResource>> GetEntitiesAsync(IPagingOptions pagingOptions,
-            IEntityTypeParameters entityTypeParameters, CancellationToken ct)
+        public async Task<IPage<TListModelResource>> GetEntitiesAsync(IEntityTypeParameters entityTypeParameters, 
+            CancellationToken ct)
         {
             _currentAction = GetEntities;
+            var results = await GetElementsOfTModelSequenceAsync(entityTypeParameters)
+                .OrderByPropertyOrField(PaginationValues.OrderBy, PaginationValues.Ascending)
+                .Skip(PaginationValues.Page * PaginationValues.PageSize)
+                .Take(PaginationValues.PageSize)
+                .ProjectTo<TListModelResource>()
+                .ToArrayAsync(ct);
+
             var totalNumberOfRecords = await Query.CountAsync(ct);
-            var results = await GetElementsOfTModelSequenceAsync(
-                PaginationValues.PageSize, 
-                PaginationValues.Page,
-                PaginationValues.OrderBy, 
-                PaginationValues.Ascending, ct);
 
             return Page<TListModelResource>.Create(results, totalNumberOfRecords, PaginationValues);
         }
@@ -147,21 +149,11 @@ namespace ShopPromotion.Domain.Services
         /// <summary>
         /// Method to provide override facilities for child to use Include method for list of items.
         /// </summary>
-        /// <param name="pageSize"></param>
-        /// <param name="pageNumber"></param>
-        /// <param name="orderBy"></param>
-        /// <param name="ascending"></param>
-        /// <param name="ct"></param>
         /// <returns></returns>
-        protected virtual async Task<TListModelResource[]> GetElementsOfTModelSequenceAsync(int pageSize, int pageNumber,
-            string orderBy, bool ascending, CancellationToken ct)
+        protected virtual IQueryable<TModel> GetElementsOfTModelSequenceAsync(
+            IEntityTypeParameters entityTypeParameters)
         {
-            return await Query
-                .OrderByPropertyOrField(orderBy, ascending)
-                .Skip(pageNumber * pageSize)
-                .Take(pageSize)
-                .ProjectTo<TListModelResource>()
-                .ToArrayAsync(ct);
+            return Query;
         }
 
         /// <summary>
@@ -187,7 +179,7 @@ namespace ShopPromotion.Domain.Services
         {}
 
         /// <summary>
-        /// Get the actions that specify what actually happening in <see cref="DefaultEntityService{TForm,TModelResource,TModel,TContext}"/>.
+        /// Get the actions that specify what actually happening in <see cref="DefaultEntityService{TForm,TListModelResource, TModelResource,TModel,TContext}"/>.
         /// </summary>
         /// <returns> Currently action alias. </returns>
         protected short GetCurrentAction()

@@ -12,10 +12,8 @@ namespace ShopPromotion.Domain.Services
 {
     using EntityLayer;
     using Infrastructure;
-    using Infrastructure.Models.Form;
     using Infrastructure.Models.Resource;
     using Infrastructure.Models.Parameter;
-    using Infrastructure.Models.Response.Pagination;
     using PaginationHelper;
 
     public class
@@ -38,6 +36,20 @@ namespace ShopPromotion.Domain.Services
         }
 
         /// <inheritdoc>
+        ///     <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
+        /// </inheritdoc>
+        protected override IQueryable<Order> GetElementsOfTModelSequenceAsync(
+            IEntityTypeParameters entityTypeParameters)
+        {
+            // Filter by contract.
+            if (entityTypeParameters.GetParameter("ShopId") != null)
+                Query = Query.Where(x =>
+                    x.ShopPromotionBarcode.Promotion.ShopId == (int) entityTypeParameters.GetParameter("ShopId"));
+
+            return base.GetElementsOfTModelSequenceAsync(entityTypeParameters);
+        }
+
+        /// <inheritdoc>
         /// <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
         /// </inheritdoc>
         protected override Order MappingFromModelToTModelDestination(T form, CancellationToken ct)
@@ -46,20 +58,6 @@ namespace ShopPromotion.Domain.Services
             var order = Mapper.Map<Order>(form);
 
             return order;
-        }
-
-        /// <inheritdoc>
-        /// <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
-        /// </inheritdoc>
-        public override async Task<IPage<MinimumOrderResource>> GetEntitiesAsync(IPagingOptions pagingOptions,
-            IEntityTypeParameters entityTypeParameters, CancellationToken ct)
-        {
-            // Filter by contract.
-            if (entityTypeParameters.GetParameter("ShopId") != null)
-                Query = Query.Where(x =>
-                    x.ShopPromotionBarcode.Promotion.ShopId == (int) entityTypeParameters.GetParameter("ShopId"));
-
-            return await base.GetEntitiesAsync(pagingOptions, entityTypeParameters, ct);
         }
 
         /// <inheritdoc />

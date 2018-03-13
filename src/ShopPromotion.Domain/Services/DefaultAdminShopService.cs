@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace ShopPromotion.Domain.Services
@@ -15,10 +14,8 @@ namespace ShopPromotion.Domain.Services
     using EntityLayer;
     using Extensions;
     using Infrastructure;
-    using Infrastructure.Models.Form;
     using Infrastructure.Models.Resource;
     using Infrastructure.Models.Parameter;
-    using Infrastructure.Models.Response.Pagination;
     using PaginationHelper;
 
     public class
@@ -48,18 +45,21 @@ namespace ShopPromotion.Domain.Services
         /// <inheritdoc>
         ///     <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
         /// </inheritdoc>
-        protected override async Task<MinimumShopListResource[]> GetElementsOfTModelSequenceAsync(int pageSize,
-            int pageNumber, string orderBy, bool ascending,
-            CancellationToken ct)
+        protected override IQueryable<Shop> GetElementsOfTModelSequenceAsync(IEntityTypeParameters entityTypeParameters)
         {
-            return await Query
-                .OrderByPropertyOrField(orderBy, ascending)
+            if (entityTypeParameters.GetParameter("CreateDate") != null)
+            {
+                var createDate = (DateFilterParameterOptions) entityTypeParameters.GetParameter("CreateDate");
+                // Filter by create date.
+                Query = Query.FilterByCreateDate(createDate);
+            }
+                
+
+            Query = Query
                 .Include(shop => shop.ShopImages)
-                .Include(shop => shop.ShopAttributes)
-                .Skip(pageNumber * pageSize)
-                .Take(pageSize)
-                .ProjectTo<MinimumShopListResource>()
-                .ToArrayAsync(ct);
+                .Include(shop => shop.ShopAttributes);
+            
+            return base.GetElementsOfTModelSequenceAsync(entityTypeParameters);
         }
 
         /// <inheritdoc>
@@ -81,22 +81,6 @@ namespace ShopPromotion.Domain.Services
             }
 
             return shop;
-        }
-
-        /// <inheritdoc>
-        /// <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
-        /// </inheritdoc>
-        public override async Task<IPage<MinimumShopListResource>> GetEntitiesAsync(IPagingOptions pagingOptions,
-            IEntityTypeParameters entityTypeParameters, CancellationToken ct)
-        {
-            if (entityTypeParameters.GetParameter("CreateDate") == null)
-                return await base.GetEntitiesAsync(pagingOptions, entityTypeParameters, ct);
-
-            var createDate = (DateFilterParameterOptions) entityTypeParameters.GetParameter("CreateDate");
-            // Filter by create date.
-            Query = Query.FilterByCreateDate(createDate);
-
-            return await base.GetEntitiesAsync(pagingOptions, entityTypeParameters, ct);
         }
 
         /// <inheritdoc />

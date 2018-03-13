@@ -39,9 +39,8 @@ namespace ShopPromotion.API.Controllers.Admin
         {
         }
 
-        /// Get list of shop special offers.
         /// <summary>
-        /// Get list of shop special offers
+        /// Get list of shop special offers.
         /// </summary>
         /// <param name="ct">
         /// Adding a CancellationToken parameter to your route methods allows ASP.NET Core to notify your
@@ -66,7 +65,6 @@ namespace ShopPromotion.API.Controllers.Admin
             return base.GetEntitiesAsync(pagingOptions, entityTypeParameters, ct);
         }
 
-        /// Get a shop special offer by id.
         /// <summary>
         /// Get a shop special offer by id.
         /// </summary>
@@ -93,7 +91,6 @@ namespace ShopPromotion.API.Controllers.Admin
             return base.GetEntityByIdAsync(itemByIdParameters, ct);
         }
 
-        /// Create new shop special offer.
         /// <summary>
         /// Create new shop special offer.
         /// </summary>
@@ -118,7 +115,6 @@ namespace ShopPromotion.API.Controllers.Admin
             return base.CreateEntityAsync(form, ct);
         }
 
-        /// Update existing shop special offer.
         /// <summary>
         /// Update existing shop special offer.
         /// </summary>
@@ -145,7 +141,6 @@ namespace ShopPromotion.API.Controllers.Admin
             return base.UpdateEntityAsync(itemByIdParameters, form, ct);
         }
 
-        /// Delete existing shop special offer.
         /// <summary>
         /// Delete existing shop special offer.
         /// </summary>

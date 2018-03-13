@@ -38,7 +38,6 @@ namespace ShopPromotion.API.Controllers.Admin
         {
         }
 
-        /// Get list of shop promotion barcodes.
         /// <summary>
         /// Get list of shop promotion barcodes.
         /// </summary>

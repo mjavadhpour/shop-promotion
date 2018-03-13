@@ -12,10 +12,8 @@ namespace ShopPromotion.Domain.Services
 {
     using EntityLayer;
     using Infrastructure;
-    using Infrastructure.Models.Form;
     using Infrastructure.Models.Resource;
     using Infrastructure.Models.Parameter;
-    using Infrastructure.Models.Response.Pagination;
     using PaginationHelper;
 
     public class
@@ -40,22 +38,10 @@ namespace ShopPromotion.Domain.Services
         }
 
         /// <inheritdoc>
-        /// <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
+        ///     <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
         /// </inheritdoc>
-        protected override ShopPromotionBarcode MappingFromModelToTModelDestination(T form, CancellationToken ct)
-        {
-            // Map shop promotion and resource.
-            var shopPromotion = Mapper.Map<ShopPromotionBarcode>(form);
-
-            return shopPromotion;
-        }
-
-        /// <inheritdoc>
-        /// <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
-        /// </inheritdoc>
-        public override async Task<IPage<MinimumShopPromotionBarcodeResource>> GetEntitiesAsync(
-            IPagingOptions pagingOptions,
-            IEntityTypeParameters entityTypeParameters, CancellationToken ct)
+        protected override IQueryable<ShopPromotionBarcode> GetElementsOfTModelSequenceAsync(
+            IEntityTypeParameters entityTypeParameters)
         {
             // Filter by shop id.
             if (entityTypeParameters.GetParameter("ShopId") != null)
@@ -65,7 +51,18 @@ namespace ShopPromotion.Domain.Services
             if (entityTypeParameters.GetParameter("PromotionId") != null)
                 Query = Query.Where(x => x.Promotion.Id == (int) entityTypeParameters.GetParameter("PromotionId"));
 
-            return await base.GetEntitiesAsync(pagingOptions, entityTypeParameters, ct);
+            return base.GetElementsOfTModelSequenceAsync(entityTypeParameters);
+        }
+
+        /// <inheritdoc>
+        /// <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
+        /// </inheritdoc>
+        protected override ShopPromotionBarcode MappingFromModelToTModelDestination(T form, CancellationToken ct)
+        {
+            // Map shop promotion and resource.
+            var shopPromotion = Mapper.Map<ShopPromotionBarcode>(form);
+
+            return shopPromotion;
         }
 
         /// <inheritdoc />
