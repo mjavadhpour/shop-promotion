@@ -89,6 +89,13 @@ namespace ShopPromotion.Domain.Services
         public override async Task<IPage<MinimumShopListResource>> GetEntitiesAsync(IPagingOptions pagingOptions,
             IEntityTypeParameters entityTypeParameters, CancellationToken ct)
         {
+            if (entityTypeParameters.GetParameter("CreateDate") == null)
+                return await base.GetEntitiesAsync(pagingOptions, entityTypeParameters, ct);
+
+            var createDate = (DateFilterParameterOptions) entityTypeParameters.GetParameter("CreateDate");
+            // Filter by create date.
+            Query = Query.FilterByCreateDate(createDate);
+
             return await base.GetEntitiesAsync(pagingOptions, entityTypeParameters, ct);
         }
 

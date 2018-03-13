@@ -2,11 +2,14 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using System;
+using System.Linq;
+using System.Linq.Expressions;
+
 namespace ShopPromotion.Domain.Extensions
 {
-    using System;
-    using System.Linq;
-    using System.Linq.Expressions;
+    using EntityLayer;
+    using Infrastructure.Models.Parameter;
 
     public static class Extensions
     {
@@ -38,6 +41,49 @@ namespace ShopPromotion.Domain.Extensions
                 new[] {elementType, propertyOrFieldExpression.Type}, queryable.Expression, selector);
 
             return queryable.Provider.CreateQuery<T>(orderByExpression);
+        }
+
+        /// <summary>
+        /// Filter the IQueryable by given option from given <see cref="Infrastructure.Models.Parameter.DateFilterParameterOptions"/>.
+        /// </summary>
+        /// <param name="queryable"></param>
+        /// <param name="createDate"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException">When given <see cref="Infrastructure.Models.Parameter.DateFilterParameterOptions"/> is out of range.</exception>
+        public static IQueryable<T> FilterByCreateDate<T>(this IQueryable<T> queryable,
+            DateFilterParameterOptions createDate) where T : BaseEntity
+        {
+            var dateNow = DateTime.Now;
+
+            // Filter by create date.
+            switch (createDate)
+            {
+                case DateFilterParameterOptions.LastHour:
+                    queryable = queryable.Where(x =>
+                        x.CreatedAt >= dateNow.AddHours(-1));
+                    break;
+                case DateFilterParameterOptions.ThisMonth:
+                    queryable = queryable.Where(x =>
+                        x.CreatedAt >= dateNow.AddMonths(-1));
+                    break;
+                case DateFilterParameterOptions.ThisWeek:
+                    queryable = queryable.Where(x =>
+                        x.CreatedAt >= dateNow.AddDays(-7));
+                    break;
+                case DateFilterParameterOptions.ThisYear:
+                    queryable = queryable.Where(x =>
+                        x.CreatedAt >= dateNow.AddYears(-1));
+                    break;
+                case DateFilterParameterOptions.Today:
+                    queryable = queryable.Where(x =>
+                        x.CreatedAt >= dateNow.AddDays(-1));
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return queryable;
         }
 
         /// <summary>

@@ -12,18 +12,23 @@ namespace ShopPromotion.API.Infrastructure.Models.Parameter
     public class GetAllShopsParameters : IEntityTypeParameters
     {
         /// <summary>
-        /// Filter shop by date.
+        /// Filter shop by created time. <br />
+        /// Use <b>0</b> for <b>Last hour</b> <br />
+        /// Use <b>1</b> for <b>Today</b> <br />
+        /// Use <b>2</b> for <b>This week</b> <br />
+        /// Use <b>3</b> for <b>This month</b> <br />
+        /// Use <b>4</b> for <b>This year</b> <br />
         /// </summary>
         [FromQuery]
-        public string Title { get; set; }
+        public DateFilterParameterOptions CreateDate { get; set; }
 
         /// <inheritdoc />
         public object GetParameter(string nameOfParam)
         {
             switch (nameOfParam)
             {
-                case "Title":
-                    return Title;
+                case "CreateDate":
+                    return CreateDate;
                 default:
                     throw new KeyNotFoundException();
             }
