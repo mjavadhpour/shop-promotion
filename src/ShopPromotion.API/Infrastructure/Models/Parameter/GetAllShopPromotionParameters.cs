@@ -12,7 +12,7 @@ namespace ShopPromotion.API.Infrastructure.Models.Parameter
     public class GetAllShopPromotionParameters : IEntityTypeParameters
     {
         /// <summary>
-        /// Filter special offers by shop id.
+        /// Filter shop promotion by shop id.
         /// </summary>
         [FromQuery]
         public int? ShopId { get; set; }

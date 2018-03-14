@@ -4,9 +4,8 @@
 
 namespace ShopPromotion.API.Infrastructure.Models.Form
 {
-    using Domain.EntityLayer;
-
-    public class ShopPromotionForm : BaseEntity
+    public class ShopPromotionForm : Domain.Infrastructure.Models.Form.ShopPromotionForm
     {
+        
     }
 }

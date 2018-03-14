@@ -27,12 +27,18 @@ namespace ShopPromotion.Helper.Infrastructure.Filters
         public ApiExceptionFilter()
         {
             AddHandler<ShopNotFoundException>(OnShopNotFoundException);
+            AddHandler<PaymentMethodNotFoundException>(OnPaymentMethodNotFoundException);
             AddHandler<Exception>(OnOtherException);
         }
 
         private IActionResult OnShopNotFoundException(ShopNotFoundException ex)
         {
             return ErrorResult(404, new ApiError { Message = "Requested shop was not found!" });
+        }
+
+        private IActionResult OnPaymentMethodNotFoundException(PaymentMethodNotFoundException ex)
+        {
+            return ErrorResult(404, new ApiError { Message = "Requested payment method was not found!" });
         }
 
         private IActionResult OnOtherException(Exception ex)
