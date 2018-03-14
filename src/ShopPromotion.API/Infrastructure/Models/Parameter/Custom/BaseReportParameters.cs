@@ -17,12 +17,12 @@ namespace ShopPromotion.API.Infrastructure.Models.Parameter.Custom
         /// <summary>
         /// Filter result with Date.
         /// </summary>
-        public DateTime FromDate { get; set; }
+        public DateTime? FromDate { get; set; }
 
         /// <summary>
         /// Filter result with Date.
         /// </summary>
-        public DateTime ToDate { get; set; }
+        public DateTime? ToDate { get; set; }
 
         /// <inheritdoc />
         public virtual object GetParameter(string nameOfParam)

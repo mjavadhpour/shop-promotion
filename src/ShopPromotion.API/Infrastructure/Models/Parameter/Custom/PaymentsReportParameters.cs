@@ -12,17 +12,22 @@ namespace ShopPromotion.API.Infrastructure.Models.Parameter.Custom
         /// <summary>
         /// Filter result by price. 
         /// </summary>
-        public int FromPrice { get; set; }
+        public int? FromPrice { get; set; }
 
         /// <summary>
         /// Filter result by price.
         /// </summary>
-        public int ToPrice { get; set; }
+        public int? ToPrice { get; set; }
+
+        /// <summary>
+        /// Filter result by shop id.
+        /// </summary>
+        public int? ShopId { get; set; }
 
         /// <summary>
         /// Filter by payment method.
         /// </summary>
-        public int PaymentMethodId { get; set; }
+        public int? PaymentMethodId { get; set; }
 
         /// <inheritdoc />
         public override object GetParameter(string nameOfParam)
@@ -35,6 +40,8 @@ namespace ShopPromotion.API.Infrastructure.Models.Parameter.Custom
                     return ToPrice;
                 case "PaymentMethodId":
                     return PaymentMethodId;
+                case "ShopId":
+                    return ShopId;
             }
 
             return base.GetParameter(nameOfParam);
