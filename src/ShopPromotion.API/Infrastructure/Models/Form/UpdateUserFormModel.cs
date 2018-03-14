@@ -12,26 +12,20 @@ namespace ShopPromotion.API.Infrastructure.Models.Form
     public class UpdateUserFormModel
     {
         /// <summary>
-        /// PhoneNumber
+        /// The user phone number.
         /// </summary>
         [Required]
         [Phone]
         public string PhoneNumber { get; set; }
 
         /// <summary>
-        /// Password
+        /// The user first name.
         /// </summary>
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.",
-            MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
+        public string FirstName { get; set; }
 
         /// <summary>
-        /// Confirm password
+        /// The user last name.
         /// </summary>
-        [Required]
-        [DataType(DataType.Password)]
-        public string NewPassword { get; set; }
+        public string LastName { get; set; }
     }
 }

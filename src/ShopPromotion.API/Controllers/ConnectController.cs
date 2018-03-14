@@ -9,7 +9,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using ShopPromotion.Domain.Infrastructure.DAL;
 
 namespace ShopPromotion.API.Controllers
 {
@@ -21,6 +20,8 @@ namespace ShopPromotion.API.Controllers
     // ShopPromotion Domain
     using Domain.EntityLayer;
     using Domain.Services.PaginationHelper;
+    using Domain.Infrastructure.DAL;
+    using Domain.Services.UserManager;
     // ShopPromotion Helper
     using Helper.Infrastructure.ActionResults;
     using Helper.Infrastructure.Filters;
@@ -34,14 +35,17 @@ namespace ShopPromotion.API.Controllers
     {
         private readonly UserManager<BaseIdentityUser> _userManager;
         private readonly TokenProviderService _tokenProviderService;
+        private readonly IShopPromotionUserManager _shopPromotionUserManager;
 
         /// <inheritdoc />
         public ConnectController(ResolvedPaginationValueService defaultPagingOptionsAccessor, UnitOfWork unitOfWork,
-            UserManager<BaseIdentityUser> userManager, TokenProviderService tokenProviderService) : base(
+            UserManager<BaseIdentityUser> userManager, TokenProviderService tokenProviderService, 
+            IShopPromotionUserManager shopPromotionUserManager) : base(
             defaultPagingOptionsAccessor, unitOfWork)
         {
             _userManager = userManager;
             _tokenProviderService = tokenProviderService;
+            _shopPromotionUserManager = shopPromotionUserManager;
         }
 
         /// <summary>
@@ -59,9 +63,12 @@ namespace ShopPromotion.API.Controllers
         // TODO: Add more situation handlling.
         public async Task<IActionResult> Token([FromBody] LoginFormModel loginFormModel)
         {
-            var user = await UnitOfWork.ShopPromotionUserManager.FindByCodeAsync(loginFormModel.Code);
+            var user = await _shopPromotionUserManager.FindByCodeAsync(loginFormModel.Code);
 
             if (user == null) return BadRequest(new ApiError("Could not create token"));
+
+            user.PhoneNumberConfirmed = true;
+            await _shopPromotionUserManager.UpdateAsync(user);
 
             var userClaims = await _userManager.GetClaimsAsync(user);
 

@@ -26,6 +26,7 @@ namespace ShopPromotion.Domain.Services.UserManager
         private readonly ShopPromotionDomainContext _context;
         private readonly UserManager<BaseIdentityUser> _userManager;
         private readonly IQueryable<BaseIdentityUser> _queryableIdentityUsers;
+
         /// <summary>
         /// Resolved velue for pagination.
         /// </summary>
@@ -57,8 +58,8 @@ namespace ShopPromotion.Domain.Services.UserManager
             if (phoneNumber == null)
                 throw new ArgumentNullException(nameof(phoneNumber));
 
-            return 
-                await 
+            return
+                await
                     Task.FromResult(
                         _context.BaseIdentityUsers
                             .AsNoTracking()
@@ -84,7 +85,7 @@ namespace ShopPromotion.Domain.Services.UserManager
         public async Task<BaseIdentityUser> CreateByPhoneNumberAsync(string phoneNumber)
         {
             if (phoneNumber == null)
-                throw new ArgumentNullException(nameof (phoneNumber));
+                throw new ArgumentNullException(nameof(phoneNumber));
             // Create new user
             var user = new AppUser
             {
@@ -118,6 +119,31 @@ namespace ShopPromotion.Domain.Services.UserManager
             return Task.Run(() => GetAllUsers(pagingOptions));
         }
 
+        /// <inheritdoc />
+        public async Task<IdentityResult> UpdateAsync(BaseIdentityUser user,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            _context.BaseIdentityUsers.Attach(user);
+            user.ConcurrencyStamp = Guid.NewGuid().ToString();
+            _context.Entry(user).State = EntityState.Modified;
+            try
+            {
+                await _context.SaveChangesAsync(cancellationToken);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return IdentityResult.Failed(new IdentityError());
+            }
+
+            return IdentityResult.Success;
+        }
+
         /// <summary>
         /// Paginate and get all users.
         /// </summary>
@@ -125,7 +151,7 @@ namespace ShopPromotion.Domain.Services.UserManager
         /// <returns></returns>
         private async Task<Page<MinimumIdentityUserResource>> GetAllUsers(PagingOptions pagingOptions)
         {
-            var totalNumberOfRecords = await _queryableIdentityUsers.CountAsync(CancellationToken.None);           
+            var totalNumberOfRecords = await _queryableIdentityUsers.CountAsync(CancellationToken.None);
 
             // Please add user claim with the help of this issue: https://github.com/aspnet/Identity/issues/1361
             var users = await _userManager.Users

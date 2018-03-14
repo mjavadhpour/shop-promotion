@@ -2,6 +2,7 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -108,7 +109,11 @@ namespace ShopPromotion.API.Controllers.Admin
             var user = await _shopPromotionUserManager.FindByPhoneAsync(itemByUserNameParameters.PhoneNumber);
             // 404
             if (user == null) return NotFound();
-            await _baseIdentityUserManager.ChangePasswordAsync(user, model.Password, model.NewPassword);
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.PhoneNumber = model.PhoneNumber;
+            user.SecurityStamp = Guid.NewGuid().ToString();
+            await _shopPromotionUserManager.UpdateAsync(user);
             return NoContent();
         }
 

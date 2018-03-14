@@ -15,6 +15,7 @@ namespace ShopPromotion.API.Infrastructure.Models.Form
         /// The user phone number.
         /// </summary>
         [Required]
+        [Phone]
         public string PhoneNumber { get; set; }
     }
 }

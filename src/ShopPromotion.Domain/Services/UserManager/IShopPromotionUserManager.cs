@@ -4,6 +4,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace ShopPromotion.Domain.Services.UserManager
 {
@@ -24,7 +25,8 @@ namespace ShopPromotion.Domain.Services.UserManager
         /// <returns>
         /// The task object containing the results of the asynchronous lookup operation, the user, if any, associated with a value of the specified phone number.
         /// </returns>
-        Task<BaseIdentityUser> FindByPhoneAsync(string phoneNumber, CancellationToken cancellationToken = default(CancellationToken));
+        Task<BaseIdentityUser> FindByPhoneAsync(string phoneNumber,
+            CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets the user, if any, associated with the value of the specified verification code.
@@ -34,7 +36,8 @@ namespace ShopPromotion.Domain.Services.UserManager
         /// <returns>
         /// The task object containing the results of the asynchronous lookup operation, the user, if any, associated with a value of the specified phone number.
         /// </returns>
-        Task<BaseIdentityUser> FindByCodeAsync(string verificationCode, CancellationToken cancellationToken = default(CancellationToken));
+        Task<BaseIdentityUser> FindByCodeAsync(string verificationCode,
+            CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Creates the specified user in the backing store with given <paramref name="phoneNumber" />,
@@ -63,5 +66,14 @@ namespace ShopPromotion.Domain.Services.UserManager
         /// <param name="pagingOptions"></param>
         /// <returns></returns>
         Task<Page<MinimumIdentityUserResource>> GetAllUsersAsync(PagingOptions pagingOptions);
+
+        /// <summary>
+        /// Update an instance of baseIdentityUser.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<IdentityResult> UpdateAsync(BaseIdentityUser user,
+            CancellationToken cancellationToken = default(CancellationToken));
     }
 }
