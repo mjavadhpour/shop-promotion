@@ -19,6 +19,11 @@ namespace ShopPromotion.API.Infrastructure.Models.ActionResults
         public string PhoneNumber { get; set; }
 
         /// <summary>
+        /// Is requested user new?
+        /// </summary>
+        public bool IsNew { get; set; }
+
+        /// <summary>
         /// The default claim of new user
         /// </summary>
         public IList<MinimumClaimResource> Claim { get; set; }

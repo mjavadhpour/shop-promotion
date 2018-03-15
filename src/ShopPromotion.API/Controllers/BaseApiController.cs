@@ -2,11 +2,9 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
-using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,7 +34,7 @@ namespace ShopPromotion.API.Controllers
         where TGetAllParameters : IEntityTypeParameters
         where TGetItemParameters : GetItemByIdParameters
     {
-        private readonly UserManager<BaseIdentityUser> _userManager;
+        protected readonly UserManager<BaseIdentityUser> _userManager;
 
         /// <summary>
         /// The Base entity service. SHOULD pass by child with real service that was related to API.
@@ -110,7 +108,7 @@ namespace ShopPromotion.API.Controllers
             var response =
                 new SingleModelResponse<TMinimumTResource>() as ISingleModelResponse<TMinimumTResource>;
             // Unified model for single response.
-            form.CreatedById = GetUserId(HttpContext);
+            form.CreatedById = _userManager.GetUserId(HttpContext.User);
             response.Model = GenericUnitOfWork.GenericRepository().AddEntity(form, ct);
             await GenericUnitOfWork.SaveAsync();
             return CreatedAtAction(nameof(GetEntityByIdAsync), new {ItemId = response.Model.Id}, response);
@@ -154,19 +152,6 @@ namespace ShopPromotion.API.Controllers
             await GenericUnitOfWork.GenericRepository().DeleteEntityAsync(new T {Id = itemByIdParameters.ItemId}, ct);
             await GenericUnitOfWork.SaveAsync();
             return NoContent();
-        }
-
-        /// <summary>
-        /// Get logged in user ID.
-        /// </summary>
-        /// <remarks>
-        /// For test reason we return zero guid if HttpContext was not registered.
-        /// </remarks>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        protected string GetUserId(HttpContext context)
-        {
-            return context == null ? new Guid().ToString() : _userManager.GetUserId(context.User);
         }
     }
 }

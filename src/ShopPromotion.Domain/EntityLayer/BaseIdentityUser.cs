@@ -31,5 +31,7 @@ namespace ShopPromotion.Domain.EntityLayer
         public string ProfileImagePath { get; set; }
 
         public DateTime CreatedAt { get; set; }
+
+        public bool IsNew { get; set; }
     }
 }

@@ -78,7 +78,7 @@ namespace ShopPromotion.API.Controllers.User
             var claim = await _userManager.GetClaimsAsync(user);
             var claimUser = Mapper.Map<IList<MinimumClaimResource>>(claim);
             return Created("created",
-                new RegisterViewModel {PhoneNumber = formModel.PhoneNumber, Claim = claimUser});
+                new RegisterViewModel {PhoneNumber = formModel.PhoneNumber, Claim = claimUser, IsNew = user.IsNew});
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace ShopPromotion.API.Controllers.User
             var claim = await _userManager.GetClaimsAsync(user);
             var claimUser = Mapper.Map<IList<MinimumClaimResource>>(claim);
             return Created("created",
-                new RegisterViewModel {PhoneNumber = formModel.PhoneNumber, Claim = claimUser});
+                new RegisterViewModel {PhoneNumber = formModel.PhoneNumber, Claim = claimUser, IsNew = user.IsNew});
         }
 
         /// <summary>
@@ -124,6 +124,7 @@ namespace ShopPromotion.API.Controllers.User
             {
                 // Create user
                 user = await UnitOfWork.ShopPromotionUserManager.CreateByPhoneNumberAsync(formModel.PhoneNumber);
+                user.IsNew = true;
                 // Generate new verification code for user
                 await UnitOfWork.ShopPromotionUserManager.GenerateVerificationCodeAsync(user);
                 // Send SMS for verification code
@@ -134,6 +135,7 @@ namespace ShopPromotion.API.Controllers.User
                 // The user exists and duplicate ky exception was thrown. then we just publish and event
                 // Get old user.
                 user = await UnitOfWork.ShopPromotionUserManager.FindByPhoneAsync(formModel.PhoneNumber);
+                user.IsNew = false;
                 // Generate new verification code for user
                 await UnitOfWork.ShopPromotionUserManager.GenerateVerificationCodeAsync(user);
                 // Send SMS for verification code

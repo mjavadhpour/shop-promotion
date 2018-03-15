@@ -11,5 +11,8 @@ namespace ShopPromotion.Domain.EntityLayer
     {
         public string ShopKeeperUserId { get; set; }
         public ShopKeeperUser ShopKeeperUser { get; set; }
+
+        public int MessageId { get; set; }
+        public Message Message { get; set; }
     }
 }

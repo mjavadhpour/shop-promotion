@@ -54,9 +54,22 @@ namespace ShopPromotion.API.Infrastructure.Models.Parameter
     }
 
     /// <summary>
-    /// Controller parameter for get user by UserName.
+    /// Controller parameter for get user by Phone number.
     /// </summary>
     public class GetItemByPhoneNumberParameters
+    {
+        /// <summary>
+        /// PhoneNumber
+        /// </summary>
+        [FromRoute]
+        [Required]
+        public string PhoneNumber { get; set; }
+    }
+
+    /// <summary>
+    /// Controller parameter for get user by Phone number and id.
+    /// </summary>
+    public class GetItemByIdAndPhoneNumberParameters : GetItemByIdParameters
     {
         /// <summary>
         /// PhoneNumber

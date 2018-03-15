@@ -24,6 +24,8 @@ namespace ShopPromotion.Domain.EntityLayer
 
         public IList<ShopAttribute> ShopAttributes { get; set; }
 
+        public IList<ShopInbox> ShopInboxes { get; set; }
+
         public ShopGeolocation ShopGeolocation { get; set; }
 
         public string Title { get; set; }

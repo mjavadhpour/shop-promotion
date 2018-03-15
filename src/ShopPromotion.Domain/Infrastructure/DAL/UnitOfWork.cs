@@ -4,6 +4,7 @@
 
 using System;
 using System.Threading.Tasks;
+using ShopPromotion.Domain.Services.InboxServices;
 
 namespace ShopPromotion.Domain.Infrastructure.DAL
 {
@@ -27,11 +28,13 @@ namespace ShopPromotion.Domain.Infrastructure.DAL
         private readonly IUserReportService _userReportService;
         private readonly IShopReportService _shopReportService;
         private readonly IPaymentReportTracker _paymentReportService;
+        private readonly IInboxService _inboxService;
 
         public UnitOfWork(ShopPromotionDomainContext context, IShopPromotionUserManager shopPromotionUserManager,
             IShopStatusService shopStatusService, IUsageStatisticservice usageStatisticservice,
             IUserReportService userReportService, IShopReportService shopReportService,
-            IPaymentReportTracker paymentReportService)
+            IPaymentReportTracker paymentReportService,
+            IInboxService inboxService)
         {
             _context = context;
             _shopPromotionUserManager = shopPromotionUserManager;
@@ -40,6 +43,7 @@ namespace ShopPromotion.Domain.Infrastructure.DAL
             _userReportService = userReportService;
             _shopReportService = shopReportService;
             _paymentReportService = paymentReportService;
+            _inboxService = inboxService;
         }
 
         public IShopPromotionUserManager ShopPromotionUserManager => _shopPromotionUserManager;
@@ -53,6 +57,8 @@ namespace ShopPromotion.Domain.Infrastructure.DAL
         public IShopReportService ShopReportService => _shopReportService;
 
         public IPaymentReportTracker PaymentReportService => _paymentReportService;
+
+        public IInboxService InboxService => _inboxService;
 
         /// <summary>
         /// Commit with the resolved context.

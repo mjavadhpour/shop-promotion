@@ -4,6 +4,7 @@
 
 using LiteDB;
 using Microsoft.Extensions.DependencyInjection;
+using ShopPromotion.Domain.Services.InboxServices;
 
 namespace ShopPromotion.API.ServiceConfiguration
 {
@@ -63,47 +64,70 @@ namespace ShopPromotion.API.ServiceConfiguration
             services.AddScoped<UnitOfWork<ShopAdminForm, MinimumShopListResource, MinimumShopResource, Shop>>();
             // Generic unit of work. Shop
             services.AddScoped<UnitOfWork<ShopForm, MinimumShopListResource, MinimumShopResource, Shop>>();
-            // Generic unit of work. Message
+            // Generic unit of work. AdminMessage
             services.AddScoped<UnitOfWork<MessageForm, MinimumMessageListResource, MinimumMessageResource, Message>>();
+            // Generic unit of work. AppMessage
+            services.AddScoped<UnitOfWork<MessageForm, MinimumInboxResource, MinimumInboxMessageResource, Message>>();
             // Generic unit of work. SpecialOffer
-            services.AddScoped<UnitOfWork<SpecialOfferForm, MinimumSpecialOfferResource, MinimumSpecialOfferResource, SpecialOffer>>();
+            services
+                .AddScoped<UnitOfWork<SpecialOfferForm, MinimumSpecialOfferResource, MinimumSpecialOfferResource,
+                    SpecialOffer>>();
             // Generic unit of work. ShopPromotion
-            services.AddScoped<UnitOfWork<ShopPromotionForm, MinimumShopPromotionResource, MinimumShopPromotionResource, ShopPromotion>>();
+            services
+                .AddScoped<UnitOfWork<ShopPromotionForm, MinimumShopPromotionResource, MinimumShopPromotionResource,
+                    ShopPromotion>>();
             // Generic unit of work. Order
             services.AddScoped<UnitOfWork<OrderForm, MinimumOrderResource, MinimumOrderResource, Order>>();
             // Generic unit of work. ShopPromotionBarcode
-            services.AddScoped<UnitOfWork<ShopPromotionBarcodeForm, MinimumShopPromotionBarcodeResource, MinimumShopPromotionBarcodeResource, ShopPromotionBarcode>>();
+            services
+                .AddScoped<UnitOfWork<ShopPromotionBarcodeForm, MinimumShopPromotionBarcodeResource,
+                    MinimumShopPromotionBarcodeResource, ShopPromotionBarcode>>();
             // ShopStatusService
             services.AddScoped<IShopStatusService, ShopStatusService>();
             // Shop
             services
-                .AddScoped<IBaseService<ShopForm, MinimumShopListResource, MinimumShopResource, Shop, ShopPromotionDomainContext>,
+                .AddScoped<IBaseService<ShopForm, MinimumShopListResource, MinimumShopResource, Shop,
+                        ShopPromotionDomainContext>,
                     DefaultShopService<ShopForm>>();
             // ShopPromotion
             services
-                .AddScoped<IBaseService<ShopPromotionForm, MinimumShopPromotionResource, MinimumShopPromotionResource, ShopPromotion, ShopPromotionDomainContext>,
+                .AddScoped<IBaseService<ShopPromotionForm, MinimumShopPromotionResource, MinimumShopPromotionResource,
+                        ShopPromotion, ShopPromotionDomainContext>,
                     DefaultShopPromotionService<ShopPromotionForm>>();
             // Order
             services
-                .AddScoped<IBaseService<OrderForm, MinimumOrderResource, MinimumOrderResource, Order, ShopPromotionDomainContext>,
+                .AddScoped<IBaseService<OrderForm, MinimumOrderResource, MinimumOrderResource, Order,
+                        ShopPromotionDomainContext>,
                     DefaultOrderService<OrderForm>>();
             // ShopPromotionBarcode
             services
-                .AddScoped<IBaseService<ShopPromotionBarcodeForm, MinimumShopPromotionBarcodeResource, MinimumShopPromotionBarcodeResource, ShopPromotionBarcode, ShopPromotionDomainContext>,
+                .AddScoped<IBaseService<ShopPromotionBarcodeForm, MinimumShopPromotionBarcodeResource,
+                        MinimumShopPromotionBarcodeResource, ShopPromotionBarcode, ShopPromotionDomainContext>,
                     DefaultShopPromotionBarcodeService<ShopPromotionBarcodeForm>>();
-            // Message
+            // AdminMessage
             services
-                .AddScoped<IBaseService<MessageForm, MinimumMessageListResource, MinimumMessageResource, Message, ShopPromotionDomainContext>,
-                    DefaultMessageService<MessageForm>>();
+                .AddScoped<IBaseService<MessageForm, MinimumMessageListResource, MinimumMessageResource, Message,
+                        ShopPromotionDomainContext>,
+                    DefaultAdminMessageService<MessageForm>>();
+            // AppMessage
+            services
+                .AddScoped<IBaseService<MessageForm, MinimumInboxResource, MinimumInboxMessageResource, Message,
+                        ShopPromotionDomainContext>,
+                    DefaultAppMessageService<MessageForm>>();
             // SpecialOffer
             services
                 .AddScoped<
-                    IBaseService<SpecialOfferForm, MinimumSpecialOfferResource, MinimumSpecialOfferResource, SpecialOffer, ShopPromotionDomainContext
+                    IBaseService<SpecialOfferForm, MinimumSpecialOfferResource, MinimumSpecialOfferResource,
+                        SpecialOffer, ShopPromotionDomainContext
                     >, DefaultSpecialOfferService<SpecialOfferForm>>();
             // Shop Admin
             services
-                .AddScoped<IBaseService<ShopAdminForm, MinimumShopListResource, MinimumShopResource, Shop, ShopPromotionDomainContext>,
+                .AddScoped<IBaseService<ShopAdminForm, MinimumShopListResource, MinimumShopResource, Shop,
+                        ShopPromotionDomainContext>,
                     DefaultAdminShopService<ShopAdminForm>>();
+            // Inbox service.
+            services
+                .AddScoped<IInboxService, InboxService>();
             // Report services.
             services.AddScoped<IUserReportService, UserReportService>();
             services.AddScoped<IPaymentReportTracker, PaymentReportService>();

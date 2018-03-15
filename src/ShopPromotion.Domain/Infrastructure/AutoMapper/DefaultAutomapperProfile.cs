@@ -4,6 +4,7 @@
 
 using System.Linq;
 using AutoMapper;
+using ShopPromotion.Domain.Infrastructure.Models.Form;
 
 namespace ShopPromotion.Domain.Infrastructure.AutoMapper
 {
@@ -48,6 +49,27 @@ namespace ShopPromotion.Domain.Infrastructure.AutoMapper
             // Message
             CreateMap<Message, MinimumMessageResource>();
             CreateMap<Message, MinimumMessageListResource>();
+            CreateMap<MessageForm, Message>()
+                .ForMember(m => m.AuthorId, opt => opt.MapFrom(mf => mf.CreatedById));
+            // ShopKeeperUserInbox
+            CreateMap<ShopKeeperUserInbox, MinimumInboxMessageResource>()
+                .ForMember(dto => dto.Note, opt => opt.MapFrom(s => s.Message.Note))
+                .ForMember(dto => dto.Subject, opt => opt.MapFrom(s => s.Message.Subject));
+            CreateMap<ShopKeeperUserInbox,  MinimumInboxResource>()
+                .ForMember(dto => dto.Subject, opt => opt.MapFrom(s => s.Message.Subject));
+            // AppUserInbox
+            CreateMap<AppUserInbox, MinimumInboxMessageResource>()
+                .ForMember(dto => dto.Note, opt => opt.MapFrom(s => s.Message.Note))
+                .ForMember(dto => dto.Subject, opt => opt.MapFrom(s => s.Message.Subject));
+            CreateMap<AppUserInbox, MinimumInboxResource>()
+                .ForMember(dto => dto.Subject, opt => opt.MapFrom(s => s.Message.Subject));
+            // ShopInbox
+            CreateMap<ShopInbox, MinimumInboxMessageResource>()
+                .ForMember(dto => dto.Note, opt => opt.MapFrom(s => s.Message.Note))
+                .ForMember(dto => dto.Subject, opt => opt.MapFrom(s => s.Message.Subject));
+            CreateMap<ShopInbox, MinimumInboxResource>()
+                .ForMember(dto => dto.Subject, opt => opt.MapFrom(s => s.Message.Subject));
+            CreateMap<MessageForm, MinimumMessageResource>();
             // SpecialOffer
             CreateMap<SpecialOffer, MinimumSpecialOfferResource>();
             // Attribute
