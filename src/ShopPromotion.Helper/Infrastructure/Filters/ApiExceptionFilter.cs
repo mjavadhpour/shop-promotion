@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
-using ShopPromotion.Domain.Exceptions;
 
 namespace ShopPromotion.Helper.Infrastructure.Filters
 {
     using ActionResults;
+    using Domain.Exceptions;
 
     /// <summary>
     /// There are a couple of ways to implement exception handling globally.
@@ -28,6 +28,7 @@ namespace ShopPromotion.Helper.Infrastructure.Filters
         {
             AddHandler<ShopNotFoundException>(OnShopNotFoundException);
             AddHandler<PaymentMethodNotFoundException>(OnPaymentMethodNotFoundException);
+            AddHandler<NotValidBase64ShopImageException>(OnNotValidBase64ShopImageException);
             AddHandler<Exception>(OnOtherException);
         }
 
@@ -39,6 +40,11 @@ namespace ShopPromotion.Helper.Infrastructure.Filters
         private IActionResult OnPaymentMethodNotFoundException(PaymentMethodNotFoundException ex)
         {
             return ErrorResult(404, new ApiError { Message = "Requested payment method was not found!" });
+        }
+
+        private IActionResult OnNotValidBase64ShopImageException(NotValidBase64ShopImageException ex)
+        {
+            return ErrorResult(400, new ApiError { Message = "Get an invalid shop image with base 64 format!" });
         }
 
         private IActionResult OnOtherException(Exception ex)

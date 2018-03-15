@@ -26,6 +26,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.0.0" />
     <!-- Entity Framework Core provider for MySql built on top of mysql-net/MySqlConnector -->
     <!-- <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.0.0-rtm-*" /> -->
+    <!-- In memory database for testing perpose -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.0.0" />
     <!-- SqlServer -->
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.0" />
     <!-- Auto mapper -->

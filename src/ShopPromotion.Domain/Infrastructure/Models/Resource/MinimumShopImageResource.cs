@@ -7,5 +7,7 @@ namespace ShopPromotion.Domain.Infrastructure.Models.Resource
     public class MinimumShopImageResource : MinimumBaseEntity
     {
         public string Path { get; set; }
+
+        public string Type { get; set; }
     }
 }

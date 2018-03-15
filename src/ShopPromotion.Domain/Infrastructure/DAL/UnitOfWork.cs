@@ -60,6 +60,8 @@ namespace ShopPromotion.Domain.Infrastructure.DAL
 
         public IInboxService InboxService => _inboxService;
 
+        public ShopPromotionDomainContext Context => _context;
+
         /// <summary>
         /// Commit with the resolved context.
         /// </summary>

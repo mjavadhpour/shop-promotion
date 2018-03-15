@@ -29,7 +29,7 @@
   <!--             Folders             -->
   <!-- ******************************* -->
   <ItemGroup>
-    <Folder Include="wwwroot" />
+    <Folder Include="wwwroot\img\shop" />
   </ItemGroup>
   <!-- ******************************* -->
   <!--   File Config For Publish env   -->
