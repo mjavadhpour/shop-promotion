@@ -3,6 +3,7 @@
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ShopPromotion.API.Infrastructure.Models.Parameter
 {
@@ -10,13 +11,16 @@ namespace ShopPromotion.API.Infrastructure.Models.Parameter
 
     public class GetAllShopsParameters : FilterByCreateDate, IEntityTypeParameters
     {
+        [Required]
+        public int ShopPromotionId { get; set; }
+
         /// <inheritdoc />
         public object GetParameter(string nameOfParam)
         {
             switch (nameOfParam)
             {
-                case "CreateDate":
-                    return CreateDate;
+                case "ShopPromotionId":
+                    return ShopPromotionId;
                 default:
                     throw new KeyNotFoundException();
             }

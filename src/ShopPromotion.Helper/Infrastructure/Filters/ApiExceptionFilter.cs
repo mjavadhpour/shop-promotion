@@ -28,6 +28,7 @@ namespace ShopPromotion.Helper.Infrastructure.Filters
         {
             AddHandler<ShopNotFoundException>(OnShopNotFoundException);
             AddHandler<PaymentMethodNotFoundException>(OnPaymentMethodNotFoundException);
+            AddHandler<ShopPromotionNotFoundException>(OnShopPromotionNotFoundException);
             AddHandler<NotValidBase64ShopImageException>(OnNotValidBase64ShopImageException);
             AddHandler<Exception>(OnOtherException);
         }
@@ -40,6 +41,11 @@ namespace ShopPromotion.Helper.Infrastructure.Filters
         private IActionResult OnPaymentMethodNotFoundException(PaymentMethodNotFoundException ex)
         {
             return ErrorResult(404, new ApiError { Message = "Requested payment method was not found!" });
+        }
+
+        private IActionResult OnShopPromotionNotFoundException(ShopPromotionNotFoundException ex)
+        {
+            return ErrorResult(404, new ApiError { Message = "Requested shop promotion was not found!" });
         }
 
         private IActionResult OnNotValidBase64ShopImageException(NotValidBase64ShopImageException ex)

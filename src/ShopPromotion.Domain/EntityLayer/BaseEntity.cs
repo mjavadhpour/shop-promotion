@@ -11,6 +11,7 @@ namespace ShopPromotion.Domain.EntityLayer
     public abstract class BaseEntity : IBaseEntity
     {
         [Key]
+        [JsonIgnore]
         public virtual int Id { get; set; }
 
         [JsonIgnore]
@@ -19,6 +20,7 @@ namespace ShopPromotion.Domain.EntityLayer
         [JsonIgnore]
         public DateTime UpdatedAt { get; set; }
 
+        [JsonIgnore]
         public string CreatedById { get; set; }
     }
 }

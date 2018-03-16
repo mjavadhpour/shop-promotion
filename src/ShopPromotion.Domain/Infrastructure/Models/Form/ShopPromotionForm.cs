@@ -15,7 +15,6 @@ namespace ShopPromotion.Domain.Infrastructure.Models.Form
     {
         [JsonIgnore]
         [Required]
-        [FromRoute]
         public virtual int ShopId { get; set; }
 
         [FromBody]

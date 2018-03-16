@@ -11,7 +11,7 @@ namespace ShopPromotion.Domain.EntityLayer
     public class ShopPromotionReview : BaseEntity
     {
         public string AuthorId { get; set; }
-        public AppUser Author { get; set; }
+        public BaseIdentityUser Author { get; set; }
 
         public int ShopPromotionId { get; set; }
         public ShopPromotion ShopPromotion { get; set; }

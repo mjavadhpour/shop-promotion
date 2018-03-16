@@ -26,10 +26,11 @@ namespace ShopPromotion.API.Controllers
     /// <summary>
     /// Base controller.
     /// </summary>
-    public abstract class BaseApiController<TForm, TMinimumTListResource, TMinimumTResource, T, TGetAllParameters, TGetItemParameters> : BaseController
+    public abstract class BaseApiController<TForm, TMinimumTListResource, TMinimumTResource, T, TGetAllParameters,
+        TGetItemParameters> : BaseController
         where T : BaseEntity, new()
         where TForm : BaseEntity
-        where TMinimumTListResource: MinimumBaseEntity
+        where TMinimumTListResource : MinimumBaseEntity
         where TMinimumTResource : MinimumBaseEntity
         where TGetAllParameters : IEntityTypeParameters
         where TGetItemParameters : GetItemByIdParameters
@@ -49,7 +50,8 @@ namespace ShopPromotion.API.Controllers
         /// <param name="userManager"></param>
         /// <param name="genericUnitOfWork"></param>
         protected BaseApiController(ResolvedPaginationValueService defaultPagingOptionsAccessor, UnitOfWork unitOfWork,
-            UserManager<BaseIdentityUser> userManager, UnitOfWork<TForm, TMinimumTListResource, TMinimumTResource, T> genericUnitOfWork) :
+            UserManager<BaseIdentityUser> userManager,
+            UnitOfWork<TForm, TMinimumTListResource, TMinimumTResource, T> genericUnitOfWork) :
             base(defaultPagingOptionsAccessor, unitOfWork)
         {
             _userManager = userManager;

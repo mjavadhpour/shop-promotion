@@ -36,6 +36,19 @@ namespace ShopPromotion.API.Infrastructure.Models.Parameter
     /// <summary>
     /// SpecialOffer controllers parameter class model.
     /// </summary>
+    public class GetItemByIdAndShopPromotionIdParameters : GetItemByIdParameters
+    {
+        /// <summary>
+        /// Shop promotion id.
+        /// </summary>
+        [FromRoute]
+        [Required]
+        public int ShopPromotionId { get; set; }
+    }
+
+    /// <summary>
+    /// SpecialOffer controllers parameter class model.
+    /// </summary>
     public class GetItemByIdAndShopAndPromotionParameters : GetItemByIdParameters
     {
         /// <summary>

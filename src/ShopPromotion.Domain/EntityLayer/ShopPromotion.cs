@@ -3,6 +3,7 @@
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
 using System;
+using System.Collections.Generic;
 
 namespace ShopPromotion.Domain.EntityLayer
 {
@@ -16,6 +17,8 @@ namespace ShopPromotion.Domain.EntityLayer
 
         public int? PaymentMethodId { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
+
+        public IList<ShopPromotionReview> ShopPromotionReviews { get; set; }
 
         public string Description { get; set; }
 
