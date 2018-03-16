@@ -20,6 +20,8 @@ namespace ShopPromotion.Domain.EntityLayer
 
         public IList<ShopPromotionReview> ShopPromotionReviews { get; set; }
 
+        public IList<ShopPromotionLike> ShopPromotionLikes { get; set; }
+
         public string Description { get; set; }
 
         public string Name { get; set; }

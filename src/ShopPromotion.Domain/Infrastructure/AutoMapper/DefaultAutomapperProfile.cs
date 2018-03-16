@@ -46,6 +46,10 @@ namespace ShopPromotion.Domain.Infrastructure.AutoMapper
             CreateMap<ShopPromotionReviewForm, MinimumShopPromotionReviewResource>();
             CreateMap<ShopPromotionReviewForm, ShopPromotionReview>()
                 .ForMember(dto => dto.AuthorId, opt => opt.MapFrom(form => form.CreatedById));
+            // ShopPromotionLike
+            CreateMap<ShopPromotionLikeForm, MinimumShopPromotionLikeResource>();
+            CreateMap<ShopPromotionLikeForm, ShopPromotionLike>()
+                .ForMember(dto => dto.LikedById, opt => opt.MapFrom(form => form.CreatedById));
             // ShopImage
             CreateMap<ShopImage, MinimumShopImageResource>();
             // ShopGeolocations

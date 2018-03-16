@@ -76,6 +76,8 @@ namespace ShopPromotion.Domain.Infrastructure
 
         public DbSet<ShopKeeperUserInbox> ShopKeeperUserInboxes { get; set; }
 
+        public DbSet<ShopPromotionLike> ShopPromotionLikes { get; set; }
+
         public DbSet<ShopPromotion> ShopPromotions { get; set; }
 
         public DbSet<ShopPromotionBarcode> PromotionBarcodes { get; set; }

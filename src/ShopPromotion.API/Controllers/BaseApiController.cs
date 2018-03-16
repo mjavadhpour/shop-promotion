@@ -35,7 +35,7 @@ namespace ShopPromotion.API.Controllers
         where TGetAllParameters : IEntityTypeParameters
         where TGetItemParameters : GetItemByIdParameters
     {
-        protected readonly UserManager<BaseIdentityUser> _userManager;
+        protected readonly UserManager<BaseIdentityUser> UserManager;
 
         /// <summary>
         /// The Base entity service. SHOULD pass by child with real service that was related to API.
@@ -54,7 +54,7 @@ namespace ShopPromotion.API.Controllers
             UnitOfWork<TForm, TMinimumTListResource, TMinimumTResource, T> genericUnitOfWork) :
             base(defaultPagingOptionsAccessor, unitOfWork)
         {
-            _userManager = userManager;
+            UserManager = userManager;
             GenericUnitOfWork = genericUnitOfWork;
         }
 
@@ -110,7 +110,7 @@ namespace ShopPromotion.API.Controllers
             var response =
                 new SingleModelResponse<TMinimumTResource>() as ISingleModelResponse<TMinimumTResource>;
             // Unified model for single response.
-            form.CreatedById = _userManager.GetUserId(HttpContext.User);
+            form.CreatedById = UserManager.GetUserId(HttpContext.User);
             response.Model = GenericUnitOfWork.GenericRepository().AddEntity(form, ct);
             await GenericUnitOfWork.SaveAsync();
             return CreatedAtAction(nameof(GetEntityByIdAsync), new {ItemId = response.Model.Id}, response);

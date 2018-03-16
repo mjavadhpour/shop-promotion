@@ -71,6 +71,9 @@ namespace ShopPromotion.API.ServiceConfiguration
             // Generic unit of work. ShopPromotionReview
             services.AddScoped<UnitOfWork<ShopPromotionReviewForm,
                 MinimumShopPromotionReviewListResource, MinimumShopPromotionReviewResource, ShopPromotionReview>>();
+            // Generic unit of work. ShopPromotionLike
+            services.AddScoped<UnitOfWork<ShopPromotionLikeForm,
+                MinimumShopPromotionLikeListResource, MinimumShopPromotionLikeResource, ShopPromotionLike>>();
             // Generic unit of work. SpecialOffer
             services
                 .AddScoped<UnitOfWork<SpecialOfferForm, MinimumSpecialOfferResource, MinimumSpecialOfferResource,
@@ -104,8 +107,15 @@ namespace ShopPromotion.API.ServiceConfiguration
             // ShopPromotionReview
             services
                 .AddScoped<IBaseService<ShopPromotionReviewForm,
-                        MinimumShopPromotionReviewListResource, MinimumShopPromotionReviewResource, ShopPromotionReview, ShopPromotionDomainContext>,
+                        MinimumShopPromotionReviewListResource, MinimumShopPromotionReviewResource, ShopPromotionReview, 
+                        ShopPromotionDomainContext>,
                     DefaultShopPromotionReviewService<ShopPromotionReviewForm>>();
+            // ShopPromotionLike
+            services
+                .AddScoped<IBaseService<ShopPromotionLikeForm,
+                        MinimumShopPromotionLikeListResource, MinimumShopPromotionLikeResource, ShopPromotionLike, 
+                        ShopPromotionDomainContext>,
+                    DefaultShopPromotionLikeService<ShopPromotionLikeForm>>();
             // Order
             services
                 .AddScoped<IBaseService<OrderForm, MinimumOrderResource, MinimumOrderResource, Order,
