@@ -15,7 +15,7 @@ namespace ShopPromotion.Domain.Infrastructure.Models.Resource
 
         public IList<MinimumAttributeResource> Attributes { get; set; }
 
-        public MinimumShopGeolocationsResource Geolocation { get; set; }
+        public MinimumShopGeolocationResource Geolocation { get; set; }
 
         public ShopStatusOption Status { get; set; }
 

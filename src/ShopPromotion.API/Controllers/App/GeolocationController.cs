@@ -23,27 +23,27 @@ namespace ShopPromotion.API.Controllers.App
     using Domain.Services.PaginationHelper;
 
     /// <summary>
-    /// Shop promotion review controller.
+    /// Shop geolocation controller.
     /// </summary>
     [Area("App")]
-    [Route("api/v1/[area]/shopPromotion")]
-    public class ShopPromotionReviewController : BaseApiController<ShopPromotionReviewForm,
-        MinimumShopPromotionReviewListResource, MinimumShopPromotionReviewResource, ShopPromotionReview,
-        GetAllShopPromotionReviewsParameters, GetItemByIdAndShopPromotionIdParameters>
+    [Route("api/v1/[area]/Shop/{ShopId}/Location")]
+    public class GeolocationController : BaseApiController<ShopGeolocationForm,
+        MinimumShopGeolocationListResource, MinimumShopGeolocationResource, ShopGeolocation,
+        GetAllGeolocationsParameters, GetItemByIdAndShopParameters>
     {
         /// <inheritdoc />
-        public ShopPromotionReviewController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
+        public GeolocationController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
             UnitOfWork unitOfWork,
             UserManager<BaseIdentityUser> userManager,
-            UnitOfWork<ShopPromotionReviewForm, MinimumShopPromotionReviewListResource,
-                MinimumShopPromotionReviewResource, ShopPromotionReview> genericUnitOfWork) : base(
+            UnitOfWork<ShopGeolocationForm, MinimumShopGeolocationListResource,
+                MinimumShopGeolocationResource, ShopGeolocation> genericUnitOfWork) : base(
             defaultPagingOptionsAccessor,
             unitOfWork, userManager, genericUnitOfWork)
         {
         }
 
         /// <summary>
-        /// Get list of shop promotion reviews.
+        /// Get list of shop geolocations.
         /// </summary>
         /// <param name="ct">
         /// Adding a CancellationToken parameter to your route methods allows ASP.NET Core to notify your
@@ -59,16 +59,16 @@ namespace ShopPromotion.API.Controllers.App
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpGet("{ShopPromotionId}/Review")]
-        [ProducesResponseType(typeof(Page<MinimumShopPromotionReviewListResource>), 200)]
+        [HttpGet("")]
+        [ProducesResponseType(typeof(Page<MinimumShopGeolocationListResource>), 200)]
         public override async Task<IActionResult> GetEntitiesAsync([FromQuery] PagingOptions pagingOptions,
-            GetAllShopPromotionReviewsParameters getAllShopsParameters, CancellationToken ct)
+            GetAllGeolocationsParameters getAllShopsParameters, CancellationToken ct)
         {
             return await base.GetEntitiesAsync(pagingOptions, getAllShopsParameters, ct);
         }
 
         /// <summary>
-        /// Get a shop promotion review by id.
+        /// Get a shop geolocation by id.
         /// </summary>
         /// <param name="itemByIdParameters"></param>
         /// <param name="ct">
@@ -84,17 +84,17 @@ namespace ShopPromotion.API.Controllers.App
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Not Found</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpGet("{ShopPromotionId}/Review/{ItemId}")]
-        [ProducesResponseType(typeof(SingleModelResponse<MinimumShopPromotionReviewResource>), 200)]
+        [HttpGet("{ItemId}")]
+        [ProducesResponseType(typeof(SingleModelResponse<MinimumShopGeolocationResource>), 200)]
         public override async Task<IActionResult> GetEntityByIdAsync(
-            GetItemByIdAndShopPromotionIdParameters itemByIdParameters,
+            GetItemByIdAndShopParameters itemByIdParameters,
             CancellationToken ct)
         {
             return await base.GetEntityByIdAsync(itemByIdParameters, ct);
         }
 
         /// <summary>
-        /// Create new shop promotion review.
+        /// Create new shop geolocation.
         /// </summary>
         /// <param name="form"></param>
         /// <param name="ct">
@@ -110,19 +110,19 @@ namespace ShopPromotion.API.Controllers.App
         /// <response code="401">Unauthorized</response>
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpPost("{ShopPromotionId}/Review")]
-        [ProducesResponseType(typeof(SingleModelResponse<MinimumShopPromotionReviewResource>), 201)]
+        [HttpPost("")]
+        [ProducesResponseType(typeof(SingleModelResponse<MinimumShopGeolocationResource>), 201)]
         public override async Task<IActionResult> CreateEntityAsync(
-            [FromBody] ShopPromotionReviewForm form,
+            [FromBody] ShopGeolocationForm form,
             CancellationToken ct)
         {
             // Manually assign route value to form.
-            form.ShopPromotionId = Int32.Parse(HttpContext.GetRouteValue("ShopPromotionId").ToString());
+            form.ShopId = Int32.Parse(HttpContext.GetRouteValue("ShopId").ToString());
             return await base.CreateEntityAsync(form, ct);
         }
 
         /// <summary>
-        /// Update existing shop promotion review.
+        /// Update existing shop geolocation.
         /// </summary>
         /// <param name="itemByIdParameters"></param>
         /// <param name="form"></param>
@@ -140,17 +140,18 @@ namespace ShopPromotion.API.Controllers.App
         /// <response code="403">Forbidden</response>
         /// <response code="404">Not Found</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpPut("{ShopPromotionId}/Review/{ItemId}")]
+        [HttpPut("{ItemId}")]
         public override async Task<IActionResult> UpdateEntityAsync(
-            GetItemByIdAndShopPromotionIdParameters itemByIdParameters,
-            [FromBody] ShopPromotionReviewForm form,
+            GetItemByIdAndShopParameters itemByIdParameters,
+            [FromBody] ShopGeolocationForm form,
             CancellationToken ct)
         {
+            form.ShopId = itemByIdParameters.ShopId;
             return await base.UpdateEntityAsync(itemByIdParameters, form, ct);
         }
 
         /// <summary>
-        /// Delete existing shop promotion review.
+        /// Delete existing shop geolocation.
         /// </summary>
         /// <param name="itemByIdParameters"></param>
         /// <param name="ct">
@@ -167,9 +168,9 @@ namespace ShopPromotion.API.Controllers.App
         /// <response code="403">Forbidden</response>
         /// <response code="404">Not Found</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpDelete("{ShopPromotionId}/Review/{ItemId}")]
+        [HttpDelete("{ItemId}")]
         public override async Task<IActionResult> DeleteEntityAsync(
-            GetItemByIdAndShopPromotionIdParameters itemByIdParameters,
+            GetItemByIdAndShopParameters itemByIdParameters,
             CancellationToken ct)
         {
             return await base.DeleteEntityAsync(itemByIdParameters, ct);

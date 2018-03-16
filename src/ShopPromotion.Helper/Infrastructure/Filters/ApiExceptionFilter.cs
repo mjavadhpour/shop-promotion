@@ -29,6 +29,7 @@ namespace ShopPromotion.Helper.Infrastructure.Filters
             AddHandler<ShopNotFoundException>(OnShopNotFoundException);
             AddHandler<PaymentMethodNotFoundException>(OnPaymentMethodNotFoundException);
             AddHandler<ShopPromotionNotFoundException>(OnShopPromotionNotFoundException);
+            AddHandler<DuplicateShopGeolocationException>(OnDuplicateShopGeolocationException);
             AddHandler<NotValidBase64ShopImageException>(OnNotValidBase64ShopImageException);
             AddHandler<Exception>(OnOtherException);
         }
@@ -51,6 +52,11 @@ namespace ShopPromotion.Helper.Infrastructure.Filters
         private IActionResult OnNotValidBase64ShopImageException(NotValidBase64ShopImageException ex)
         {
             return ErrorResult(400, new ApiError { Message = "Get an invalid shop image with base 64 format!" });
+        }
+
+        private IActionResult OnDuplicateShopGeolocationException(DuplicateShopGeolocationException ex)
+        {
+            return ErrorResult(400, new ApiError { Message = "Each shop can have just one location!" });
         }
 
         private IActionResult OnOtherException(Exception ex)

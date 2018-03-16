@@ -3,20 +3,24 @@
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ShopPromotion.API.Infrastructure.Models.Parameter
 {
     using Domain.Infrastructure.Models.Parameter;
 
-    public class GetAllShopsParameters : FilterByCreateDate, IEntityTypeParameters
+    public class GetAllShopPromotionReviewsParameters : IEntityTypeParameters
     {
+        [Required]
+        public int ShopPromotionId { get; set; }
+
         /// <inheritdoc />
         public object GetParameter(string nameOfParam)
         {
             switch (nameOfParam)
             {
-                case "CreateDate":
-                    return CreateDate;
+                case "ShopPromotionId":
+                    return ShopPromotionId;
                 default:
                     throw new KeyNotFoundException();
             }

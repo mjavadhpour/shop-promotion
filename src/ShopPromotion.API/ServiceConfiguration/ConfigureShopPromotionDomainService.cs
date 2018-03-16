@@ -75,6 +75,10 @@ namespace ShopPromotion.API.ServiceConfiguration
             services
                 .AddScoped<UnitOfWork<SpecialOfferForm, MinimumSpecialOfferResource, MinimumSpecialOfferResource,
                     SpecialOffer>>();
+            // Generic unit of work. ShopGeolocation
+            services
+                .AddScoped<UnitOfWork<ShopGeolocationForm, MinimumShopGeolocationListResource,
+                    MinimumShopGeolocationResource, ShopGeolocation>>();
             // Generic unit of work. ShopPromotion
             services
                 .AddScoped<UnitOfWork<ShopPromotionForm, MinimumShopPromotionResource, MinimumShopPromotionResource,
@@ -112,6 +116,11 @@ namespace ShopPromotion.API.ServiceConfiguration
                 .AddScoped<IBaseService<ShopPromotionBarcodeForm, MinimumShopPromotionBarcodeResource,
                         MinimumShopPromotionBarcodeResource, ShopPromotionBarcode, ShopPromotionDomainContext>,
                     DefaultShopPromotionBarcodeService<ShopPromotionBarcodeForm>>();
+            // ShopPromotionBarcode
+            services
+                .AddScoped<IBaseService<ShopGeolocationForm, MinimumShopGeolocationListResource,
+                        MinimumShopGeolocationResource, ShopGeolocation, ShopPromotionDomainContext>,
+                    DefaultShopGeolocationService<ShopGeolocationForm>>();
             // AdminMessage
             services
                 .AddScoped<IBaseService<MessageForm, MinimumMessageListResource, MinimumMessageResource, Message,
