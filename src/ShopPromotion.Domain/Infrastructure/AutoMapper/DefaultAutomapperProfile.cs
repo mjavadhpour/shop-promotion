@@ -50,6 +50,8 @@ namespace ShopPromotion.Domain.Infrastructure.AutoMapper
             CreateMap<ShopPromotionLikeForm, MinimumShopPromotionLikeResource>();
             CreateMap<ShopPromotionLikeForm, ShopPromotionLike>()
                 .ForMember(dto => dto.LikedById, opt => opt.MapFrom(form => form.CreatedById));
+            // ShopPromotionBarcode
+            CreateMap<ShopPromotionBarcodeForm, ShopPromotionBarcode>();
             // ShopImage
             CreateMap<ShopImage, MinimumShopImageResource>();
             // ShopGeolocations

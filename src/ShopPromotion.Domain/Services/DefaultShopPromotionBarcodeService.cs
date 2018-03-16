@@ -11,7 +11,9 @@ using Microsoft.EntityFrameworkCore;
 namespace ShopPromotion.Domain.Services
 {
     using EntityLayer;
+    using Exceptions;
     using Infrastructure;
+    using Infrastructure.Models.Form;
     using Infrastructure.Models.Resource;
     using Infrastructure.Models.Parameter;
     using PaginationHelper;
@@ -19,7 +21,7 @@ namespace ShopPromotion.Domain.Services
     public class
         DefaultShopPromotionBarcodeService<T> : DefaultEntityService<T, MinimumShopPromotionBarcodeResource,
             MinimumShopPromotionBarcodeResource, ShopPromotionBarcode, ShopPromotionDomainContext>
-        where T : BaseEntity
+        where T : ShopPromotionBarcodeForm
     {
         public DefaultShopPromotionBarcodeService(ShopPromotionDomainContext context,
             ResolvedPaginationValueService resolvedPaginationValue) : base(context, resolvedPaginationValue)
@@ -60,9 +62,16 @@ namespace ShopPromotion.Domain.Services
         protected override ShopPromotionBarcode MappingFromModelToTModelDestination(T form, CancellationToken ct)
         {
             // Map shop promotion and resource.
-            var shopPromotion = Mapper.Map<ShopPromotionBarcode>(form);
+            var shopPromotionBarcode = Mapper.Map<ShopPromotionBarcode>(form);
 
-            return shopPromotion;
+            // Assign shop promotion to new barcode.
+            var shopPromotion = Context.ShopPromotions.AsNoTracking()
+                .SingleOrDefaultAsync(x => x.Id == form.PromotionId, ct);
+            // Validation requested id.
+            if (shopPromotion.Result == null) throw new ShopPromotionNotFoundException();
+            shopPromotionBarcode.PromotionId = shopPromotion.Result.Id;
+
+            return shopPromotionBarcode;
         }
 
         /// <inheritdoc />
