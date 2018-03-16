@@ -9,7 +9,7 @@ namespace ShopPromotion.API.Infrastructure.Models.Parameter
 {
     using Domain.Infrastructure.Models.Parameter;
 
-    public class GetAllOrdersParameters : IEntityTypeParameters
+    public class GetAllAdminOrdersParameters : IEntityTypeParameters
     {
         /// <summary>
         /// Filter order by shop id

@@ -66,6 +66,8 @@ namespace ShopPromotion.Domain.Services
             // Map shop and resource.
             var shop = Mapper.Map<Shop>(form);
 
+            // Assign shop owner.
+            shop.OwnerId = form.CreatedById;
             // Assign default status to new shop.
             if (GetCurrentAction() == CreateEntity)
             {

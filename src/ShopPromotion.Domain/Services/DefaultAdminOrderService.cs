@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using ShopPromotion.Domain.Extensions;
 
 namespace ShopPromotion.Domain.Services
 {
@@ -41,10 +42,20 @@ namespace ShopPromotion.Domain.Services
         protected override IQueryable<Order> GetElementsOfTModelSequenceAsync(
             IEntityTypeParameters entityTypeParameters)
         {
+            // Filter by createDate using magic extention.
+            if (entityTypeParameters.GetParameter("CreateDate") != null)
+            {
+                var createDate = (DateFilterParameterOptions) entityTypeParameters.GetParameter("CreateDate");
+                // Filter by create date.
+                Query = Query.FilterByCreateDate(createDate);
+            }
+
             // Filter by contract.
             if (entityTypeParameters.GetParameter("ShopId") != null)
+            {
                 Query = Query.Where(x =>
-                    x.ShopPromotionBarcode.Promotion.ShopId == (int) entityTypeParameters.GetParameter("ShopId"));
+                    x.ShopPromotionBarcode.Promotion.ShopId == (int) entityTypeParameters.GetParameter("ShopId"));   
+            }
 
             return base.GetElementsOfTModelSequenceAsync(entityTypeParameters);
         }

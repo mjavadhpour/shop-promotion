@@ -2,13 +2,16 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ShopPromotion.Domain.Exceptions;
 
-namespace ShopPromotion.API.Controllers.Admin
+namespace ShopPromotion.API.Controllers.App
 {
     // API
     using Infrastructure.Models.Parameter;
@@ -24,14 +27,14 @@ namespace ShopPromotion.API.Controllers.Admin
     /// <summary>
     /// Shop promotion controller.
     /// </summary>
-    [Area("Admin")]
+    [Area("App")]
     [Route("api/v1/[area]/Order")]
-    [Authorize(Policy = ConfigurePolicyService.AdminUserPolicy)]
-    public class AdminOrderController : BaseApiController<OrderForm, MinimumOrderResource, MinimumOrderResource, Order
-        , GetAllAdminOrdersParameters, GetItemByIdAndShopParameters>
+    [Authorize(Policy = ConfigurePolicyService.ShopKeeperUserPolicy)]
+    public class ShopOrderController : BaseApiController<OrderForm, MinimumOrderResource, MinimumOrderResource, Order
+        , GetAllShopOrdersParameters, GetItemByIdAndShopParameters>
     {
         /// <inheritdoc />
-        public AdminOrderController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
+        public ShopOrderController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
             UnitOfWork unitOfWork, UserManager<BaseIdentityUser> userManager,
             UnitOfWork<OrderForm, MinimumOrderResource, MinimumOrderResource, Order> genericUnitOfWork) : base(
             defaultPagingOptionsAccessor, unitOfWork, userManager, genericUnitOfWork)
@@ -59,8 +62,12 @@ namespace ShopPromotion.API.Controllers.Admin
         [HttpGet("")]
         [ProducesResponseType(typeof(Page<MinimumOrderResource>), 200)]
         public override Task<IActionResult> GetEntitiesAsync(PagingOptions pagingOptions,
-            GetAllAdminOrdersParameters entityTypeParameters, CancellationToken ct)
+            GetAllShopOrdersParameters entityTypeParameters, CancellationToken ct)
         {
+            var loggedInUserId = UserManager.GetUserId(HttpContext.User);
+            var shop = UnitOfWork.Context.Shops.AsNoTracking().FirstOrDefault(x => x.OwnerId == loggedInUserId);
+            if (shop == null) throw new ShopNotFoundException();
+            entityTypeParameters.ShopId = shop.Id;
             return base.GetEntitiesAsync(pagingOptions, entityTypeParameters, ct);
         }
 
