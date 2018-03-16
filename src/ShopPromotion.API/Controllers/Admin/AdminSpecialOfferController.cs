@@ -2,8 +2,6 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
-using System.Linq;
-using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -16,32 +14,33 @@ namespace ShopPromotion.API.Controllers.Admin
     using Infrastructure.Models.Parameter;
     using Infrastructure.Models.Form;
     using ServiceConfiguration;
-    // Doamin
+    // Domain
     using Domain.EntityLayer;
     using Domain.Infrastructure.DAL;
-    using Domain.Infrastructure.Models.Response;
     using Domain.Infrastructure.Models.Resource;
+    using Domain.Infrastructure.Models.Response;
     using Domain.Infrastructure.Models.Response.Pagination;
     using Domain.Services.PaginationHelper;
 
     /// <summary>
-    /// Message controller.
+    /// Shop special offer controller.
     /// </summary>
     [Area("Admin")]
+    [Route("api/v1/[area]")]
     [Authorize(Policy = ConfigurePolicyService.AdminUserPolicy)]
-    public class MessageController : BaseApiController<MessageForm, MinimumMessageListResource, MinimumMessageResource, 
-        Message, GetAllMessagesParameters, GetItemByIdParameters>
+    public class AdminSpecialOfferController : BaseApiController<SpecialOfferForm, MinimumSpecialOfferResource, MinimumSpecialOfferResource, SpecialOffer
+        , GetAllSpecialOffersParameters, GetItemByIdParameters>
     {
         /// <inheritdoc />
-        public MessageController(ResolvedPaginationValueService defaultPagingOptionsAccessor, UnitOfWork unitOfWork,
-            UserManager<BaseIdentityUser> userManager,
-            UnitOfWork<MessageForm, MinimumMessageListResource, MinimumMessageResource, Message> genericUnitOfWork) 
-            : base(defaultPagingOptionsAccessor, unitOfWork, userManager, genericUnitOfWork)
+        public AdminSpecialOfferController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
+            UnitOfWork unitOfWork, UserManager<BaseIdentityUser> userManager,
+            UnitOfWork<SpecialOfferForm, MinimumSpecialOfferResource, MinimumSpecialOfferResource, SpecialOffer> genericUnitOfWork) : base(
+            defaultPagingOptionsAccessor, unitOfWork, userManager, genericUnitOfWork)
         {
         }
 
         /// <summary>
-        /// Get list of messages.
+        /// Get list of shop special offers.
         /// </summary>
         /// <param name="ct">
         /// Adding a CancellationToken parameter to your route methods allows ASP.NET Core to notify your
@@ -58,15 +57,16 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="401">Unauthorized</response>
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
-        [ProducesResponseType(typeof(Page<MinimumMessageListResource>), 200)]
+        [HttpGet("SpecialOffer")]
+        [ProducesResponseType(typeof(Page<MinimumSpecialOfferResource>), 200)]
         public override Task<IActionResult> GetEntitiesAsync(PagingOptions pagingOptions,
-            GetAllMessagesParameters entityTypeParameters, CancellationToken ct)
+            GetAllSpecialOffersParameters entityTypeParameters, CancellationToken ct)
         {
             return base.GetEntitiesAsync(pagingOptions, entityTypeParameters, ct);
         }
 
         /// <summary>
-        /// Get a message by id.
+        /// Get a shop special offer by id.
         /// </summary>
         /// <param name="itemByIdParameters"></param>
         /// <param name="ct">
@@ -83,7 +83,8 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="403">Forbidden</response>
         /// <response code="404">Not Found</response>
         /// <response code="500">Internal Server Error</response>
-        [ProducesResponseType(typeof(SingleModelResponse<MinimumMessageResource>), 200)]
+        [HttpGet("Shop/{ItemId}/SpecialOffer")]
+        [ProducesResponseType(typeof(SingleModelResponse<MinimumSpecialOfferResource>), 200)]
         public override Task<IActionResult> GetEntityByIdAsync(GetItemByIdParameters itemByIdParameters,
             CancellationToken ct)
         {
@@ -91,7 +92,7 @@ namespace ShopPromotion.API.Controllers.Admin
         }
 
         /// <summary>
-        /// Create new message.
+        /// Create new shop special offer.
         /// </summary>
         /// <param name="form"></param>
         /// <param name="ct">
@@ -107,14 +108,15 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="401">Unauthorized</response>
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
-        [ProducesResponseType(typeof(SingleModelResponse<MinimumMessageResource>), 201)]
-        public override async Task<IActionResult> CreateEntityAsync([FromBody] MessageForm form, CancellationToken ct)
+        [HttpPost("Shop/SpecialOffer")]
+        [ProducesResponseType(typeof(SingleModelResponse<MinimumSpecialOfferResource>), 201)]
+        public override Task<IActionResult> CreateEntityAsync([FromBody] SpecialOfferForm form, CancellationToken ct)
         {
-            return await base.CreateEntityAsync(form, ct);
+            return base.CreateEntityAsync(form, ct);
         }
 
         /// <summary>
-        /// Update existing message.
+        /// Update existing shop special offer.
         /// </summary>
         /// <param name="itemByIdParameters"></param>
         /// <param name="form"></param>
@@ -132,14 +134,15 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="403">Forbidden</response>
         /// <response code="404">Not Found</response>
         /// <response code="500">Internal Server Error</response>
+        [HttpPut("Shop/{ItemId}/SpecialOffer")]
         public override Task<IActionResult> UpdateEntityAsync(GetItemByIdParameters itemByIdParameters,
-            [FromBody] MessageForm form, CancellationToken ct)
+            [FromBody] SpecialOfferForm form, CancellationToken ct)
         {
             return base.UpdateEntityAsync(itemByIdParameters, form, ct);
         }
 
         /// <summary>
-        /// Delete existing message.
+        /// Delete existing shop special offer.
         /// </summary>
         /// <param name="itemByIdParameters"></param>
         /// <param name="ct">
@@ -156,6 +159,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="403">Forbidden</response>
         /// <response code="404">Not Found</response>
         /// <response code="500">Internal Server Error</response>
+        [HttpDelete("Shop/{ItemId}/SpecialOffer")]
         public override Task<IActionResult> DeleteEntityAsync(GetItemByIdParameters itemByIdParameters,
             CancellationToken ct)
         {

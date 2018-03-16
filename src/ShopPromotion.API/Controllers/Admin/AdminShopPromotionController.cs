@@ -30,11 +30,11 @@ namespace ShopPromotion.API.Controllers.Admin
     [Area("Admin")]
     [Route("api/v1/[area]")]
     [Authorize(Policy = ConfigurePolicyService.AdminUserPolicy)]
-    public class ShopPromotionController : BaseApiController<ShopPromotionForm, MinimumShopPromotionResource, MinimumShopPromotionResource, ShopPromotion
+    public class AdminShopPromotionController : BaseApiController<ShopPromotionForm, MinimumShopPromotionResource, MinimumShopPromotionResource, ShopPromotion
         , GetAllShopPromotionParameters, GetItemByIdAndShopParameters>
     {
         /// <inheritdoc />
-        public ShopPromotionController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
+        public AdminShopPromotionController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
             UnitOfWork unitOfWork, UserManager<BaseIdentityUser> userManager,
             UnitOfWork<ShopPromotionForm, MinimumShopPromotionResource, MinimumShopPromotionResource, ShopPromotion> genericUnitOfWork) : base(
             defaultPagingOptionsAccessor, unitOfWork, userManager, genericUnitOfWork)
@@ -64,7 +64,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="401">Unauthorized</response>
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpGet("[controller]")]
+        [HttpGet("ShopPromotion")]
         [ProducesResponseType(typeof(Page<MinimumShopPromotionResource>), 200)]
         public override Task<IActionResult> GetEntitiesAsync(PagingOptions pagingOptions,
             GetAllShopPromotionParameters entityTypeParameters, CancellationToken ct)
@@ -95,7 +95,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="403">Forbidden</response>
         /// <response code="404">Not Found</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpGet("Shop/{ShopId}/[controller]/{ItemId}")]
+        [HttpGet("Shop/{ShopId}/ShopPromotion/{ItemId}")]
         [ProducesResponseType(typeof(SingleModelResponse<MinimumShopPromotionResource>), 200)]
         public override Task<IActionResult> GetEntityByIdAsync(GetItemByIdAndShopParameters itemByIdParameters,
             CancellationToken ct)
@@ -124,7 +124,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="401">Unauthorized</response>
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpPost("shop/{ShopId}/[controller]")]
+        [HttpPost("shop/{ShopId}/ShopPromotion")]
         [ProducesResponseType(typeof(SingleModelResponse<MinimumShopPromotionResource>), 201)]
         public override Task<IActionResult> CreateEntityAsync([FromBody] ShopPromotionForm form, CancellationToken ct)
         {
@@ -151,7 +151,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="403">Forbidden</response>
         /// <response code="404">Not Found</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpPut("Shop/{ShopId}/[controller]/{ItemId}")]
+        [HttpPut("Shop/{ShopId}/ShopPromotion/{ItemId}")]
         public override Task<IActionResult> UpdateEntityAsync(GetItemByIdAndShopParameters itemByIdParameters,
             ShopPromotionForm form, CancellationToken ct)
         {
@@ -176,7 +176,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="403">Forbidden</response>
         /// <response code="404">Not Found</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpDelete("shop/{ShopId}/[controller]/{ItemId}")]
+        [HttpDelete("shop/{ShopId}/ShopPromotion/{ItemId}")]
         public override Task<IActionResult> DeleteEntityAsync(GetItemByIdAndShopParameters itemByIdParameters,
             CancellationToken ct)
         {

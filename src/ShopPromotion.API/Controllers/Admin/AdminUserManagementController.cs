@@ -31,14 +31,15 @@ namespace ShopPromotion.API.Controllers.Admin
     /// Shop controller.
     /// </summary>
     [Area("Admin")]
+    [Route("api/v1/[area]/UserManagement")]
     [Authorize(Policy = ConfigurePolicyService.AdminUserPolicy)]
-    public class UserManagementController : BaseController
+    public class AdminUserManagementController : BaseController
     {
         private readonly UserManager<BaseIdentityUser> _baseIdentityUserManager;
         private readonly IShopPromotionUserManager _shopPromotionUserManager;
 
         /// <inheritdoc />
-        public UserManagementController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
+        public AdminUserManagementController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
             UnitOfWork unitOfWork, UserManager<BaseIdentityUser> baseIdentityUserManager,
             IShopPromotionUserManager shopPromotionUserManager) : base(
             defaultPagingOptionsAccessor, unitOfWork)

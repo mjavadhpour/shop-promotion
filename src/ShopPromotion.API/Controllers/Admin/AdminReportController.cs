@@ -23,11 +23,12 @@ namespace ShopPromotion.API.Controllers.Admin
     /// Report controller.
     /// </summary>
     [Area("Admin")]
+    [Route("api/v1/[area]/Report")]
     [Authorize(Policy = ConfigurePolicyService.AdminUserPolicy)]
-    public class ReportController : BaseController
+    public class AdminReportController : BaseController
     {
         /// <inheritdoc />
-        public ReportController(ResolvedPaginationValueService defaultPagingOptionsAccessor, UnitOfWork unitOfWork) :
+        public AdminReportController(ResolvedPaginationValueService defaultPagingOptionsAccessor, UnitOfWork unitOfWork) :
             base(defaultPagingOptionsAccessor, unitOfWork)
         {
         }

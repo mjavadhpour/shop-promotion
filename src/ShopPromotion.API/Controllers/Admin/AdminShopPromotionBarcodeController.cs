@@ -27,11 +27,11 @@ namespace ShopPromotion.API.Controllers.Admin
     [Area("Admin")]
     [Route("api/v1/[area]")]
     [Authorize(Policy = ConfigurePolicyService.AdminUserPolicy)]
-    public class ShopPromotionBarcodeController : BaseApiController<ShopPromotionBarcodeForm, MinimumShopPromotionBarcodeResource, MinimumShopPromotionBarcodeResource, ShopPromotionBarcode
+    public class AdminShopPromotionBarcodeController : BaseApiController<ShopPromotionBarcodeForm, MinimumShopPromotionBarcodeResource, MinimumShopPromotionBarcodeResource, ShopPromotionBarcode
         , GetAllShopPromotionBarcodeParameters, GetItemByIdAndShopAndPromotionParameters>
     {
         /// <inheritdoc />
-        public ShopPromotionBarcodeController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
+        public AdminShopPromotionBarcodeController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
             UnitOfWork unitOfWork, UserManager<BaseIdentityUser> userManager,
             UnitOfWork<ShopPromotionBarcodeForm, MinimumShopPromotionBarcodeResource, MinimumShopPromotionBarcodeResource, ShopPromotionBarcode> genericUnitOfWork) : base(
             defaultPagingOptionsAccessor, unitOfWork, userManager, genericUnitOfWork)
@@ -56,7 +56,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="401">Unauthorized</response>
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpGet("Shop/{ShopId}/Promotion/{PromotionId}/[controller]")]
+        [HttpGet("Shop/{ShopId}/Promotion/{PromotionId}/ShopPromotionBarcode")]
         [ProducesResponseType(typeof(Page<MinimumShopPromotionBarcodeResource>), 200)]
         public override Task<IActionResult> GetEntitiesAsync(PagingOptions pagingOptions,
             GetAllShopPromotionBarcodeParameters entityTypeParameters, CancellationToken ct)

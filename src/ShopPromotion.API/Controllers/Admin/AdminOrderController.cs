@@ -25,13 +25,13 @@ namespace ShopPromotion.API.Controllers.Admin
     /// Shop promotion controller.
     /// </summary>
     [Area("Admin")]
-    [Route("api/v1/[area]")]
+    [Route("api/v1/[area]/Order")]
     [Authorize(Policy = ConfigurePolicyService.AdminUserPolicy)]
-    public class OrderController : BaseApiController<OrderForm, MinimumOrderResource, MinimumOrderResource, Order
+    public class AdminOrderController : BaseApiController<OrderForm, MinimumOrderResource, MinimumOrderResource, Order
         , GetAllOrdersParameters, GetItemByIdAndShopParameters>
     {
         /// <inheritdoc />
-        public OrderController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
+        public AdminOrderController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
             UnitOfWork unitOfWork, UserManager<BaseIdentityUser> userManager,
             UnitOfWork<OrderForm, MinimumOrderResource, MinimumOrderResource, Order> genericUnitOfWork) : base(
             defaultPagingOptionsAccessor, unitOfWork, userManager, genericUnitOfWork)
@@ -56,7 +56,7 @@ namespace ShopPromotion.API.Controllers.Admin
         /// <response code="401">Unauthorized</response>
         /// <response code="403">Forbidden</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpGet("[controller]")]
+        [HttpGet("")]
         [ProducesResponseType(typeof(Page<MinimumOrderResource>), 200)]
         public override Task<IActionResult> GetEntitiesAsync(PagingOptions pagingOptions,
             GetAllOrdersParameters entityTypeParameters, CancellationToken ct)

@@ -24,15 +24,16 @@ namespace ShopPromotion.API.Controllers.Admin
     /// Shop status controller.
     /// </summary>
     [Area("Admin")]
+    [Route("api/v1/[area]/ShopStatus")]
     [Authorize(Policy = ConfigurePolicyService.AdminUserPolicy)]
-    public class ShopStatusController : BaseController
+    public class AdminShopStatusController : BaseController
     {
         private readonly ResolvedPaginationValueService _defaultPagingOptionsAccessor;
         private readonly UserManager<BaseIdentityUser> _userManager;
         private readonly UnitOfWork<ShopForm, MinimumShopListResource, MinimumShopResource, Shop> _genericUnitOfWork;
 
         /// <inheritdoc />
-        public ShopStatusController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
+        public AdminShopStatusController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
             UnitOfWork unitOfWork, ResolvedPaginationValueService defaultPagingOptionsAccessor1,
             UserManager<BaseIdentityUser> userManager,
             UnitOfWork<ShopForm, MinimumShopListResource, MinimumShopResource, Shop> genericUnitOfWork) : base(defaultPagingOptionsAccessor,
