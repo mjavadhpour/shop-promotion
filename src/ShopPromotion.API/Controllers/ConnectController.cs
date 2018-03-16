@@ -2,8 +2,10 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -71,6 +73,8 @@ namespace ShopPromotion.API.Controllers
             await _shopPromotionUserManager.UpdateAsync(user);
 
             var userClaims = await _userManager.GetClaimsAsync(user);
+            userClaims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id));
+            userClaims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
 
             var token = _tokenProviderService.CreateToken(userClaims);
 
