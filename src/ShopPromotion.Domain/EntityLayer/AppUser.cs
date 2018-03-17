@@ -14,5 +14,7 @@ namespace ShopPromotion.Domain.EntityLayer
         public double TotalPrivilege { get; set; }
 
         public IList<AppUserInbox> AppUserInboxes { get; set; }
+
+        public IList<AppUserPaymentMethod> AppUserPaymentMethods { get; set; }
     }
 }

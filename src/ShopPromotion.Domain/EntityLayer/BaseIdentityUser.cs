@@ -3,6 +3,7 @@
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
 using System;
+using System.Xml;
 
 namespace ShopPromotion.Domain.EntityLayer
 {

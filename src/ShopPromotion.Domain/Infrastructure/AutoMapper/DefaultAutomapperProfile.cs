@@ -52,6 +52,8 @@ namespace ShopPromotion.Domain.Infrastructure.AutoMapper
                 .ForMember(dto => dto.LikedById, opt => opt.MapFrom(form => form.CreatedById));
             // ShopPromotionBarcode
             CreateMap<ShopPromotionBarcodeForm, ShopPromotionBarcode>();
+            // PaymentMethod
+            CreateMap<PaymentMethodForm, PaymentMethod>();
             // ShopImage
             CreateMap<ShopImage, MinimumShopImageResource>();
             // ShopGeolocations

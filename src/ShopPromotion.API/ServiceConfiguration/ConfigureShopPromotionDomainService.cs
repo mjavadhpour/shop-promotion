@@ -74,6 +74,9 @@ namespace ShopPromotion.API.ServiceConfiguration
             // Generic unit of work. ShopPromotionLike
             services.AddScoped<UnitOfWork<ShopPromotionLikeForm,
                 MinimumShopPromotionLikeListResource, MinimumShopPromotionLikeResource, ShopPromotionLike>>();
+            // Generic unit of work. PaymentMethod
+            services.AddScoped<UnitOfWork<PaymentMethodForm,
+                MinimumPaymentMethodResource, MinimumPaymentMethodResource, PaymentMethod>>();
             // Generic unit of work. SpecialOffer
             services
                 .AddScoped<UnitOfWork<SpecialOfferForm, MinimumSpecialOfferResource, MinimumSpecialOfferResource,
@@ -99,6 +102,11 @@ namespace ShopPromotion.API.ServiceConfiguration
                 .AddScoped<IBaseService<ShopForm, MinimumShopListResource, MinimumShopResource, Shop,
                         ShopPromotionDomainContext>,
                     DefaultShopService<ShopForm>>();
+            // PaymentMethod
+            services
+                .AddScoped<IBaseService<PaymentMethodForm, MinimumPaymentMethodResource, MinimumPaymentMethodResource, 
+                        PaymentMethod, ShopPromotionDomainContext>,
+                    DefaultPaymentMethodService<PaymentMethodForm>>();
             // ShopPromotion
             services
                 .AddScoped<IBaseService<ShopPromotionForm, MinimumShopPromotionResource, MinimumShopPromotionResource,

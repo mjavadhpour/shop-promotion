@@ -2,18 +2,10 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
-namespace ShopPromotion.Domain.EntityLayer
+namespace ShopPromotion.Domain.Infrastructure.Models.Resource
 {
-    /// <summary>
-    /// Payment method, have and options about gateway and more.
-    /// </summary>
-    public class PaymentMethod : BaseEntity
+    public class MinimumPaymentMethodResource : MinimumBaseEntity
     {
-        public int? GatewayConfigId { get; set; }
-        public GatewayConfig GatewayConfig { get; set; }
-
-        public AppUserPaymentMethod AppUserPaymentMethod { get; set; }
-
         public string Code { get; set; }
 
         public bool IsEnabled { get; set; }

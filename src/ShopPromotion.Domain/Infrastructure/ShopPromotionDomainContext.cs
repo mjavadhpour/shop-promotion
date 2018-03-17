@@ -36,6 +36,8 @@ namespace ShopPromotion.Domain.Infrastructure
 
         public DbSet<AppUserInbox> AppUserInboxes { get; set; }
 
+        public DbSet<AppUserPaymentMethod> AppUserPaymentMethods { get; set; }
+
         public DbSet<AppUserPrivilege> AppUserPrivileges { get; set; }
 
         public DbSet<Attribute> Attributes { get; set; }
@@ -145,6 +147,7 @@ namespace ShopPromotion.Domain.Infrastructure
             modelBuilder.Entity<BaseIdentityUser>(b =>
             {
                 b.HasIndex(u => u.PhoneNumber).HasName("PhoneNumberIndex").IsUnique();
+                b.HasIndex(u => u.VerificationCode).HasName("VerificationCodeIndex").IsUnique();
             });
             // shop promotion barcode configurarions.
             modelBuilder.Entity<ShopPromotionBarcode>(b =>
