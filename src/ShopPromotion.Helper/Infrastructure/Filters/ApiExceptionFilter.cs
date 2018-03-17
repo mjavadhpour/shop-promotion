@@ -29,6 +29,7 @@ namespace ShopPromotion.Helper.Infrastructure.Filters
             AddHandler<ShopNotFoundException>(OnShopNotFoundException);
             AddHandler<PaymentMethodNotFoundException>(OnPaymentMethodNotFoundException);
             AddHandler<ShopPromotionNotFoundException>(OnShopPromotionNotFoundException);
+            AddHandler<KeyNotFoundException>(OnKeyNotFoundException);
             AddHandler<GatewayConfigNotFoundException>(OnGatewayConfigNotFoundException);
             AddHandler<DuplicateShopGeolocationException>(OnDuplicateShopGeolocationException);
             AddHandler<NotValidBase64ImageException>(OnNotValidBase64ImageException);
@@ -43,6 +44,11 @@ namespace ShopPromotion.Helper.Infrastructure.Filters
         private IActionResult OnPaymentMethodNotFoundException(PaymentMethodNotFoundException ex)
         {
             return ErrorResult(404, new ApiError { Message = "Requested payment method was not found!" });
+        }
+
+        private IActionResult OnKeyNotFoundException(KeyNotFoundException ex)
+        {
+            return ErrorResult(500, new ApiError { Message = "Requested query was not found in action parameters!" });
         }
 
         private IActionResult OnGatewayConfigNotFoundException(GatewayConfigNotFoundException ex)

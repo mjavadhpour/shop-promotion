@@ -42,14 +42,6 @@ namespace ShopPromotion.Domain.Services
         protected override IQueryable<Order> GetElementsOfTModelSequenceAsync(
             IEntityTypeParameters entityTypeParameters)
         {
-            // Filter by createDate using magic extention.
-            if (entityTypeParameters.GetParameter("CreateDate") != null)
-            {
-                var createDate = (DateFilterParameterOptions) entityTypeParameters.GetParameter("CreateDate");
-                // Filter by create date.
-                Query = Query.FilterByCreateDate(createDate);
-            }
-
             // Filter by contract.
             if (entityTypeParameters.GetParameter("ShopId") != null)
             {
