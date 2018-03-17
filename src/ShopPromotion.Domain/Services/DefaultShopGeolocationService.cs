@@ -12,6 +12,7 @@ namespace ShopPromotion.Domain.Services
 {
     using EntityLayer;
     using Exceptions;
+    using Extensions;
     using Infrastructure;
     using Infrastructure.Models.Resource;
     using Infrastructure.Models.Parameter;
@@ -45,14 +46,22 @@ namespace ShopPromotion.Domain.Services
         protected override IQueryable<ShopGeolocation> GetElementsOfTModelSequenceAsync(
             IEntityTypeParameters entityTypeParameters)
         {
-            // Filter by shop id.
-            Query = Query.Where(x =>
-                x.ShopId == (int) entityTypeParameters.GetParameter("ShopId"));
+            Query.Include(x => x.Shop);
 
             // Filter by attribute if exists.
             if (entityTypeParameters.GetParameter("AttributeId") != null)
                 Query = Query.Where(x =>
                     x.Shop.ShopAttributes.Any(att => att.Id == (int) entityTypeParameters.GetParameter("AttributeId")));
+
+            var geolocationPoint = (GeolocationPoint) entityTypeParameters.GetParameter("GeolocationPoint");
+            if (geolocationPoint == null) return base.GetElementsOfTModelSequenceAsync(entityTypeParameters);
+
+            // Filter by geolocation if exists.
+            if (!geolocationPoint.IsEmpty())
+            {
+                Query = Query.Where(x => IsInRadius(geolocationPoint.Latitude, geolocationPoint.Longitude, x.Latitude,
+                    x.Longitude, geolocationPoint.Radius));
+            }
 
             return base.GetElementsOfTModelSequenceAsync(entityTypeParameters);
         }
@@ -86,6 +95,22 @@ namespace ShopPromotion.Domain.Services
             {
                 throw new DuplicateShopGeolocationException();
             }
+        }
+
+        /// <summary>
+        /// Is in given radius or not.
+        /// </summary>
+        /// <param name="originLatitude"></param>
+        /// <param name="originLongitude"></param>
+        /// <param name="destinationLatitude"></param>
+        /// <param name="destinationLongitude"></param>
+        /// <param name="radius"></param>
+        /// <returns></returns>
+        private bool IsInRadius(double originLatitude, double originLongitude, double destinationLatitude,
+            double destinationLongitude, int radius)
+        {
+            return GeoCalculator.GetDistance(originLatitude, originLongitude, destinationLatitude,
+                       destinationLongitude) < radius;
         }
     }
 }

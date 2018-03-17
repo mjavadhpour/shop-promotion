@@ -146,8 +146,8 @@ namespace ShopPromotion.API.Infrastructure.Data
                 },
                 ShopGeolocation = new ShopGeolocation
                 {
-                    latitude = "32.2354657",
-                    Longitude = "57.465768",
+                    Latitude = 32.2354657,
+                    Longitude = 57.465768,
                     CreatedAt = DateTime.Now
                 },
                 ShopImages = new List<ShopImage>

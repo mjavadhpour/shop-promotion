@@ -3,8 +3,6 @@
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 
 namespace ShopPromotion.API.Infrastructure.Models.Parameter
 {
@@ -17,6 +15,8 @@ namespace ShopPromotion.API.Infrastructure.Models.Parameter
         /// </summary>
         public int? AttributeId { get; set; }
 
+        public GeolocationPoint GeolocationPoint { get; set; }
+
         /// <inheritdoc />
         public object GetParameter(string nameOfParam)
         {
@@ -24,6 +24,8 @@ namespace ShopPromotion.API.Infrastructure.Models.Parameter
             {
                 case "AttributeId":
                     return AttributeId;
+                case "GeolocationPoint":
+                    return GeolocationPoint;
                 default:
                     throw new KeyNotFoundException();
             }

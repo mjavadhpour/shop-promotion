@@ -4,12 +4,8 @@
 
 namespace ShopPromotion.Domain.Infrastructure.Models.Resource
 {
-    public class MinimumShopGeolocationListResource : MinimumBaseEntity
+    public class MinimumShopListForGeoLocationResource : MinimumBaseEntity
     {
-        public MinimumShopListForGeoLocationResource Shop { get; set; }
-
-        public string latitude { get; set; }
-
-        public string Longitude { get; set; }
+        public string Title { get; set; }
     }
 }

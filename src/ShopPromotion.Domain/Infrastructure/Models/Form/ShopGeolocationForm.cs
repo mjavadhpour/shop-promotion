@@ -16,9 +16,9 @@ namespace ShopPromotion.Domain.Infrastructure.Models.Form
         public int ShopId { get; set; }
 
         [Required]
-        public string latitude { get; set; }
+        public double Latitude { get; set; }
 
         [Required]
-        public string Longitude { get; set; }
+        public double Longitude { get; set; }
     }
 }
