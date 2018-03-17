@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ShopPromotion.Domain.Infrastructure.DAL;
 
 namespace ShopPromotion.API.Controllers.User
 {
@@ -25,6 +24,7 @@ namespace ShopPromotion.API.Controllers.User
     // Domain
     using Domain.EntityLayer;
     using Domain.Services.PaginationHelper;
+    using Domain.Infrastructure.DAL;
     // Helper
     using Helper.Infrastructure.ActionResults;
 

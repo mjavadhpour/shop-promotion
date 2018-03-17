@@ -29,6 +29,7 @@
   <!--             Folders             -->
   <!-- ******************************* -->
   <ItemGroup>
+    <Folder Include="Infrastructure\Models\Resource" />
     <Folder Include="wwwroot\img\shop" />
     <Folder Include="wwwroot\img\user" />
   </ItemGroup>

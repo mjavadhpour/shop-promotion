@@ -3,10 +3,16 @@
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using ShopPromotion.API.Infrastructure.Models.Resource;
+using ShopPromotion.Domain.EntityLayer;
+using ShopPromotion.Domain.Infrastructure.Models.Resource.Custom;
 
 namespace ShopPromotion.API.Controllers.User
 {
@@ -25,31 +31,33 @@ namespace ShopPromotion.API.Controllers.User
     /// <summary>
     /// AppUser image controller.
     /// </summary>
-    [Area("AppUser")]
-    [Route("api/v1/[area]/Profile")]
+    [Area("User")]
+    [Route("api/v1/[area]")]
     [Authorize(Policy = ConfigurePolicyService.AppUserPolicy)]
     public class UserProfileController : BaseController
     {
         private readonly IShopPromotionUserManager _shopPromotionUserManager;
+        private readonly UserManager<BaseIdentityUser> _userManager;
 
         /// <inheritdoc />
         public UserProfileController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
-            UnitOfWork unitOfWork, IShopPromotionUserManager shopPromotionUserManager) : base(
+            UnitOfWork unitOfWork, IShopPromotionUserManager shopPromotionUserManager,
+            UserManager<BaseIdentityUser> userManager) : base(
             defaultPagingOptionsAccessor, unitOfWork)
         {
             _shopPromotionUserManager = shopPromotionUserManager;
+            _userManager = userManager;
         }
 
         /// <summary>
-        /// Upload an image for app user.
+        /// Edit app user profile.
         /// </summary>
-        /// <response code="201">Created</response>
+        /// <response code="204">Updated</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="403">Forbidden</response>
         /// <response code="404">Not Found</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpPut("{PhoneNumber}")]
-        [ProducesResponseType(typeof(SingleModelResponse<MinimumAppUserImageResource>), 201)]
+        [HttpPut("Profile/{PhoneNumber}")]
         public async Task<IActionResult> UploadAppUserImageAsync(GetItemByPhoneNumberParameters byPhoneNumberParameters,
             [FromBody] UpdateUserFormModel form,
             CancellationToken ct)
@@ -68,6 +76,31 @@ namespace ShopPromotion.API.Controllers.User
             appUser.SecurityStamp = Guid.NewGuid().ToString();
             await _shopPromotionUserManager.UpdateAsync(appUser, ct);
             return NoContent();
+        }
+
+        /// <summary>
+        /// Get current logged in user.
+        /// </summary>
+        /// <response code="200">Created</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="404">Not Found</response>
+        /// <response code="500">Internal Server Error</response>
+        [HttpGet("Current")]
+        [ProducesResponseType(typeof(SingleModelResponse<MinimumIdentityUserResource>), 200)]
+        public async Task<IActionResult> UploadAppUserImageAsync()
+        {
+            // Find requested user.
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            // If app user not found
+            if (user == null) throw new UserNotFoundException();
+            var response =
+                new SingleModelResponse<MinimumIdentityUserResource>() as
+                    ISingleModelResponse<MinimumIdentityUserResource>;
+            response.Model = Mapper.Map<MinimumIdentityUserResource>(user);
+            var userClaims = await _userManager.GetClaimsAsync(user);
+            response.Model.ClaimList = Mapper.Map<IList<MinimumClaimResource>>(userClaims);
+            return Ok(response);
         }
     }
 }

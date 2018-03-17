@@ -6,6 +6,8 @@ using System.Collections.Generic;
 
 namespace ShopPromotion.Domain.Infrastructure.Models.Resource.Custom
 {
+    using API.Infrastructure.Models.Resource;
+
     /// <summary>
     /// Identity user response model.
     /// </summary>
@@ -20,6 +22,6 @@ namespace ShopPromotion.Domain.Infrastructure.Models.Resource.Custom
         /// <summary>
         /// The user claim list.
         /// </summary>
-        public IList<string> ClaimList { get; set; }
+        public IList<MinimumClaimResource> ClaimList { get; set; }
     }
 }
