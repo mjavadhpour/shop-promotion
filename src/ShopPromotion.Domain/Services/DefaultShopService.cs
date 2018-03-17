@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 namespace ShopPromotion.Domain.Services
 {
     using EntityLayer;
+    using Extensions;
     using Infrastructure;
     using Infrastructure.Models.Resource;
     using Infrastructure.Models.Parameter;
@@ -48,6 +49,31 @@ namespace ShopPromotion.Domain.Services
         /// </inheritdoc>
         protected override IQueryable<Shop> GetElementsOfTModelSequenceAsync(IEntityTypeParameters entityTypeParameters)
         {
+            // Filter by create date.
+            if (entityTypeParameters.GetParameter("CreateDate") != null)
+            {
+                var createDate = (DateFilterParameterOptions) entityTypeParameters.GetParameter("CreateDate");
+                // Filter by create date.
+                Query = Query.FilterByCreateDate(createDate);
+            }
+
+            // Filter by attribute if exists.
+            if (entityTypeParameters.GetParameter("AttributeId") != null)
+                Query = Query.Where(x =>
+                    x.ShopAttributes.Any(att => att.Id == (int) entityTypeParameters.GetParameter("AttributeId")));
+
+            // Filter by geolocation if exists.
+            var geolocationPoint = (GeolocationPoint) entityTypeParameters.GetParameter("GeolocationPoint");
+            if (geolocationPoint != null)
+            {
+                if (!geolocationPoint.IsEmpty())
+                {
+                    Query = Query.Where(x => Extensions.IsInRadius(geolocationPoint.Latitude, geolocationPoint.Longitude,
+                        x.ShopGeolocation.Latitude,
+                        x.ShopGeolocation.Longitude, geolocationPoint.Radius));
+                }   
+            }
+
             Query = Query
                 .Include(shop => shop.ShopImages)
                 .Include(shop => shop.ShopAttributes)

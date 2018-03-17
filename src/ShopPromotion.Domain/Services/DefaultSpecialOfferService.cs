@@ -42,6 +42,12 @@ namespace ShopPromotion.Domain.Services
         protected override IQueryable<SpecialOffer> GetElementsOfTModelSequenceAsync(
             IEntityTypeParameters entityTypeParameters)
         {
+            Query = Query
+                .Where(x =>
+                    x.Shop.ShopStatuses.Where(ss => ss.Status == ShopStatusOption.Approved)
+                        .OrderByDescending(ss => ss.Id)
+                        .FirstOrDefault().Id == x.Shop.ShopStatuses.OrderByDescending(ss => ss.Id).FirstOrDefault().Id);
+
             // Filter by shop id.
             if (entityTypeParameters.GetParameter("IsEnabled") != null)
                 Query = Query.Where(x => x.IsEnabled == (bool) entityTypeParameters.GetParameter("IsEnabled"));

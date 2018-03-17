@@ -46,12 +46,19 @@ namespace ShopPromotion.Domain.Services
         protected override IQueryable<ShopPromotionLike> GetElementsOfTModelSequenceAsync(
             IEntityTypeParameters entityTypeParameters)
         {
+            Query = Query
+                .Where(x =>
+                    x.ShopPromotion.Shop.ShopStatuses.Where(ss => ss.Status == ShopStatusOption.Approved)
+                        .OrderByDescending(ss => ss.Id)
+                        .FirstOrDefault().Id == x.ShopPromotion.Shop.ShopStatuses.OrderByDescending(ss => ss.Id)
+                        .FirstOrDefault().Id);
+
             // Filter by promotion id.
             Query = Query.Where(x =>
-                    x.ShopPromotion.Id == (int) entityTypeParameters.GetParameter("ShopPromotionId")
-                        &&
-                    x.Liked
-                );
+                x.ShopPromotion.Id == (int) entityTypeParameters.GetParameter("ShopPromotionId")
+                &&
+                x.Liked
+            );
 
             return base.GetElementsOfTModelSequenceAsync(entityTypeParameters);
         }

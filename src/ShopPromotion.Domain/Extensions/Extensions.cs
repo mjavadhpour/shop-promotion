@@ -100,5 +100,25 @@ namespace ShopPromotion.Domain.Extensions
             }
             return r;
         }
+
+        /// <summary>
+        /// Is in given radius or not.
+        /// </summary>
+        /// <param name="originLatitude"></param>
+        /// <param name="originLongitude"></param>
+        /// <param name="destinationLatitude"></param>
+        /// <param name="destinationLongitude"></param>
+        /// <param name="radius"></param>
+        /// <returns></returns>
+        public static bool IsInRadius(double? originLatitude, double? originLongitude, double? destinationLatitude,
+            double? destinationLongitude, int radius)
+        {
+            if (originLatitude == null || originLongitude == null || destinationLatitude == null ||
+                destinationLongitude == null) return false;
+
+            
+            return GeoCalculator.GetDistance(originLatitude ?? 0, originLongitude ?? 0, destinationLatitude ?? 0,
+                       destinationLongitude ?? 0) < radius;
+        }
     }
 }

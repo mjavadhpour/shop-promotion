@@ -46,7 +46,7 @@ namespace ShopPromotion.Domain.Services
         protected override IQueryable<ShopGeolocation> GetElementsOfTModelSequenceAsync(
             IEntityTypeParameters entityTypeParameters)
         {
-            Query.Include(x => x.Shop);
+            Query = Query.Include(x => x.Shop);
 
             // Filter by attribute if exists.
             if (entityTypeParameters.GetParameter("AttributeId") != null)
@@ -59,7 +59,7 @@ namespace ShopPromotion.Domain.Services
             // Filter by geolocation if exists.
             if (!geolocationPoint.IsEmpty())
             {
-                Query = Query.Where(x => IsInRadius(geolocationPoint.Latitude, geolocationPoint.Longitude, x.Latitude,
+                Query = Query.Where(x => Extensions.IsInRadius(geolocationPoint.Latitude, geolocationPoint.Longitude, x.Latitude,
                     x.Longitude, geolocationPoint.Radius));
             }
 
@@ -95,22 +95,6 @@ namespace ShopPromotion.Domain.Services
             {
                 throw new DuplicateShopGeolocationException();
             }
-        }
-
-        /// <summary>
-        /// Is in given radius or not.
-        /// </summary>
-        /// <param name="originLatitude"></param>
-        /// <param name="originLongitude"></param>
-        /// <param name="destinationLatitude"></param>
-        /// <param name="destinationLongitude"></param>
-        /// <param name="radius"></param>
-        /// <returns></returns>
-        private bool IsInRadius(double originLatitude, double originLongitude, double destinationLatitude,
-            double destinationLongitude, int radius)
-        {
-            return GeoCalculator.GetDistance(originLatitude, originLongitude, destinationLatitude,
-                       destinationLongitude) < radius;
         }
     }
 }

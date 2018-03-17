@@ -45,6 +45,13 @@ namespace ShopPromotion.Domain.Services
         protected override IQueryable<ShopPromotionBarcode> GetElementsOfTModelSequenceAsync(
             IEntityTypeParameters entityTypeParameters)
         {
+            Query = Query
+                .Where(x =>
+                    x.Promotion.Shop.ShopStatuses.Where(ss => ss.Status == ShopStatusOption.Approved)
+                        .OrderByDescending(ss => ss.Id)
+                        .FirstOrDefault().Id ==
+                    x.Promotion.Shop.ShopStatuses.OrderByDescending(ss => ss.Id).FirstOrDefault().Id);
+
             // Filter by shop id.
             if (entityTypeParameters.GetParameter("ShopId") != null)
                 Query = Query.Where(x => x.Promotion.ShopId == (int) entityTypeParameters.GetParameter("ShopId"));
