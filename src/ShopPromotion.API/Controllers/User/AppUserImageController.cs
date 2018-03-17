@@ -10,7 +10,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ShopPromotion.API.Controllers.App
+namespace ShopPromotion.API.Controllers.User
 {
     // API
     using ServiceConfiguration;
@@ -28,7 +28,7 @@ namespace ShopPromotion.API.Controllers.App
     /// AppUser image controller.
     /// </summary>
     [Area("AppUser")]
-    [Route("api/v1/[area]")]
+    [Route("api/v1/[area]/Profile")]
     [Authorize(Policy = ConfigurePolicyService.AppUserPolicy)]
     public class UserImageController : BaseController
     {

@@ -27,5 +27,10 @@ namespace ShopPromotion.API.Infrastructure.Models.Form
         /// The user last name.
         /// </summary>
         public string LastName { get; set; }
+
+        /// <summary>
+        /// The user email.
+        /// </summary>
+        public string Email { get; set; }
     }
 }
