@@ -30,6 +30,7 @@
   <!-- ******************************* -->
   <ItemGroup>
     <Folder Include="wwwroot\img\shop" />
+    <Folder Include="wwwroot\img\user" />
   </ItemGroup>
   <!-- ******************************* -->
   <!--   File Config For Publish env   -->

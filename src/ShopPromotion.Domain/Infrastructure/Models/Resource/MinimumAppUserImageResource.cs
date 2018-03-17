@@ -4,7 +4,7 @@
 
 namespace ShopPromotion.Domain.Infrastructure.Models.Resource
 {
-    public sealed class MinimumShopImageResource : AbstractMinimumImageResource
+    public sealed class MinimumAppUserImageResource : AbstractMinimumImageResource
     {
     }
 }

@@ -4,13 +4,11 @@
 
 using System;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace ShopPromotion.API.Controllers.App
 {
@@ -27,47 +25,45 @@ namespace ShopPromotion.API.Controllers.App
     using Domain.Infrastructure.Models.Response;
 
     /// <summary>
-    /// Shop image controller.
+    /// AppUser image controller.
     /// </summary>
-    [Area("App")]
+    [Area("AppUser")]
     [Route("api/v1/[area]")]
-    [Authorize(Policy = ConfigurePolicyService.ShopKeeperUserPolicy)]
-    public class ShopImageController : BaseController
+    [Authorize(Policy = ConfigurePolicyService.AppUserPolicy)]
+    public class UserImageController : BaseController
     {
         /// <inheritdoc />
-        public ShopImageController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
+        public UserImageController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
             UnitOfWork unitOfWork) : base(defaultPagingOptionsAccessor, unitOfWork)
         {
         }
 
         /// <summary>
-        /// Upload an image for shop.
+        /// Upload an image for app user.
         /// </summary>
         /// <response code="201">Created</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="403">Forbidden</response>
         /// <response code="404">Not Found</response>
         /// <response code="500">Internal Server Error</response>
-        [HttpPost("Shop/{ItemId}/image")]
-        [ProducesResponseType(typeof(SingleModelResponse<MinimumShopImageResource>), 201)]
-        public async Task<IActionResult> UploadShopImageAsync(GetItemByIdParameters byIdParameters,
+        [HttpPost("{PhoneNumber}/image")]
+        [ProducesResponseType(typeof(SingleModelResponse<MinimumAppUserImageResource>), 201)]
+        public async Task<IActionResult> UploadAppUserImageAsync(GetItemByPhoneNumberParameters byPhoneNumberParameters,
             [FromBody] Base64ImageForm shopImageBase64Form,
             CancellationToken ct)
         {
-            // Find requested shop
-            var shop = UnitOfWork.Context.Shops.AsNoTracking()
-                .Where(x => x.Id == byIdParameters.ItemId)
-                .Select(x => x.Id)
-                .SingleOrDefaultAsync(ct);
+            // Find requested app user.
+            var appUser =
+                await UnitOfWork.ShopPromotionUserManager.FindByPhoneAsync(byPhoneNumberParameters.PhoneNumber, ct);
 
-            // If shop not found
-            if (shop.Result == 0) throw new ShopNotFoundException();
+            // If app user not found
+            if (appUser == null) throw new UserNotFoundException();
 
             // UPLOAD IMAGE
-            var randomFileName =  $@"{Path.GetRandomFileName()}.{shopImageBase64Form.ImageType}";
+            var randomFileName = $@"{Path.GetRandomFileName()}.{shopImageBase64Form.ImageType}";
             // Path to file in dedicated location
             var filePath = Path.Combine(
-                $"{Environment.CurrentDirectory}/wwwroot/img/shop/{randomFileName}");
+                $"{Environment.CurrentDirectory}/wwwroot/img/user/{randomFileName}");
             // Save file to requested directory.
             try
             {
@@ -82,35 +78,36 @@ namespace ShopPromotion.API.Controllers.App
 
             // Manually map to target object. it's better to handle with automapper. we do it manually
             // because automapper create just once then in CreateAt and Code we don't have unique values.
-            var shopImage = new ShopImage
+            var appUserImage = new AppUserImage
             {
                 Path = randomFileName,
-                ShopId = shop.Result,
+                OwnerId = appUser.Id,
                 Type = shopImageBase64Form.ImageType,
                 CreatedAt = DateTime.Now
             };
-            UnitOfWork.Context.ShopImages.Add(shopImage);
+            UnitOfWork.Context.AppUserImages.Add(appUserImage);
             await UnitOfWork.SaveAsync();
 
             // Prepare response.
             var response =
-                new SingleModelResponse<MinimumShopImageResource>() as ISingleModelResponse<MinimumShopImageResource>;
-            response.Model = Mapper.Map<MinimumShopImageResource>(shopImage);
+                new SingleModelResponse<MinimumAppUserImageResource>() as
+                    ISingleModelResponse<MinimumAppUserImageResource>;
+            response.Model = Mapper.Map<MinimumAppUserImageResource>(appUserImage);
             return Ok(response);
         }
 
         /// <summary>
-        /// Stream shop image.
+        /// Stream app user image.
         /// </summary>
         /// <param name="fileNameParameters"></param>
         /// <returns></returns>
-        [HttpGet("Shop/image/{FileName}")]
-        public async Task<IActionResult> GetShopImageAsync(GetItemByFileNameParameters fileNameParameters)
+        [HttpGet("image/{FileName}")]
+        public async Task<IActionResult> GetAppUserImageAsync(GetItemByFileNameParameters fileNameParameters)
         {
             // Path to file in dedicated location
             var filePath =
                 Path.Combine(
-                    $"{Environment.CurrentDirectory}/wwwroot/img/shop/{fileNameParameters.FileName}");
+                    $"{Environment.CurrentDirectory}/wwwroot/img/user/{fileNameParameters.FileName}");
             var image = await Task.FromResult(System.IO.File.OpenRead(filePath));
             return File(image, "image/jpeg");
         }

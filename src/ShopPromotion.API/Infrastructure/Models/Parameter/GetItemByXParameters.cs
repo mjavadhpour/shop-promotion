@@ -80,6 +80,19 @@ namespace ShopPromotion.API.Infrastructure.Models.Parameter
     }
 
     /// <summary>
+    /// Controller parameter for get a file from dedicated directory with requested file name.
+    /// </summary>
+    public class GetItemByFileNameParameters
+    {
+        /// <summary>
+        /// Requested file name.
+        /// </summary>
+        [FromRoute]
+        [Required]
+        public string FileName { get; set; }
+    }
+
+    /// <summary>
     /// Controller parameter for get user by Phone number and id.
     /// </summary>
     public class GetItemByIdAndPhoneNumberParameters : GetItemByIdParameters

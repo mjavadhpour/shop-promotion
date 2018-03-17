@@ -4,7 +4,14 @@
 
 namespace ShopPromotion.Domain.Infrastructure.Models.Resource
 {
-    public sealed class MinimumShopImageResource : AbstractMinimumImageResource
+    /// <summary>
+    /// Minimum resource for image entity.
+    /// TODO: validate with specific interface.
+    /// </summary>
+    public abstract class AbstractMinimumImageResource : MinimumBaseEntity
     {
+        public string Path { get; set; }
+
+        public string Type { get; set; }
     }
 }

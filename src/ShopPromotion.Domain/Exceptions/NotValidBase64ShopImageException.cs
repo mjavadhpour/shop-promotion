@@ -7,12 +7,12 @@ namespace ShopPromotion.Domain.Exceptions
     using System;
 
     /// <summary>
-    /// Thrown when can not find requested shop.
+    /// Thrown when base 64 image have not valid format.
     /// </summary>
-    public class NotValidBase64ShopImageException : Exception
+    public class NotValidBase64ImageException : Exception
     {
         /// <inheritdoc />
-        public NotValidBase64ShopImageException() : base("Get an invalid base 64 shop image!")
+        public NotValidBase64ImageException() : base("Get an invalid base 64 image!")
         {
         }
     }

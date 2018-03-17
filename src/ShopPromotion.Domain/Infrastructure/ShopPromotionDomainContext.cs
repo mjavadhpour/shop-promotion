@@ -34,6 +34,8 @@ namespace ShopPromotion.Domain.Infrastructure
 
         public DbSet<AppUser> AppUsers { get; set; }
 
+        public DbSet<AppUserImage> AppUserImages { get; set; }
+
         public DbSet<AppUserInbox> AppUserInboxes { get; set; }
 
         public DbSet<AppUserPaymentMethod> AppUserPaymentMethods { get; set; }

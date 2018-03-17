@@ -5,9 +5,9 @@
 namespace ShopPromotion.API.Infrastructure.Models.Form.Custom
 {
     /// <summary>
-    /// Form for upload shop image.
+    /// Form for upload image.
     /// </summary>
-    public class Base64ShopImageForm
+    public class Base64ImageForm
     {
         /// <summary>
         /// Base 64 string of image.

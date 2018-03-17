@@ -9,3 +9,5 @@
 
 # db Files
 **/*.db
+**/wwwroot/img/shop/*
+**/wwwroot/img/user/*

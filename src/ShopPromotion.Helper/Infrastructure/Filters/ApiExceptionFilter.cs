@@ -31,7 +31,7 @@ namespace ShopPromotion.Helper.Infrastructure.Filters
             AddHandler<ShopPromotionNotFoundException>(OnShopPromotionNotFoundException);
             AddHandler<GatewayConfigNotFoundException>(OnGatewayConfigNotFoundException);
             AddHandler<DuplicateShopGeolocationException>(OnDuplicateShopGeolocationException);
-            AddHandler<NotValidBase64ShopImageException>(OnNotValidBase64ShopImageException);
+            AddHandler<NotValidBase64ImageException>(OnNotValidBase64ImageException);
             AddHandler<Exception>(OnOtherException);
         }
 
@@ -55,9 +55,9 @@ namespace ShopPromotion.Helper.Infrastructure.Filters
             return ErrorResult(404, new ApiError { Message = "Requested shop promotion was not found!" });
         }
 
-        private IActionResult OnNotValidBase64ShopImageException(NotValidBase64ShopImageException ex)
+        private IActionResult OnNotValidBase64ImageException(NotValidBase64ImageException ex)
         {
-            return ErrorResult(400, new ApiError { Message = "Get an invalid shop image with base 64 format!" });
+            return ErrorResult(400, new ApiError { Message = "Get an invalid image with base 64 format!" });
         }
 
         private IActionResult OnDuplicateShopGeolocationException(DuplicateShopGeolocationException ex)
