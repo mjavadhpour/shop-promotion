@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using EntityFrameworkCore.Triggers;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -52,6 +53,8 @@ namespace ShopPromotion.Domain.Infrastructure
 
         public DbSet<Order> Orders { get; set; }
 
+        public DbSet<OrderDiscountCoupon> OrderDiscountCoupons { get; set; }
+
         public DbSet<OrderItem> OrderItems { get; set; }
 
         public DbSet<Payment> Payments { get; set; }
@@ -76,6 +79,10 @@ namespace ShopPromotion.Domain.Infrastructure
 
         public DbSet<ShopInbox> ShopInboxes { get; set; }
 
+        public DbSet<ShopKeeperCheckout> ShopKeeperCheckouts { get; set; }
+
+        public DbSet<ShopKeeperCheckoutOrder> ShopKeeperCheckoutOrders { get; set; }
+
         public DbSet<ShopKeeperUser> ShopKeeperUsers{ get; set; }
 
         public DbSet<ShopKeeperUserInbox> ShopKeeperUserInboxes { get; set; }
@@ -96,21 +103,24 @@ namespace ShopPromotion.Domain.Infrastructure
         public override int SaveChanges()
         {
             AddTimestamps();
-            return base.SaveChanges();
+            AddTriggers();
+            return this.SaveChangesWithTriggers(base.SaveChanges);
         }
 
         /// <inheritdoc />
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             AddTimestamps();
-            return base.SaveChanges(acceptAllChangesOnSuccess);
+            AddTriggers();
+            return this.SaveChangesWithTriggers(base.SaveChanges, acceptAllChangesOnSuccess);
         }
 
         /// <inheritdoc />
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             AddTimestamps();
-            return base.SaveChangesAsync(cancellationToken);
+            AddTriggers();
+            return this.SaveChangesWithTriggersAsync(base.SaveChangesAsync, cancellationToken);
         }
 
         /// <inheritdoc />
@@ -118,7 +128,9 @@ namespace ShopPromotion.Domain.Infrastructure
             CancellationToken cancellationToken = new CancellationToken())
         {
             AddTimestamps();
-            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+            AddTriggers();
+            return this.SaveChangesWithTriggersAsync(base.SaveChangesAsync, 
+                acceptAllChangesOnSuccess, cancellationToken);
         }
 
         /// <summary>
@@ -155,7 +167,19 @@ namespace ShopPromotion.Domain.Infrastructure
             modelBuilder.Entity<ShopPromotionBarcode>(b =>
             {
                 b.HasIndex(u => u.Barcode).HasName("BarcodeIndex").IsUnique();
-            });            
+            });
+            // Unique discount enable and uniqueEnableStamp
+            modelBuilder.Entity<Discount>(b =>
+            {
+                b.HasIndex(d => new {d.Enabled, d.UniqueStampForEnable})
+                    .HasName("IX_EnabledAndUniqueStampForEnable").IsUnique();
+            });
+            // Unique fields for OrderDiscountCoupon
+            modelBuilder.Entity<OrderDiscountCoupon>(b =>
+            {
+                b.HasIndex(d => new {d.OrderId, d.DiscountCouponId})
+                    .HasName("IX_OrderIdAndDiscountCouponId").IsUnique();
+            });
             // Execute system onModelCreating to handle other library database.
             base.OnModelCreating(modelBuilder);
         }
@@ -191,6 +215,39 @@ namespace ShopPromotion.Domain.Infrastructure
             {
                 ((BaseEntity) entity.Entity).UpdatedAt = DateTime.Now;
             }
+        }
+
+        /// <summary>
+        /// Database triggers functionallity.
+        /// </summary>
+        private void AddTriggers()
+        {
+            Triggers<Discount>.Inserting +=
+                entry =>
+                {
+                    if (entry.Entity.Enabled)
+                    {
+                        entry.Entity.UniqueStampForEnable = "IX_UNIQUE_ENABLE_HASH";
+                    }
+                    else
+                    {
+                        entry.Entity.UniqueStampForEnable =
+                            Extensions.Extensions.GenerateNewUniqueRandom(1000000000, 10);
+                    }
+                };
+            Triggers<Discount>.Updating +=
+                entry =>
+                {
+                    if (entry.Entity.Enabled)
+                    {
+                        entry.Entity.UniqueStampForEnable = "IX_UNIQUE_ENABLE_HASH";
+                    }
+                    else
+                    {
+                        entry.Entity.UniqueStampForEnable =
+                            Extensions.Extensions.GenerateNewUniqueRandom(1000000000, 10);
+                    }
+                };
         }
     }
 }

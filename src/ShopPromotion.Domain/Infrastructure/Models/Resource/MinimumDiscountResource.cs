@@ -4,19 +4,10 @@
 
 using System;
 
-namespace ShopPromotion.Domain.EntityLayer
+namespace ShopPromotion.Domain.Infrastructure.Models.Resource
 {
-    /// <summary>
-    /// The discount, or coupon configuration.
-    /// </summary>
-    public class Discount : BaseEntity
+    public class MinimumDiscountResource : MinimumBaseEntity
     {
-        public Discount()
-        {
-            Enabled = false;
-            Code = Extensions.Extensions.GenerateNewUniqueRandom();
-        }
-
         public string Code { get; set; }
 
         public string Name { get; set; }
@@ -32,8 +23,6 @@ namespace ShopPromotion.Domain.EntityLayer
         public double DiscountPercent { get; set; }
 
         public bool Enabled { get; set; }
-
-        public string UniqueStampForEnable { get; set; }
 
         public DateTime StartsAt { get; set; }
 

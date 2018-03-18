@@ -85,12 +85,26 @@ namespace ShopPromotion.API.ServiceConfiguration
             services
                 .AddScoped<UnitOfWork<ShopGeolocationForm, MinimumShopGeolocationListResource,
                     MinimumShopGeolocationResource, ShopGeolocation>>();
+            // Generic unit of work. Discount
+            services
+                .AddScoped<UnitOfWork<DiscountCreateForm, MinimumDiscountListResource,
+                    MinimumDiscountResource, Discount>>();
+            // Generic unit of work. OrderDiscountCoupon
+            services
+                .AddScoped<UnitOfWork<OrderDiscountCouponForm, MinimumOrderDiscountCouponListResource,
+                    MinimumOrderDiscountCouponResource, OrderDiscountCoupon>>();
+            // Generic unit of work. OrderItem
+            services
+                .AddScoped<UnitOfWork<OrderItemForm, MinimumOrderItemListResource,
+                    MinimumOrderItemResource, OrderItem>>();
             // Generic unit of work. ShopPromotion
             services
                 .AddScoped<UnitOfWork<ShopPromotionForm, MinimumShopPromotionResource, MinimumShopPromotionResource,
                     ShopPromotion>>();
             // Generic unit of work. Order
             services.AddScoped<UnitOfWork<OrderForm, MinimumOrderResource, MinimumOrderResource, Order>>();
+            // Generic unit of work. Order with List
+            services.AddScoped<UnitOfWork<OrderForm, MinimumOrderListResource, MinimumOrderResource, Order>>();
             // Generic unit of work. ShopPromotionBarcode
             services
                 .AddScoped<UnitOfWork<ShopPromotionBarcodeForm, MinimumShopPromotionBarcodeResource,
@@ -124,11 +138,21 @@ namespace ShopPromotion.API.ServiceConfiguration
                         MinimumShopPromotionLikeListResource, MinimumShopPromotionLikeResource, ShopPromotionLike, 
                         ShopPromotionDomainContext>,
                     DefaultShopPromotionLikeService<ShopPromotionLikeForm>>();
-            // Order
+            // AdminOrder
             services
                 .AddScoped<IBaseService<OrderForm, MinimumOrderResource, MinimumOrderResource, Order,
                         ShopPromotionDomainContext>,
+                    DefaultAdminOrderService<OrderForm>>();
+            // Order
+            services
+                .AddScoped<IBaseService<OrderForm, MinimumOrderListResource, MinimumOrderResource, Order,
+                        ShopPromotionDomainContext>,
                     DefaultOrderService<OrderForm>>();
+            // Discount
+            services
+                .AddScoped<IBaseService<DiscountCreateForm, MinimumDiscountListResource, MinimumDiscountResource, 
+                        Discount, ShopPromotionDomainContext>,
+                    DefaultDiscountService<DiscountCreateForm>>();
             // ShopPromotionBarcode
             services
                 .AddScoped<IBaseService<ShopPromotionBarcodeForm, MinimumShopPromotionBarcodeResource,
@@ -149,6 +173,16 @@ namespace ShopPromotion.API.ServiceConfiguration
                 .AddScoped<IBaseService<MessageForm, MinimumInboxResource, MinimumInboxMessageResource, Message,
                         ShopPromotionDomainContext>,
                     DefaultAppMessageService<MessageForm>>();
+            // OrderDiscountCoupon
+            services
+                .AddScoped<IBaseService<OrderDiscountCouponForm, MinimumOrderDiscountCouponListResource, 
+                        MinimumOrderDiscountCouponResource, OrderDiscountCoupon, ShopPromotionDomainContext>,
+                    DefaultOrderDiscountCouponService<OrderDiscountCouponForm>>();
+            // OrderItem
+            services
+                .AddScoped<IBaseService<OrderItemForm, MinimumOrderItemListResource, MinimumOrderItemResource, OrderItem,
+                        ShopPromotionDomainContext>,
+                    DefaultOrderItemService<OrderItemForm>>();
             // SpecialOffer
             services
                 .AddScoped<

@@ -2,26 +2,29 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using ShopPromotion.Domain.Extensions;
+using ShopPromotion.Domain.Infrastructure.Models.Form;
 
 namespace ShopPromotion.Domain.Services
 {
     using EntityLayer;
+    using Extensions;
     using Infrastructure;
     using Infrastructure.Models.Resource;
     using Infrastructure.Models.Parameter;
     using PaginationHelper;
 
     public class
-        DefaultAdminOrderService<T> : DefaultEntityService<T, MinimumOrderResource, MinimumOrderResource, Order, ShopPromotionDomainContext>
-        where T : BaseEntity
+        DefaultDiscountService<T> : DefaultEntityService<T, MinimumDiscountListResource, MinimumDiscountResource, Discount,
+            ShopPromotionDomainContext>
+        where T : DiscountCreateForm
     {
-        public DefaultAdminOrderService(ShopPromotionDomainContext context,
+        public DefaultDiscountService(ShopPromotionDomainContext context,
             ResolvedPaginationValueService resolvedPaginationValue) : base(context, resolvedPaginationValue)
         {
         }
@@ -29,7 +32,7 @@ namespace ShopPromotion.Domain.Services
         /// <inheritdoc>
         /// <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
         /// </inheritdoc>
-        protected override async Task<Order> GetElementOfTModelSequenceAsync(int id, CancellationToken ct)
+        protected override async Task<Discount> GetElementOfTModelSequenceAsync(int id, CancellationToken ct)
         {
             return await Entities
                 .AsNoTracking()
@@ -39,34 +42,36 @@ namespace ShopPromotion.Domain.Services
         /// <inheritdoc>
         ///     <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
         /// </inheritdoc>
-        protected override IQueryable<Order> GetElementsOfTModelSequenceAsync(
-            IEntityTypeParameters entityTypeParameters)
+        protected override IQueryable<Discount> GetElementsOfTModelSequenceAsync(IEntityTypeParameters entityTypeParameters)
         {
-            // Filter by contract.
-            if (entityTypeParameters.GetParameter("ShopId") != null)
-            {
-                Query = Query.Where(x =>
-                    x.ShopPromotionBarcode.Promotion.ShopId == (int) entityTypeParameters.GetParameter("ShopId"));   
-            }
-
             return base.GetElementsOfTModelSequenceAsync(entityTypeParameters);
         }
 
         /// <inheritdoc>
         /// <cref>DefaultEntityService{TForm, TModelResource,TModel}</cref>
         /// </inheritdoc>
-        protected override Order MappingFromModelToTModelDestination(T form, CancellationToken ct)
+        protected override Discount MappingFromModelToTModelDestination(T form, CancellationToken ct)
         {
-            // Map order and resource.
-            var order = Mapper.Map<Order>(form);
+            DiscountCreateForm finalForm;
+            // In update client can just change the enabled field.
+            if (GetCurrentAction() == UpdateEntity)
+            {
+                finalForm = Mapper.Map<DiscountCreateForm>(CurrentFindedObject);
+                finalForm.Enabled = form.Enabled;
+            }
+            else
+            {
+                // In create we resolve final form with given create form from application layer.
+                finalForm = form;
+            }
 
-            return order;
+            // Map discount and resource.
+            var discount = Mapper.Map<Discount>(finalForm);
+
+            return discount;
         }
 
         /// <inheritdoc />
-        /// <summary>
-        /// Check if shop have duplicated size for each product group thrown error.
-        /// </summary>
         protected override void ValidateAddOrUpdateRequest(T form)
         {
         }

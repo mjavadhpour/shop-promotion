@@ -3,6 +3,7 @@
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
 using System;
+using System.Collections.Generic;
 
 namespace ShopPromotion.Domain.EntityLayer
 {
@@ -11,11 +12,17 @@ namespace ShopPromotion.Domain.EntityLayer
     /// </summary>
     public class Order : BaseEntity
     {
+        public Order()
+        {
+            Code = Guid.NewGuid();
+        }
+
         public string CustomerId { get; set; }
         public AppUser Customer { get; set; }
 
-        public int? DiscountCouponId { get; set; }
-        public DiscountCoupon DiscountCoupon { get; set; }
+        public IList<OrderDiscountCoupon> DiscountCoupons { get; set; }
+
+        public IList<OrderItem> OrderItems { get; set; }
 
         public int ShopPromotionBarcodeId { get; set; }
         public ShopPromotionBarcode ShopPromotionBarcode { get; set; }
@@ -24,11 +31,9 @@ namespace ShopPromotion.Domain.EntityLayer
 
         public int ItemsTotal { get; set; }
 
-        public string State { get; set; }
+        public OrderStateOptions State { get; set; }
  
-        public string PaymentState { get; set; }
-
-        public string CheckoutState { get; set; }
+        public OrderPaymentStateOptions PaymentState { get; set; }
 
         public string Notes { get; set; }
 

@@ -28,6 +28,7 @@ namespace ShopPromotion.Domain.Services
         where TModelResource : MinimumBaseEntity
     {
         protected readonly DbSet<TModel> Entities;
+        protected TModel CurrentFindedObject { get; private set; }
         protected IQueryable<TModel> Query;
         /// <summary>
         /// Hold the actions that specify what actually happening in this class.
@@ -59,9 +60,9 @@ namespace ShopPromotion.Domain.Services
         public async Task<TModelResource> GetEntityAsync(int id, CancellationToken ct)
         {
             _currentAction = GetEntity;
-            var entity = await GetElementOfTModelSequenceAsync(id, ct);
+            CurrentFindedObject = await GetElementOfTModelSequenceAsync(id, ct);
 
-            return Mapper.Map<TModelResource>(entity);
+            return Mapper.Map<TModelResource>(CurrentFindedObject);
         }
 
         /// <inheritdoc>
@@ -107,8 +108,8 @@ namespace ShopPromotion.Domain.Services
         /// </inheritdoc>
         public async Task UpdateEntityAsync(TForm form, CancellationToken ct)
         {
-            _currentAction = UpdateEntity;
             var entity = await GetEntityAsync(form.Id, ct);
+            _currentAction = UpdateEntity;
             if (entity == null) return;
             // Custom validation and thrown intended exceptions
             ValidateAddOrUpdateRequest(form);

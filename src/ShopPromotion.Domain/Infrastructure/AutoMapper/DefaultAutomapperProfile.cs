@@ -52,6 +52,15 @@ namespace ShopPromotion.Domain.Infrastructure.AutoMapper
                 .ForMember(dto => dto.LikedById, opt => opt.MapFrom(form => form.CreatedById));
             // ShopPromotionBarcode
             CreateMap<ShopPromotionBarcodeForm, ShopPromotionBarcode>();
+            // OrderDiscountCoupon
+            CreateMap<OrderDiscountCouponForm, OrderDiscountCoupon>();
+            CreateMap<OrderDiscountCouponForm, MinimumOrderDiscountCouponResource>();
+            // OrderItem
+            CreateMap<OrderItemForm, OrderItem>();
+            CreateMap<OrderItemForm, MinimumOrderItemResource>();
+            // Discount
+            CreateMap<DiscountCreateForm, Discount>();
+            CreateMap<DiscountCreateForm, MinimumDiscountResource>();
             // PaymentMethod
             CreateMap<PaymentMethodForm, PaymentMethod>();
             // ShopImage
@@ -90,6 +99,7 @@ namespace ShopPromotion.Domain.Infrastructure.AutoMapper
             CreateMap<Attribute, MinimumAttributeResource>();
             // Order
             CreateMap<Order, MinimumOrderResource>();
+            CreateMap<OrderForm, Order>();
         }
     }
 }

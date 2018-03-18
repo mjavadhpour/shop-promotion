@@ -203,11 +203,10 @@ namespace ShopPromotion.API.Infrastructure.Data
             {
                 Code = new Guid(),
                 CheckoutCompletedAt = DateTime.Now,
-                CheckoutState = "Confirmed",
                 Customer = appUser,
                 ItemsTotal = 1,
-                State = "Confirmed",
-                PaymentState = "Approved",
+                State = OrderStateOptions.Cart,
+                PaymentState = OrderPaymentStateOptions.AwaitingPayment,
                 Notes = "This is test order",
                 Total = 1000000,
                 ShopPromotionBarcode = shopPromotionBarcode,

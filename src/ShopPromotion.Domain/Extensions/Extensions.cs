@@ -90,10 +90,10 @@ namespace ShopPromotion.Domain.Extensions
         /// Generate unique 6 digit number.
         /// </summary>
         /// <returns></returns>
-        public static string GenerateNewUniqueRandom()
+        public static string GenerateNewUniqueRandom(int maxValue = 1000000, int length = 6)
         {
             Random generator = new Random();
-            String r = generator.Next(0, 1000000).ToString("D6");
+            String r = generator.Next(0, maxValue).ToString($@"D{length}");
             if (r.Distinct().Count() == 1)
             {
                 r = GenerateNewUniqueRandom();

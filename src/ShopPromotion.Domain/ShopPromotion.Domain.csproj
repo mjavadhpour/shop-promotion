@@ -21,6 +21,7 @@
   <!-- ******************************* -->
   <ItemGroup>
     <!-- AspNetCore Mvc framework. intruduced in the version 2.0.0 -->
+    <PackageReference Include="EntityFrameworkCore.Triggers" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.0" />
     <!-- User Identity -->
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.0.0" />

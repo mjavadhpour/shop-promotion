@@ -2,9 +2,10 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
-namespace ShopPromotion.API.Infrastructure.Models.Form
+namespace ShopPromotion.Domain.Infrastructure.Models.Form
 {
-    public class OrderForm : Domain.Infrastructure.Models.Form.OrderForm
+    public class OrderDiscountCouponForm : BaseOrderForm
     {
+        public string DiscountCouponCode { get; set; }
     }
 }

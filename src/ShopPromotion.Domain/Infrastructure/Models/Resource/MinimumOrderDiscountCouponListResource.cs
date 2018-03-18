@@ -4,14 +4,10 @@
 
 namespace ShopPromotion.Domain.Infrastructure.Models.Resource
 {
-    public class MinimumOrderResource : MinimumBaseEntity
-    {
-        public int Total { get; set; }
+    public class MinimumOrderDiscountCouponListResource : MinimumBaseEntity
+    {        
+        public MinimumDiscountListResource DiscountCoupon { get; set; }
 
-        public int ItemsTotal { get; set; }
-
-        public string State { get; set; }
- 
-        public string PaymentState { get; set; }
+        public MinimumOrderListResource Order { get; set; }
     }
 }

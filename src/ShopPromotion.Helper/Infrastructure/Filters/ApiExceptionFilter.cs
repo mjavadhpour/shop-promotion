@@ -29,6 +29,8 @@ namespace ShopPromotion.Helper.Infrastructure.Filters
             AddHandler<ShopNotFoundException>(OnShopNotFoundException);
             AddHandler<PaymentMethodNotFoundException>(OnPaymentMethodNotFoundException);
             AddHandler<ShopPromotionNotFoundException>(OnShopPromotionNotFoundException);
+            AddHandler<DiscountCouponNotFoundException>(OnDiscountCouponNotFoundException);
+            AddHandler<PromotionBarcodeNotFoundException>(OnPromotionBarcodeNotFoundException);
             AddHandler<KeyNotFoundException>(OnKeyNotFoundException);
             AddHandler<GatewayConfigNotFoundException>(OnGatewayConfigNotFoundException);
             AddHandler<DuplicateShopGeolocationException>(OnDuplicateShopGeolocationException);
@@ -44,6 +46,16 @@ namespace ShopPromotion.Helper.Infrastructure.Filters
         private IActionResult OnPaymentMethodNotFoundException(PaymentMethodNotFoundException ex)
         {
             return ErrorResult(404, new ApiError { Message = "Requested payment method was not found!" });
+        }  
+
+        private IActionResult OnDiscountCouponNotFoundException(DiscountCouponNotFoundException ex)
+        {
+            return ErrorResult(404, new ApiError { Message = "Requested discount coupon was not found!" });
+        }
+
+        private IActionResult OnPromotionBarcodeNotFoundException(PromotionBarcodeNotFoundException ex)
+        {
+            return ErrorResult(404, new ApiError { Message = "Requested promotion barcode was not found!" });
         }
 
         private IActionResult OnKeyNotFoundException(KeyNotFoundException ex)

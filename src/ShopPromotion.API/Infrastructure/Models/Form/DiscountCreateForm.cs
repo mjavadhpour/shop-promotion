@@ -4,7 +4,7 @@
 
 namespace ShopPromotion.API.Infrastructure.Models.Form
 {
-    public class OrderForm : Domain.Infrastructure.Models.Form.OrderForm
+    public class DiscountCreateForm : Domain.Infrastructure.Models.Form.DiscountCreateForm
     {
     }
 }
