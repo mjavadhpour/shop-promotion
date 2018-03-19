@@ -4,6 +4,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,11 +28,11 @@ namespace ShopPromotion.API.Controllers.App
     public class MessageController : BaseApiController<MessageForm, MinimumInboxResource, MinimumInboxMessageResource, 
         Message, GetAllMessagesParameters, GetItemByIdParameters>
     {
-        /// <inheritdoc />
         public MessageController(ResolvedPaginationValueService defaultPagingOptionsAccessor, UnitOfWork unitOfWork,
             UserManager<BaseIdentityUser> userManager,
-            UnitOfWork<MessageForm, MinimumInboxResource, MinimumInboxMessageResource, Message> genericUnitOfWork) 
-            : base(defaultPagingOptionsAccessor, unitOfWork, userManager, genericUnitOfWork)
+            UnitOfWork<MessageForm, MinimumInboxResource, MinimumInboxMessageResource, Message> genericUnitOfWork,
+            IMediator mediator) : base(defaultPagingOptionsAccessor, unitOfWork, userManager, genericUnitOfWork,
+            mediator)
         {
         }
 

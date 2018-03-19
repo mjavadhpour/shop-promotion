@@ -7,10 +7,10 @@ namespace ShopPromotion.Domain.EntityLayer
     /// <summary>
     /// Keep reference of orders to checkout for shop keeper when admin approved the checkout request.
     /// </summary>
-    public class ShopKeeperCheckoutOrder : BaseEntity
+    public class ShopCheckoutRequestOrder : BaseEntity
     {
-        public int ShopKeeperCheckoutId { get; set; }
-        public ShopKeeperCheckout ShopKeeperCheckout { get; set; }
+        public string ShopCheckoutRequestId { get; set; }
+        public ShopCheckoutRequest ShopCheckoutRequest { get; set; }
 
         public int OrderId { get; set; }
         public Order Order { get; set; }

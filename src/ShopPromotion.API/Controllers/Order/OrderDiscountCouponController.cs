@@ -5,6 +5,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,14 +33,11 @@ namespace ShopPromotion.API.Controllers.Order
     {
         private readonly int? _currentOrderId;
 
-        /// <inheritdoc />
         public OrderDiscountCouponController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
-            UnitOfWork unitOfWork,
-            UserManager<BaseIdentityUser> userManager,
+            UnitOfWork unitOfWork, UserManager<BaseIdentityUser> userManager,
             UnitOfWork<OrderDiscountCouponForm, MinimumOrderDiscountCouponListResource,
-                MinimumOrderDiscountCouponResource, OrderDiscountCoupon> genericUnitOfWork) : base(
-            defaultPagingOptionsAccessor,
-            unitOfWork, userManager, genericUnitOfWork)
+                MinimumOrderDiscountCouponResource, OrderDiscountCoupon> genericUnitOfWork, IMediator mediator) : base(
+            defaultPagingOptionsAccessor, unitOfWork, userManager, genericUnitOfWork, mediator)
         {
             var order = UnitOfWork.Context.Orders.Select(o => new {o.Id, o.State})
                 .SingleOrDefault(o => o.State == OrderStateOptions.Cart);

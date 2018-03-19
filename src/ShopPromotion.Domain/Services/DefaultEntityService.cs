@@ -100,7 +100,7 @@ namespace ShopPromotion.Domain.Services
             var model = MappingFromModelToTModelDestination(form, ct);
             Context.Set<TModel>().Add(model);
 
-            return Mapper.Map<TModelResource>(form);
+            return Mapper.Map<TModelResource>(model);
         }
 
         /// <inheritdoc>

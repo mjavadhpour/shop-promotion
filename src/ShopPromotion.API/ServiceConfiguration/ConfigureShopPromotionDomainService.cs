@@ -93,6 +93,10 @@ namespace ShopPromotion.API.ServiceConfiguration
             services
                 .AddScoped<UnitOfWork<OrderDiscountCouponForm, MinimumOrderDiscountCouponListResource,
                     MinimumOrderDiscountCouponResource, OrderDiscountCoupon>>();
+            // Generic unit of work. ShopCheckoutRequest
+            services
+                .AddScoped<UnitOfWork<ShopCheckoutRequestForm, MinimumShopCheckoutRequestListResource,
+                    MinimumShopCheckoutRequestResource, ShopCheckoutRequest>>();
             // Generic unit of work. OrderItem
             services
                 .AddScoped<UnitOfWork<OrderItemForm, MinimumOrderItemListResource,
@@ -126,6 +130,11 @@ namespace ShopPromotion.API.ServiceConfiguration
                 .AddScoped<IBaseService<ShopPromotionForm, MinimumShopPromotionResource, MinimumShopPromotionResource,
                         ShopPromotion, ShopPromotionDomainContext>,
                     DefaultShopPromotionService<ShopPromotionForm>>();
+            // ShopCheckoutRequest
+            services
+                .AddScoped<IBaseService<ShopCheckoutRequestForm, MinimumShopCheckoutRequestListResource, 
+                        MinimumShopCheckoutRequestResource, ShopCheckoutRequest, ShopPromotionDomainContext>,
+                    DefaultShopCheckoutRequestService<ShopCheckoutRequestForm>>();
             // ShopPromotionReview
             services
                 .AddScoped<IBaseService<ShopPromotionReviewForm,

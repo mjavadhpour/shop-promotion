@@ -2,11 +2,14 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using ShopPromotion.API.Events;
 
 namespace ShopPromotion.API.Controllers
 {
@@ -36,6 +39,7 @@ namespace ShopPromotion.API.Controllers
         where TGetItemParameters : GetItemByIdParameters
     {
         protected readonly UserManager<BaseIdentityUser> UserManager;
+        private readonly IMediator _mediator;
 
         /// <summary>
         /// The Base entity service. SHOULD pass by child with real service that was related to API.
@@ -49,13 +53,15 @@ namespace ShopPromotion.API.Controllers
         /// <param name="unitOfWork"></param>
         /// <param name="userManager"></param>
         /// <param name="genericUnitOfWork"></param>
+        /// <param name="mediator"></param>
         protected BaseApiController(ResolvedPaginationValueService defaultPagingOptionsAccessor, UnitOfWork unitOfWork,
             UserManager<BaseIdentityUser> userManager,
-            UnitOfWork<TForm, TMinimumTListResource, TMinimumTResource, T> genericUnitOfWork) :
+            UnitOfWork<TForm, TMinimumTListResource, TMinimumTResource, T> genericUnitOfWork, IMediator mediator) :
             base(defaultPagingOptionsAccessor, unitOfWork)
         {
             UserManager = userManager;
             GenericUnitOfWork = genericUnitOfWork;
+            _mediator = mediator;
         }
 
         /// <summary>
@@ -113,6 +119,7 @@ namespace ShopPromotion.API.Controllers
             form.CreatedById = UserManager.GetUserId(HttpContext.User);
             response.Model = GenericUnitOfWork.GenericRepository().AddEntity(form, ct);
             await GenericUnitOfWork.SaveAsync();
+            await PublishEntityCreatedEvent(response.Model, form);
             return CreatedAtAction(nameof(GetEntityByIdAsync), new {ItemId = response.Model.Id}, response);
         }
 
@@ -154,6 +161,18 @@ namespace ShopPromotion.API.Controllers
             await GenericUnitOfWork.GenericRepository().DeleteEntityAsync(new T {Id = itemByIdParameters.ItemId}, ct);
             await GenericUnitOfWork.SaveAsync();
             return NoContent();
+        }
+
+        /// <summary>
+        /// Triggered after save new record in database, handlers.
+        /// </summary>
+        /// <param name="resource"></param>
+        /// <param name="form"></param>
+        /// <returns></returns>
+        private Task PublishEntityCreatedEvent(TMinimumTResource resource, TForm form)
+        {
+            var entityCreatedEvent = new EntityCreatedEvent<TMinimumTResource, TForm>(resource, form);
+            return Task.Run(() => _mediator.Publish(entityCreatedEvent));
         }
     }
 }

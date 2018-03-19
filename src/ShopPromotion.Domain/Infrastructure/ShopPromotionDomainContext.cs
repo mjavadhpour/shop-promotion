@@ -73,15 +73,15 @@ namespace ShopPromotion.Domain.Infrastructure
 
         public DbSet<ShopAttribute> ShopAttributes { get; set; }
 
+        public DbSet<ShopCheckoutRequest> ShopCheckoutRequests { get; set; }
+
         public DbSet<ShopGeolocation> ShopGeolocations { get; set; }
 
         public DbSet<ShopImage> ShopImages { get; set; }
 
         public DbSet<ShopInbox> ShopInboxes { get; set; }
 
-        public DbSet<ShopKeeperCheckout> ShopKeeperCheckouts { get; set; }
-
-        public DbSet<ShopKeeperCheckoutOrder> ShopKeeperCheckoutOrders { get; set; }
+        public DbSet<ShopCheckoutRequestOrder> ShopCheckoutRequestOrders { get; set; }
 
         public DbSet<ShopKeeperUser> ShopKeeperUsers{ get; set; }
 

@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -36,14 +37,11 @@ namespace ShopPromotion.API.Controllers.App
         MinimumShopPromotionLikeListResource, MinimumShopPromotionLikeResource, ShopPromotionLike,
         GetAllShopPromotionLikesParameters, GetItemByIdAndShopPromotionIdParameters>
     {
-        /// <inheritdoc />
         public ShopPromotionLikeController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
-            UnitOfWork unitOfWork,
-            UserManager<BaseIdentityUser> userManager,
-            UnitOfWork<ShopPromotionLikeForm, MinimumShopPromotionLikeListResource,
-                MinimumShopPromotionLikeResource, ShopPromotionLike> genericUnitOfWork) : base(
-            defaultPagingOptionsAccessor,
-            unitOfWork, userManager, genericUnitOfWork)
+            UnitOfWork unitOfWork, UserManager<BaseIdentityUser> userManager,
+            UnitOfWork<ShopPromotionLikeForm, MinimumShopPromotionLikeListResource, MinimumShopPromotionLikeResource,
+                ShopPromotionLike> genericUnitOfWork, IMediator mediator) : base(defaultPagingOptionsAccessor,
+            unitOfWork, userManager, genericUnitOfWork, mediator)
         {
         }
 

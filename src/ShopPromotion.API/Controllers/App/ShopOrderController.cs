@@ -5,6 +5,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -33,11 +34,11 @@ namespace ShopPromotion.API.Controllers.App
     public class ShopOrderController : BaseApiController<OrderForm, MinimumOrderResource, MinimumOrderResource, Order
         , GetAllShopOrdersParameters, GetItemByIdAndShopParameters>
     {
-        /// <inheritdoc />
-        public ShopOrderController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
-            UnitOfWork unitOfWork, UserManager<BaseIdentityUser> userManager,
-            UnitOfWork<OrderForm, MinimumOrderResource, MinimumOrderResource, Order> genericUnitOfWork) : base(
-            defaultPagingOptionsAccessor, unitOfWork, userManager, genericUnitOfWork)
+        public ShopOrderController(ResolvedPaginationValueService defaultPagingOptionsAccessor, UnitOfWork unitOfWork,
+            UserManager<BaseIdentityUser> userManager,
+            UnitOfWork<OrderForm, MinimumOrderResource, MinimumOrderResource, Order> genericUnitOfWork,
+            IMediator mediator) : base(defaultPagingOptionsAccessor, unitOfWork, userManager, genericUnitOfWork,
+            mediator)
         {
         }
 

@@ -5,6 +5,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -31,14 +32,11 @@ namespace ShopPromotion.API.Controllers.App
         MinimumShopPromotionReviewListResource, MinimumShopPromotionReviewResource, ShopPromotionReview,
         GetAllShopPromotionReviewsParameters, GetItemByIdAndShopPromotionIdParameters>
     {
-        /// <inheritdoc />
         public ShopPromotionReviewController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
-            UnitOfWork unitOfWork,
-            UserManager<BaseIdentityUser> userManager,
+            UnitOfWork unitOfWork, UserManager<BaseIdentityUser> userManager,
             UnitOfWork<ShopPromotionReviewForm, MinimumShopPromotionReviewListResource,
-                MinimumShopPromotionReviewResource, ShopPromotionReview> genericUnitOfWork) : base(
-            defaultPagingOptionsAccessor,
-            unitOfWork, userManager, genericUnitOfWork)
+                MinimumShopPromotionReviewResource, ShopPromotionReview> genericUnitOfWork, IMediator mediator) : base(
+            defaultPagingOptionsAccessor, unitOfWork, userManager, genericUnitOfWork, mediator)
         {
         }
 

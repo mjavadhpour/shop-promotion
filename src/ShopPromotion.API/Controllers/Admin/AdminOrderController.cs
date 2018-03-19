@@ -4,6 +4,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -30,11 +31,11 @@ namespace ShopPromotion.API.Controllers.Admin
     public class AdminOrderController : BaseApiController<OrderForm, MinimumOrderResource, MinimumOrderResource, Order
         , GetAllAdminOrdersParameters, GetItemByIdAndShopParameters>
     {
-        /// <inheritdoc />
-        public AdminOrderController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
-            UnitOfWork unitOfWork, UserManager<BaseIdentityUser> userManager,
-            UnitOfWork<OrderForm, MinimumOrderResource, MinimumOrderResource, Order> genericUnitOfWork) : base(
-            defaultPagingOptionsAccessor, unitOfWork, userManager, genericUnitOfWork)
+        public AdminOrderController(ResolvedPaginationValueService defaultPagingOptionsAccessor, UnitOfWork unitOfWork,
+            UserManager<BaseIdentityUser> userManager,
+            UnitOfWork<OrderForm, MinimumOrderResource, MinimumOrderResource, Order> genericUnitOfWork,
+            IMediator mediator) : base(defaultPagingOptionsAccessor, unitOfWork, userManager, genericUnitOfWork,
+            mediator)
         {
         }
 

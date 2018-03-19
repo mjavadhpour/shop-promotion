@@ -5,6 +5,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -31,14 +32,11 @@ namespace ShopPromotion.API.Controllers.App
         MinimumShopGeolocationListResource, MinimumShopGeolocationResource, ShopGeolocation,
         GetAllGeolocationsParameters, GetItemByIdAndShopParameters>
     {
-        /// <inheritdoc />
-        public GeolocationController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
-            UnitOfWork unitOfWork,
+        public GeolocationController(ResolvedPaginationValueService defaultPagingOptionsAccessor, UnitOfWork unitOfWork,
             UserManager<BaseIdentityUser> userManager,
-            UnitOfWork<ShopGeolocationForm, MinimumShopGeolocationListResource,
-                MinimumShopGeolocationResource, ShopGeolocation> genericUnitOfWork) : base(
-            defaultPagingOptionsAccessor,
-            unitOfWork, userManager, genericUnitOfWork)
+            UnitOfWork<ShopGeolocationForm, MinimumShopGeolocationListResource, MinimumShopGeolocationResource,
+                ShopGeolocation> genericUnitOfWork, IMediator mediator) : base(defaultPagingOptionsAccessor, unitOfWork,
+            userManager, genericUnitOfWork, mediator)
         {
         }
 

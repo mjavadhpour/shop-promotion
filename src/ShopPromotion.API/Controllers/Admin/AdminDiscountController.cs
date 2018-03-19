@@ -4,6 +4,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -32,14 +33,11 @@ namespace ShopPromotion.API.Controllers.Admin
         GetAllDiscountsParameters,
         GetItemByIdParameters>
     {
-        /// <inheritdoc />
         public AdminDiscountController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
-            UnitOfWork unitOfWork,
-            UserManager<BaseIdentityUser> userManager,
-            UnitOfWork<DiscountCreateForm, MinimumDiscountListResource,
-                MinimumDiscountResource, Discount> genericUnitOfWork) : base(
-            defaultPagingOptionsAccessor,
-            unitOfWork, userManager, genericUnitOfWork)
+            UnitOfWork unitOfWork, UserManager<BaseIdentityUser> userManager,
+            UnitOfWork<DiscountCreateForm, MinimumDiscountListResource, MinimumDiscountResource, Discount>
+                genericUnitOfWork, IMediator mediator) : base(defaultPagingOptionsAccessor, unitOfWork, userManager,
+            genericUnitOfWork, mediator)
         {
         }
 

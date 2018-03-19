@@ -2,16 +2,10 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
-using System;
-using Newtonsoft.Json;
-
 namespace ShopPromotion.Domain.Infrastructure.Models.Resource
 {
-    public class MinimumBaseEntity
+    public class MinimumShopCheckoutRequestOrder : MinimumBaseEntity
     {
-        public virtual int Id { get; set; }
-
-        [JsonIgnore]
-        public DateTime CreatedAt { get; set; }
+        public MinimumOrderListResource Order { get; set; }
     }
 }

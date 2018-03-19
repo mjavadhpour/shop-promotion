@@ -4,6 +4,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -30,11 +31,11 @@ namespace ShopPromotion.API.Controllers.Admin
     public class AdminShopController : BaseApiController<ShopAdminForm, MinimumShopListResource, MinimumShopResource, Shop, GetAllShopsParameters,
         GetItemByIdParameters>
     {
-        /// <inheritdoc />
         public AdminShopController(ResolvedPaginationValueService defaultPagingOptionsAccessor, UnitOfWork unitOfWork,
             UserManager<BaseIdentityUser> userManager,
-            UnitOfWork<ShopAdminForm, MinimumShopListResource, MinimumShopResource, Shop> genericUnitOfWork) : base(defaultPagingOptionsAccessor,
-            unitOfWork, userManager, genericUnitOfWork)
+            UnitOfWork<ShopAdminForm, MinimumShopListResource, MinimumShopResource, Shop> genericUnitOfWork,
+            IMediator mediator) : base(defaultPagingOptionsAccessor, unitOfWork, userManager, genericUnitOfWork,
+            mediator)
         {
         }
 

@@ -4,6 +4,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -30,11 +31,11 @@ namespace ShopPromotion.API.Controllers.Admin
     public class AdminShopPromotionBarcodeController : BaseApiController<ShopPromotionBarcodeForm, MinimumShopPromotionBarcodeResource, MinimumShopPromotionBarcodeResource, ShopPromotionBarcode
         , GetAllShopPromotionBarcodeParameters, GetItemByIdAndShopAndPromotionParameters>
     {
-        /// <inheritdoc />
         public AdminShopPromotionBarcodeController(ResolvedPaginationValueService defaultPagingOptionsAccessor,
             UnitOfWork unitOfWork, UserManager<BaseIdentityUser> userManager,
-            UnitOfWork<ShopPromotionBarcodeForm, MinimumShopPromotionBarcodeResource, MinimumShopPromotionBarcodeResource, ShopPromotionBarcode> genericUnitOfWork) : base(
-            defaultPagingOptionsAccessor, unitOfWork, userManager, genericUnitOfWork)
+            UnitOfWork<ShopPromotionBarcodeForm, MinimumShopPromotionBarcodeResource,
+                MinimumShopPromotionBarcodeResource, ShopPromotionBarcode> genericUnitOfWork, IMediator mediator) :
+            base(defaultPagingOptionsAccessor, unitOfWork, userManager, genericUnitOfWork, mediator)
         {
         }
 

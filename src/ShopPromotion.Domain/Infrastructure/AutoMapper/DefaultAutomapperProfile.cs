@@ -61,6 +61,10 @@ namespace ShopPromotion.Domain.Infrastructure.AutoMapper
             // Discount
             CreateMap<DiscountCreateForm, Discount>();
             CreateMap<DiscountCreateForm, MinimumDiscountResource>();
+            // ShopCheckoutRequest
+            CreateMap<ShopCheckoutRequestForm, ShopCheckoutRequest>()
+                .ForMember(dto => dto.ShopKeeperUserId, opt => opt.MapFrom(s => s.CreatedById));
+            CreateMap<ShopCheckoutRequestForm, MinimumShopCheckoutRequestResource>();
             // PaymentMethod
             CreateMap<PaymentMethodForm, PaymentMethod>();
             // ShopImage

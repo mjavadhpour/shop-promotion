@@ -29,6 +29,7 @@
   <!--             Folders             -->
   <!-- ******************************* -->
   <ItemGroup>
+    <Folder Include="Event" />
     <Folder Include="Infrastructure\Models\Resource" />
     <Folder Include="wwwroot\img\shop" />
     <Folder Include="wwwroot\img\user" />
@@ -46,6 +47,8 @@
   <!-- ******************************* -->
   <ItemGroup>
     <!-- Full AspNetCore framework. intruduced in the version 2.0.0 -->
+    <PackageReference Include="MediatR" Version="4.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="4.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
     <!-- Version Your Service with this package -->
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="2.0.0" />

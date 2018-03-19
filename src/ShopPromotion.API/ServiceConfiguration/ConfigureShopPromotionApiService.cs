@@ -2,11 +2,16 @@
 // Licensed under the Private License. See LICENSE in the project root for license information.
 // Author: Mohammad Javad HoseinPour <mjavadhpour@gmail.com>
 
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ShopPromotion.API.ServiceConfiguration
 {
+    // API
     using Services; 
+    using EventHandlers;
+    // Doamin
+    using Domain.Infrastructure.Models.Resource;
 
     /// <summary>
     /// Configure ShopPromotion api services.
@@ -35,6 +40,10 @@ namespace ShopPromotion.API.ServiceConfiguration
             services.AddTransient<SmsIrRestful.Token>();
             services.AddTransient<SmsIrRestful.MessageSend>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+            // MediatR
+            services.AddTransient<SingleInstanceFactory>(sp => t => sp.GetService(t));
+            services.AddTransient<MultiInstanceFactory>(sp => t => sp.GetServices(t));
+            services.AddMediatR(typeof(Startup), typeof(EntityCreatedEventHandler));
         }
     }
 }
