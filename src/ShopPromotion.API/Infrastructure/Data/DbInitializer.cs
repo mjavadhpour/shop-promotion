@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 
@@ -40,9 +41,9 @@ namespace ShopPromotion.API.Infrastructure.Data
         }
 
         /// <inheritdoc />
-        public async void Initialize()
+        public async Task Initialize()
         {
-            // Create database schema if none exists with reference to all migrations.
+            // Create database schema if does not exists with reference to all migrations.
             await _context.Database.EnsureCreatedAsync();
 
             // If there is already an Administrator claim, delete old user
@@ -82,7 +83,7 @@ namespace ShopPromotion.API.Infrastructure.Data
                 await _userManager.AddClaimAsync(await _userManager.FindByNameAsync(_administratorOptions.Email), claim);
             }
 
-            SeedData();
+            // SeedData();
         }
 
         private async void SeedData()

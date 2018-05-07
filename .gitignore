@@ -11,3 +11,5 @@
 **/*.db
 **/wwwroot/img/shop/*
 **/wwwroot/img/user/*
+/.vs/ShopPromotion/v15
+/.vs/config

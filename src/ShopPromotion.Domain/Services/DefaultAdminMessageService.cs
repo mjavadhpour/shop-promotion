@@ -100,7 +100,7 @@ namespace ShopPromotion.Domain.Services
             switch (form.MessageTargetType)
             {
                 case MessageTargetTypeOption.AppUser:
-                    if (form.TargetObjectId != null)
+                    if (!string.IsNullOrEmpty(form.TargetObjectId))
                     {
                         var user = Context.Set<AppUser>().AsNoTracking()
                             .SingleOrDefaultAsync(x => x.Id == form.TargetObjectId, ct);
@@ -116,7 +116,7 @@ namespace ShopPromotion.Domain.Services
 
                     break;
                 case MessageTargetTypeOption.Shop:
-                    if (form.TargetObjectId != null)
+                    if (!string.IsNullOrEmpty(form.TargetObjectId))
                     {
                         var shop = Context.Set<Shop>().AsNoTracking()
                             .SingleOrDefaultAsync(x => x.Id == Int32.Parse(form.TargetObjectId), ct);
@@ -131,7 +131,7 @@ namespace ShopPromotion.Domain.Services
                     }
                     break;
                 case MessageTargetTypeOption.ShopKeeper:
-                    if (form.TargetObjectId != null)
+                    if (!string.IsNullOrEmpty(form.TargetObjectId))
                     {
                         var shopKeeper = Context.Set<ShopKeeperUser>().AsNoTracking()
                             .SingleOrDefaultAsync(x => x.Id == form.TargetObjectId, ct);

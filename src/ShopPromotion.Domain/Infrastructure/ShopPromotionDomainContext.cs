@@ -142,6 +142,11 @@ namespace ShopPromotion.Domain.Infrastructure
             // optionsBuilder.UseMySql(MySqlConnectionString);
             optionsBuilder.UseSqlServer(DefaultConnectionString);
 
+// If debug dump sensitive data.
+#if DEBUG
+            optionsBuilder.EnableSensitiveDataLogging();
+#endif
+
             base.OnConfiguring(optionsBuilder);
         }
 

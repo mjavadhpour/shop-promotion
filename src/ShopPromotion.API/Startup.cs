@@ -62,17 +62,17 @@ namespace ShopPromotion.API
             services.Configure<ShopPromotionApiAppSettings>(Configuration.GetSection("AppSettings"));
             // DI for configuration
             services.AddSingleton<IConfiguration>(Configuration);
-            // Add aoto mapper.
+            // Add auto mapper.
             services.AddAutoMapper();
             // Lowercase routes
             services.AddRouting(options => options.LowercaseUrls = true);
             // Add Database Initializer
-            services.AddSingleton<IDbInitializer, DbInitializer>();
+            services.AddTransient<IDbInitializer, DbInitializer>();
             // Swagger
             ConfigureSwaggerService.Configure(services);
             // User identity
             ConfigureIdentityService.Configure(services);
-            // User authenticatiuon
+            // User authentication
             ConfigureJwtAuthService.Configure(services);
             // ShopPromotion API
             ConfigureShopPromotionApiService.Configure(services);
@@ -100,21 +100,21 @@ namespace ShopPromotion.API
             loggerFactory.AddDebug();
             // Use options from ShopPromotionMiddleware. allow OPTIONS method and more.
             app.UseShopPromotionOptionsMiddleware();
-            // Use ShopPromotion headers middleware that allow us to registers all headers we want to request pipeline
+            // Use ShopPromotion headers middle-ware that allow us to registers all headers we want to request pipeline
             app.UseShopPromotionHeadersMiddleware(new ShopPromotionHeadersBuilder()
                 .AddDefaultSecurePolicy()
                 .AddCustomHeader("Access-Control-Allow-Origin", "*"));
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            // Enable middle-ware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
+            // Enable middle-ware to serve SWAGGER-UI (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "ShopPromotion API V1"); });
             // Serialize errors as JSON
             var jsonExceptionMiddleware = new JsonExceptionMiddleware(
                 app.ApplicationServices.GetRequiredService<IHostingEnvironment>());
             app.UseExceptionHandler(new ExceptionHandlerOptions {ExceptionHandler = jsonExceptionMiddleware.Invoke});
             // Generate EF Core Seed Data
-            dbInitializer.Initialize();
-            // Nginx Config
+            dbInitializer.Initialize().Wait();
+            // NGinx Configure
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto

@@ -22,7 +22,7 @@ namespace ShopPromotion.API.Controllers
     [Route("api/v1/[area]/[controller]")]
     [Authorize(Policy = ConfigurePolicyService.AppUserPolicy)]
     [ValidateModel]
-    [ApiExceptionFilter]
+    // [ApiExceptionFilter]
     [ServiceFilter(typeof(PaginationDefaultValueFilter))]
     public class BaseController : Controller
     {
